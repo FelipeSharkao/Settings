@@ -1,0 +1,34 @@
+{
+  "suggest.completionItemKindLabels": {
+    "text": "  ",
+    "method": "  ",
+    "function": "  ",
+    "field": " ﴲ ",
+    "variable": "[]",
+    "class": "  ",
+    "interface": " ﰮ ",
+    "module": "  ",
+    "property": " 襁",
+    "unit": "  ",
+    "value": "   ",
+    "enum": " 練",
+    "keyword": "   ",
+    "snippet": "  ",
+    "color": "  ",
+    "file": "  ",
+    "reference": "  ",
+    "folder": "  ",
+    "enumMember": "  ",
+    "constant": " ﲀ ",
+    "struct": " ﳤ ",
+    "event": "  ",
+    "operator": "  ",
+    "typeParameter": "  ",
+
+    "default": "   "
+  },
+  "diagnostic.errorSign": "",
+  "diagnostic.warningSign": "",
+  "diagnostic.hintSign": "",
+  "diagnostic.infoSign": ""
+}
