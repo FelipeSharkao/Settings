@@ -9,14 +9,20 @@ vim.o.backup = false
 vim.o.writebackup = false
 vim.o.autoread = true -- auto file change detection
 
--- autocmds are currently not supported by nvim (0.5 nighlty)
-vim.api.nvim_command([[
-" Triger `autoread` when files changes on disk
-autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * if mode() != 'c' | checktime | endif
-" Notification after file change
-autocmd FileChangedShellPost *
-  \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
-]])
+-- Triger `autoread` when files changes on disk
+vim.api.nvim_create_autocmd(
+  { "FocusGained", "BufEnter", "CursorHold", "CursorHoldI" },
+  { command = [[if mode() != 'c' | checktime | endif]] }
+)
+-- Notification after file change
+vim.api.nvim_create_autocmd(
+  "FileChangedShellPost",
+  {
+    callback = function ()
+      vim.api.nvim_echo({{"File changed on disk. Buffer reloaded.", "WarningMsg"}}, true)
+    end
+  }
+)
 
 
 -- ================= Scrolling ================= --

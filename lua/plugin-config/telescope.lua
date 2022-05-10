@@ -1,7 +1,7 @@
 -- Find files using lua fuctions
 local opts = { silent = true, noremap = true }
-vim.api.nvim_set_keymap('n', '<Leader>p', "<Cmd>lua require'telescope.builtin'.find_files()<CR>", {silent=false, noremap=true})
-vim.api.nvim_set_keymap('n', '<Leader>f', "<Cmd>lua require'telescope.builtin'.live_grep()<CR>", opts)
+vim.api.nvim_set_keymap('n', 'ff', "<Cmd>lua require'telescope.builtin'.find_files()<CR>", {silent=false, noremap=true})
+vim.api.nvim_set_keymap('n', 'fg', "<Cmd>lua require'telescope.builtin'.live_grep()<CR>", opts)
 
 local actions = require('telescope.actions')
 require('telescope').setup {
@@ -39,15 +39,15 @@ require('telescope').setup {
         -- preview_cutoff = 120,
         mappings = {
             i = {
-                ['<C-k>'] = actions.move_selection_next,
-                ['<C-l>'] = actions.move_selection_previous,
+                ['<C-j>'] = actions.move_selection_next,
+                ['<C-k>'] = actions.move_selection_previous,
                 ['<C-q>'] = actions.smart_send_to_qflist + actions.open_qflist,
                 -- ['ć'] = actions.close,
                 ['<CR>'] = actions.select_default + actions.center,
             },
             n = {
-                ['<C-k>'] = actions.move_selection_next,
-                ['<C-l>'] = actions.move_selection_previous,
+                ['<C-j>'] = actions.move_selection_next,
+                ['<C-k>'] = actions.move_selection_previous,
                 ['<C-q>'] = actions.smart_send_to_qflist + actions.open_qflist,
                 ['q'] = actions.close,
             }

@@ -73,20 +73,13 @@ local packer = require('packer').startup(function(use)
   use {
     'kyazdani42/nvim-tree.lua',
     requires = 'kyazdani42/nvim-web-devicons',
-    config = function() require'nvim-tree'.setup {} end
   }
 
   -- prettier tabs
   use 'romgrk/barbar.nvim'
 
-  -- nice diagnostic pane on the bottom
-  -- use 'folke/lsp-trouble.nvim'
-
   -- support the missing lsp diagnostic colors
-  -- use 'folke/lsp-colors.nvim'
-
-  -- better LSP UI (for code actions, rename etc.)
-  -- use 'tami5/lspsaga.nvim'
+  use 'folke/lsp-colors.nvim'
 
   use {'neoclide/coc.nvim', branch = 'release'}
 
@@ -101,7 +94,7 @@ local packer = require('packer').startup(function(use)
 
   -- Automaticly close () [] {} '' ""
   use 'jiangmiao/auto-pairs'
-  
+
   -- Discord Integration
   use 'andweeb/presence.nvim'
 
@@ -122,17 +115,15 @@ end)
 -- plugin specific configs go here
 require('plugin-config/nvim-cmp')
 require('plugin-config/telescope')
-require('plugin-config/nvim-tree')
 require('plugin-config/nvim-treesitter')
 require('plugin-config/barbar')
--- require('plugin-config/lsp-colors')
--- require('plugin-config/lsp-trouble')
--- require('plugin-config/lspsaga')
+require('plugin-config/lsp-colors')
 require('plugin-config/coc')
 require('plugin-config/neoformat')
 require('plugin-config/theme')
 require('plugin-config/galaxyline')
 require('plugin-config/gitsigns')
 require('plugin-config/indent-guide-lines')
+require('plugin-config/nvim-tree')
 
 return packer

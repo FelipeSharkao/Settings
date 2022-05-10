@@ -1,4 +1,5 @@
 local opts = { noremap = true, silent = true }
+local xopts = { noremap = true, silent = true, expr = true }
 
 vim.g.coc_global_extensions = {
   'coc-json',
@@ -10,6 +11,7 @@ vim.g.coc_global_extensions = {
   'coc-svelte',
   'coc-sh',
   'coc-lua',
+  'coc-eslint'
 }
 
 vim.api.nvim_set_keymap('n', 'gd', '<Cmd>call CocAction("jumpDefinition")<CR>', opts)
@@ -20,6 +22,11 @@ vim.api.nvim_set_keymap('n', 'gi', '<Cmd>call CocAction("jumpReferences")<CR>', 
 
 vim.api.nvim_set_keymap('n', 'gr', '<Cmd>call CocActionAsync("rename")<CR>', opts)
 vim.api.nvim_set_keymap('n', 'gR', '<Cmd>call CocAction("refactor")<CR>', opts)
-vim.api.nvim_set_keymap('n', 'ga', '<Cmd>call CocAction("codeAction")<CR>', opts)
+vim.api.nvim_set_keymap('n', 'ga', '<Cmd>call CocAction("codeAction", "cursor")<CR>', opts)
 vim.api.nvim_set_keymap('n', 'h', '<Cmd>call CocAction("doHover")<CR>', opts)
 vim.api.nvim_set_keymap('n', 'gh', '<Cmd>call CocAction("definitionHover")<CR>', opts)
+
+-- if autocomplete popup menu opens pressing tab will complete the first match
+vim.api.nvim_set_keymap('i', '<Tab>', 'pumvisible() ? coc#_select_confirm() : "<Tab>"', xopts)
+vim.api.nvim_set_keymap('i', '<C-Space>', 'coc#refresh()', xopts)
+vim.api.nvim_set_keymap('i', '<C-@>', 'coc#refresh()', xopts)

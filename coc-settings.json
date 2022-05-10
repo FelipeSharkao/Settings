@@ -30,5 +30,6 @@
   "diagnostic.errorSign": "",
   "diagnostic.warningSign": "",
   "diagnostic.hintSign": "",
-  "diagnostic.infoSign": ""
+  "diagnostic.infoSign": "",
+  "svelte.enable-ts-plugin": true
 }
