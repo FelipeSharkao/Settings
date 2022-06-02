@@ -77,7 +77,7 @@ vim.o.ttimeoutlen = 10  -- ms to wait for a key code seq to complete
 vim.wo.wrap = false -- don't wrap long text into multiple lines
 vim.wo.cc = '81'
 vim.o.history = 10000 -- numbers of entries in history for ':' commands and search patterns (10000 = max)
-vim.o.updatetime = 300 -- used for CursorHold event (for document highlighting detection)
+vim.o.updatetime = 100 -- used for CursorHold event (for document highlighting detection)
 vim.o.mouse = 'nv' -- allow mose in normal & visual mode
 
 -- better autocomplete behaviour
@@ -90,6 +90,3 @@ vim.o.completeopt='menuone,preview,noinsert'
 -- this means that a modified buffer doesn't need to be saved when changing
 -- tabs/windows.
 vim.o.hidden=true
-
--- Copy paste between vim and everything else
-vim.o.clipboard = "unnamedplus"

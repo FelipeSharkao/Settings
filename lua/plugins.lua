@@ -11,14 +11,10 @@ end
 local packer = require('packer').startup(function(use)
   -- Packer should manage itself
   use 'wbthomason/packer.nvim'
-
-  -- git integration
-  use {
-    'lewis6991/gitsigns.nvim',
-    requires = {
-      'nvim-lua/plenary.nvim'
-    }
-  }
+  
+  -- Git integration
+  use 'airblade/vim-gitgutter'
+  use 'tpope/vim-fugitive'
 
   -- surround vim
   use 'tpope/vim-surround'
@@ -48,10 +44,6 @@ local packer = require('packer').startup(function(use)
   -- Prettier
   use 'sbdchd/neoformat'
 
-  -- For vsnip users.
-  use 'hrsh7th/cmp-vsnip'
-  use 'hrsh7th/vim-vsnip'
-
   -- TODO: prettify telescope vim, make it use regex & shorten the window
   -- telescope - searching / navigation
   use {
@@ -62,14 +54,11 @@ local packer = require('packer').startup(function(use)
     }
   }
 
-  -- better hotfix window (for showing and searching through results in telescope's find usages)
-  -- TODO: learn how to use?
-  use {"kevinhwang91/nvim-bqf"}
-
   -- better highlighting
   use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
   use 'evanleck/vim-svelte'
 
+  -- File tree window
   use {
     'kyazdani42/nvim-tree.lua',
     requires = 'kyazdani42/nvim-web-devicons',
@@ -81,6 +70,7 @@ local packer = require('packer').startup(function(use)
   -- support the missing lsp diagnostic colors
   use 'folke/lsp-colors.nvim'
 
+  -- Extensible LSP
   use {'neoclide/coc.nvim', branch = 'release'}
 
   -- show indentation levels
@@ -88,8 +78,8 @@ local packer = require('packer').startup(function(use)
 
   -- Github Copilot
   use 'github/copilot.vim'
-
-  -- Multiple cursors
+  
+  -- Multicursor
   use 'mg979/vim-visual-multi'
 
   -- Automaticly close () [] {} '' ""
@@ -122,7 +112,6 @@ require('plugin-config/coc')
 require('plugin-config/neoformat')
 require('plugin-config/theme')
 require('plugin-config/galaxyline')
-require('plugin-config/gitsigns')
 require('plugin-config/indent-guide-lines')
 require('plugin-config/nvim-tree')
 

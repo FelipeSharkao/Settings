@@ -23,8 +23,8 @@ vim.api.nvim_set_keymap('n', 'gi', '<Cmd>call CocAction("jumpReferences")<CR>', 
 vim.api.nvim_set_keymap('n', 'gr', '<Cmd>call CocActionAsync("rename")<CR>', opts)
 vim.api.nvim_set_keymap('n', 'gR', '<Cmd>call CocAction("refactor")<CR>', opts)
 vim.api.nvim_set_keymap('n', 'ga', '<Cmd>call CocAction("codeAction", "cursor")<CR>', opts)
-vim.api.nvim_set_keymap('n', 'h', '<Cmd>call CocAction("doHover")<CR>', opts)
-vim.api.nvim_set_keymap('n', 'gh', '<Cmd>call CocAction("definitionHover")<CR>', opts)
+vim.api.nvim_set_keymap('n', 'gh', '<Cmd>call CocAction("doHover")<CR>', opts)
+vim.api.nvim_set_keymap('n', 'gH', '<Cmd>call CocAction("definitionHover")<CR>', opts)
 
 -- if autocomplete popup menu opens pressing tab will complete the first match
 vim.api.nvim_set_keymap('i', '<Tab>', 'pumvisible() ? coc#_select_confirm() : "<Tab>"', xopts)
