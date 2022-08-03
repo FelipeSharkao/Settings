@@ -1,4 +1,9 @@
 {
+  "diagnostic.errorSign": "",
+  "diagnostic.hintSign": "",
+  "diagnostic.infoSign": "",
+  "diagnostic.warningSign": "",
+  "Lua.hint.enable": false,
   "suggest.completionItemKindLabels": {
     "text": "  ",
     "method": "  ",
@@ -24,12 +29,10 @@
     "event": "  ",
     "operator": "  ",
     "typeParameter": "  ",
-
     "default": "   "
   },
-  "diagnostic.errorSign": "",
-  "diagnostic.warningSign": "",
-  "diagnostic.hintSign": "",
-  "diagnostic.infoSign": "",
-  "svelte.enable-ts-plugin": true
+  "semanticTokens.filetypes": ["*"],
+  "sumneko-lua.enableNvimLuaDev": true,
+  "svelte.enable-ts-plugin": true,
+  "Lua.telemetry.enable": true
 }

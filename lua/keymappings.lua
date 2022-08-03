@@ -1,4 +1,4 @@
-local leader = '<Space>'
+local leader = ";"
 vim.g.mapleader = leader
 
 -- defaults

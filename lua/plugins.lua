@@ -15,6 +15,10 @@ local packer = require('packer').startup(function(use)
   -- Git integration
   use 'airblade/vim-gitgutter'
   use 'tpope/vim-fugitive'
+  use {'APZelos/blamer.nvim', config = function()
+    vim.g.blamer_enabled = true
+    vim.g.blamer_delay = 600
+  end}
 
   -- surround vim
   use 'tpope/vim-surround'
@@ -77,17 +81,15 @@ local packer = require('packer').startup(function(use)
   use 'lukas-reineke/indent-blankline.nvim'
 
   -- Github Copilot
-  use 'github/copilot.vim'
+  -- Sadly I won't pay it for now
+  -- use 'github/copilot.vim'
   
   -- Multicursor
   use 'mg979/vim-visual-multi'
 
   -- Automaticly close () [] {} '' ""
   use 'jiangmiao/auto-pairs'
-
-  -- Discord Integration
-  use 'andweeb/presence.nvim'
-
+  
   -- colorscheme
   use {
     'rose-pine/neovim',
@@ -110,9 +112,9 @@ require('plugin-config/barbar')
 require('plugin-config/lsp-colors')
 require('plugin-config/coc')
 require('plugin-config/neoformat')
-require('plugin-config/theme')
 require('plugin-config/galaxyline')
 require('plugin-config/indent-guide-lines')
 require('plugin-config/nvim-tree')
+require('plugin-config/theme')
 
 return packer

@@ -10,9 +10,11 @@ vim.g.coc_global_extensions = {
   'coc-rust-analyzer',
   'coc-svelte',
   'coc-sh',
-  'coc-lua',
-  'coc-eslint'
+  'coc-sumneko-lua',
+  'coc-eslint',
 }
+
+vim.g.coc_default_semantic_highlight_groups = 1
 
 vim.api.nvim_set_keymap('n', 'gd', '<Cmd>call CocAction("jumpDefinition")<CR>', opts)
 vim.api.nvim_set_keymap('n', 'gt', '<Cmd>call CocAction("jumpTypeDefinition")<CR>', opts)

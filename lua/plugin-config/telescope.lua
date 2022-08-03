@@ -1,8 +1,8 @@
 -- Find files using lua fuctions
 local opts = { silent = true, noremap = true }
-vim.api.nvim_set_keymap('n', 'ff', "<Cmd>lua require'telescope.builtin'.find_files()<CR>", {silent=false, noremap=true})
-vim.api.nvim_set_keymap('n', 'fg', "<Cmd>lua require'telescope.builtin'.live_grep()<CR>", opts)
-vim.api.nvim_set_keymap('n', 'fl', "<Cmd>lua require'telescope.builtin'.resume()<CR>", opts)
+vim.api.nvim_set_keymap('n', '<Leader>f', "<Cmd>lua require'telescope.builtin'.find_files()<CR>", opts)
+vim.api.nvim_set_keymap('n', '<Leader>g', "<Cmd>lua require'telescope.builtin'.live_grep()<CR>", opts)
+vim.api.nvim_set_keymap('n', '<Leader>l', "<Cmd>lua require'telescope.builtin'.resume()<CR>", opts)
 
 local actions = require('telescope.actions')
 require('telescope').setup {
