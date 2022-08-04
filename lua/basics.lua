@@ -84,3 +84,6 @@ vim.o.mouse = 'nv' -- allow mose in normal & visual mode
 -- this means that a modified buffer doesn't need to be saved when changing
 -- tabs/windows.
 vim.o.hidden=true
+
+-- set completion mode on command line to be similar to cli
+vim.o.wildmode="list:longest"
