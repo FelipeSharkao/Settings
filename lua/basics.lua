@@ -80,12 +80,6 @@ vim.o.history = 10000 -- numbers of entries in history for ':' commands and sear
 vim.o.updatetime = 100 -- used for CursorHold event (for document highlighting detection)
 vim.o.mouse = 'nv' -- allow mose in normal & visual mode
 
--- better autocomplete behaviour
--- menuone - show popup menu also when there is only one match available
--- preview - show extra information about currently selected completion
--- noinsert - do not insert any text for match until the user selects it from the menu
-vim.o.completeopt='menuone,preview,noinsert'
-
 -- allows hidden buffers
 -- this means that a modified buffer doesn't need to be saved when changing
 -- tabs/windows.
