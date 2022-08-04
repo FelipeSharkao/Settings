@@ -38,13 +38,6 @@ local packer = require('packer').startup(function(use)
     'williamboman/nvim-lsp-installer',
   }
 
-  -- for LSP autocompletion
-  use 'hrsh7th/cmp-nvim-lsp'
-  use 'hrsh7th/cmp-buffer'
-  use 'hrsh7th/cmp-path'
-  use 'hrsh7th/cmp-cmdline'
-  use 'hrsh7th/nvim-cmp'
-
   -- Prettier
   use 'sbdchd/neoformat'
 
@@ -108,7 +101,6 @@ local packer = require('packer').startup(function(use)
 end)
 
 -- plugin specific configs go here
-require('plugin-config/nvim-cmp')
 require('plugin-config/telescope')
 require('plugin-config/nvim-treesitter')
 require('plugin-config/barbar')

@@ -29,6 +29,6 @@ vim.api.nvim_set_keymap('n', 'gh', '<Cmd>call CocAction("doHover")<CR>', opts)
 vim.api.nvim_set_keymap('n', 'gH', '<Cmd>call CocAction("definitionHover")<CR>', opts)
 
 -- if autocomplete popup menu opens pressing tab will complete the first match
-vim.api.nvim_set_keymap('i', '<Tab>', 'pumvisible() ? coc#_select_confirm() : "<Tab>"', xopts)
+vim.api.nvim_set_keymap('i', '<Tab>', 'coc#pum#visible() ? coc#_select_confirm() : "<Tab>"', xopts)
 vim.api.nvim_set_keymap('i', '<C-Space>', 'coc#refresh()', xopts)
 vim.api.nvim_set_keymap('i', '<C-@>', 'coc#refresh()', xopts)
