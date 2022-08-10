@@ -12,6 +12,7 @@ vim.g.coc_global_extensions = {
   'coc-sh',
   'coc-sumneko-lua',
   'coc-eslint',
+  'coc-prisma',
 }
 
 vim.g.coc_default_semantic_highlight_groups = 1
