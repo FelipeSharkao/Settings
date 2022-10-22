@@ -1,115 +1,116 @@
 local fn = vim.fn
-local installPath = DATA_PATH..'/site/pack/packer/start/packer.nvim'
+local installPath = DATA_PATH .. "/site/pack/packer/start/packer.nvim"
 
 -- install packer if it's not installed already
 local packerBootstrap = nil
 if fn.empty(fn.glob(installPath)) > 0 then
-  packerBootstrap = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', installPath})
-  vim.cmd [[packadd packer.nvim]]
+	packerBootstrap =
+		fn.system({ "git", "clone", "--depth", "1", "https://github.com/wbthomason/packer.nvim", installPath })
+	vim.cmd([[packadd packer.nvim]])
 end
 
-local packer = require('packer').startup(function(use)
-  -- Packer should manage itself
-  use 'wbthomason/packer.nvim'
+local packer = require("packer").startup(function(use)
+	-- Packer should manage itself
+	use("wbthomason/packer.nvim")
 
-  -- Git integration
-  use 'airblade/vim-gitgutter'
+	-- Git integration
+	use("airblade/vim-gitgutter")
 
-  -- surround vim
-  use 'tpope/vim-surround'
+	-- surround vim
+	use("tpope/vim-surround")
 
-  -- nerd commenter
-  use 'scrooloose/nerdcommenter'
+	-- nerd commenter
+	use("scrooloose/nerdcommenter")
 
-  -- status line
-  use 'glepnir/galaxyline.nvim'
+	-- status line
+	use("glepnir/galaxyline.nvim")
 
-  -- show recent files on empty nvim command
-  use 'mhinz/vim-startify'
+	-- show recent files on empty nvim command
+	use("mhinz/vim-startify")
 
-  -- lsp config
-  use {
-    'neovim/nvim-lspconfig',
-    'williamboman/nvim-lsp-installer',
-  }
+	-- lsp config
+	use({
+		"neovim/nvim-lspconfig",
+		"williamboman/nvim-lsp-installer",
+	})
 
-  -- Prettier
-  use 'sbdchd/neoformat'
+	-- Prettier
+	use("sbdchd/neoformat")
 
-  -- TODO: prettify telescope vim, make it use regex & shorten the window
-  -- telescope - searching / navigation
-  use {
-    'nvim-telescope/telescope.nvim',
-    requires = {
-      {'nvim-lua/plenary.nvim'},
-      {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
-    }
-  }
+	-- TODO: prettify telescope vim, make it use regex & shorten the window
+	-- telescope - searching / navigation
+	use({
+		"nvim-telescope/telescope.nvim",
+		requires = {
+			{ "nvim-lua/plenary.nvim" },
+			{ "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
+		},
+	})
 
-  -- better highlighting
-  use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
-  use 'evanleck/vim-svelte'
+	-- better highlighting
+	use({ "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" })
+	use("evanleck/vim-svelte")
 
-  -- File tree window
-  use {
-    'kyazdani42/nvim-tree.lua',
-    requires = 'kyazdani42/nvim-web-devicons',
-  }
+	-- File tree window
+	use({
+		"kyazdani42/nvim-tree.lua",
+		requires = "kyazdani42/nvim-web-devicons",
+	})
 
-  -- prettier tabs
-  use 'romgrk/barbar.nvim'
-  
-  -- floating terminal
-  use 'voldikss/vim-floaterm'
+	-- prettier tabs
+	use("romgrk/barbar.nvim")
 
-  -- support the missing lsp diagnostic colors
-  use 'folke/lsp-colors.nvim'
+	-- floating terminal
+	use("voldikss/vim-floaterm")
 
-  -- Extensible LSP
-  use {'neoclide/coc.nvim', branch = 'release'}
+	-- support the missing lsp diagnostic colors
+	use("folke/lsp-colors.nvim")
 
-  -- show indentation levels
-  use 'lukas-reineke/indent-blankline.nvim'
+	-- Extensible LSP
+	use({ "neoclide/coc.nvim", branch = "release" })
 
-  -- improve folding
-  use 'anuvyklack/pretty-fold.nvim'
+	-- show indentation levels
+	use("lukas-reineke/indent-blankline.nvim")
 
-  -- Github Copilot
-  -- Sadly I won't pay it for now
-  -- use 'github/copilot.vim'
+	-- improve folding
+	use("anuvyklack/pretty-fold.nvim")
 
-  -- Multicursor
-  use 'mg979/vim-visual-multi'
+	-- Github Copilot
+	-- Sadly I won't pay it for now
+	-- use 'github/copilot.vim'
 
-  -- Automaticly close () [] {} '' ""
-  use 'jiangmiao/auto-pairs'
+	-- Multicursor
+	use("mg979/vim-visual-multi")
 
-  -- colorscheme
-  use {
-    'rose-pine/neovim',
-    as = 'rose-pine',
-    tag = 'v1.*',
-  }
+	-- Automaticly close () [] {} '' ""
+	use("jiangmiao/auto-pairs")
 
-  -- this will automatically install listed dependencies
-  -- only the first time NeoVim is opened, because that's when Packer gets installed
-  if packerBootstrap then
-    require('packer').sync()
-  end
+	-- colorscheme
+	use({
+		"rose-pine/neovim",
+		as = "rose-pine",
+		tag = "v1.*",
+	})
+
+	-- this will automatically install listed dependencies
+	-- only the first time NeoVim is opened, because that's when Packer gets installed
+	if packerBootstrap then
+		require("packer").sync()
+	end
 end)
 
 -- plugin specific configs go here
-require('plugin-config/telescope')
-require('plugin-config/floaterm')
-require('plugin-config/nvim-treesitter')
-require('plugin-config/barbar')
-require('plugin-config/lsp-colors')
-require('plugin-config/coc')
-require('plugin-config/pretty-fold')
-require('plugin-config/neoformat')
-require('plugin-config/galaxyline')
-require('plugin-config/indent-guide-lines')
-require('plugin-config/nvim-tree')
-require('plugin-config/theme')
+require("plugin-config/telescope")
+require("plugin-config/floaterm")
+require("plugin-config/nvim-treesitter")
+require("plugin-config/barbar")
+require("plugin-config/lsp-colors")
+require("plugin-config/coc")
+require("plugin-config/pretty-fold")
+require("plugin-config/neoformat")
+require("plugin-config/galaxyline")
+require("plugin-config/indent-guide-lines")
+require("plugin-config/nvim-tree")
+require("plugin-config/theme")
 
 return packer

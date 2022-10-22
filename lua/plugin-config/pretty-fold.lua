@@ -1,1 +1,1 @@
-require('pretty-fold').setup {}
+require("pretty-fold").setup({})
