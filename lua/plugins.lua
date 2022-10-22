@@ -13,14 +13,8 @@ local packer = require("packer").startup(function(use)
 	-- Packer should manage itself
 	use("wbthomason/packer.nvim")
 
-	-- Git integration
-	use("airblade/vim-gitgutter")
-
 	-- surround vim
 	use("tpope/vim-surround")
-
-	-- nerd commenter
-	use("scrooloose/nerdcommenter")
 
 	-- status line
 	use("glepnir/galaxyline.nvim")
@@ -28,23 +22,13 @@ local packer = require("packer").startup(function(use)
 	-- show recent files on empty nvim command
 	use("mhinz/vim-startify")
 
-	-- lsp config
-	use({
-		"neovim/nvim-lspconfig",
-		"williamboman/nvim-lsp-installer",
-	})
-
 	-- Prettier
 	use("sbdchd/neoformat")
 
-	-- TODO: prettify telescope vim, make it use regex & shorten the window
 	-- telescope - searching / navigation
 	use({
 		"nvim-telescope/telescope.nvim",
-		requires = {
-			{ "nvim-lua/plenary.nvim" },
-			{ "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
-		},
+		requires = { { "nvim-lua/plenary.nvim" }, { "nvim-telescope/telescope-fzf-native.nvim", run = "make" } },
 	})
 
 	-- better highlighting
