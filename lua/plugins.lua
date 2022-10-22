@@ -11,14 +11,9 @@ end
 local packer = require('packer').startup(function(use)
   -- Packer should manage itself
   use 'wbthomason/packer.nvim'
-  
+
   -- Git integration
   use 'airblade/vim-gitgutter'
-  use 'tpope/vim-fugitive'
-  use {'APZelos/blamer.nvim', config = function()
-    vim.g.blamer_enabled = true
-    vim.g.blamer_delay = 600
-  end}
 
   -- surround vim
   use 'tpope/vim-surround'
@@ -63,6 +58,9 @@ local packer = require('packer').startup(function(use)
 
   -- prettier tabs
   use 'romgrk/barbar.nvim'
+  
+  -- floating terminal
+  use 'voldikss/vim-floaterm'
 
   -- support the missing lsp diagnostic colors
   use 'folke/lsp-colors.nvim'
@@ -79,13 +77,13 @@ local packer = require('packer').startup(function(use)
   -- Github Copilot
   -- Sadly I won't pay it for now
   -- use 'github/copilot.vim'
-  
+
   -- Multicursor
   use 'mg979/vim-visual-multi'
 
   -- Automaticly close () [] {} '' ""
   use 'jiangmiao/auto-pairs'
-  
+
   -- colorscheme
   use {
     'rose-pine/neovim',
@@ -102,6 +100,7 @@ end)
 
 -- plugin specific configs go here
 require('plugin-config/telescope')
+require('plugin-config/floaterm')
 require('plugin-config/nvim-treesitter')
 require('plugin-config/barbar')
 require('plugin-config/lsp-colors')
