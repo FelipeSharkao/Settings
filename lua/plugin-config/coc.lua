@@ -2,6 +2,7 @@ local opts = { noremap = true, silent = true }
 local xopts = { noremap = true, silent = true, expr = true }
 
 vim.g.coc_global_extensions = {
+  'coc-discord-rpc',
   'coc-json',
   'coc-git',
   'coc-tsserver',
