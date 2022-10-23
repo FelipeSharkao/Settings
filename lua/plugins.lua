@@ -28,7 +28,11 @@ local packer = require("packer").startup(function(use)
 	-- telescope - searching / navigation
 	use({
 		"nvim-telescope/telescope.nvim",
-		requires = { { "nvim-lua/plenary.nvim" }, { "nvim-telescope/telescope-fzf-native.nvim", run = "make" } },
+		requires = {
+			{ "nvim-lua/plenary.nvim" },
+			{ "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
+			{ "nvim-telescope/telescope-project.nvim" },
+		},
 	})
 
 	-- better highlighting
