@@ -25,6 +25,10 @@ local packer = require("packer").startup(function(use)
 	-- Prettier
 	use("sbdchd/neoformat")
 
+	-- Debugging
+	use("mfussenegger/nvim-dap")
+	use("mxsdev/nvim-dap-vscode-js")
+
 	-- telescope - searching / navigation
 	use({
 		"nvim-telescope/telescope.nvim",
@@ -32,6 +36,7 @@ local packer = require("packer").startup(function(use)
 			{ "nvim-lua/plenary.nvim" },
 			{ "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
 			{ "nvim-telescope/telescope-project.nvim" },
+			{ "nvim-telescope/telescope-dap.nvim" },
 		},
 	})
 
@@ -94,6 +99,7 @@ require("plugin-config/nvim-treesitter")
 require("plugin-config/barbar")
 require("plugin-config/lsp-colors")
 require("plugin-config/coc")
+require("plugin-config/nvim-dap")
 require("plugin-config/pretty-fold")
 require("plugin-config/neoformat")
 require("plugin-config/galaxyline")
