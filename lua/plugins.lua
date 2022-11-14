@@ -62,6 +62,9 @@ local packer = require("packer").startup(function(use)
 	-- Extensible LSP
 	use({ "neoclide/coc.nvim", branch = "release" })
 
+	-- Show commit messages
+	use("APZelos/blamer.nvim")
+
 	-- show indentation levels
 	use("lukas-reineke/indent-blankline.nvim")
 
@@ -99,6 +102,7 @@ require("plugin-config/nvim-treesitter")
 require("plugin-config/barbar")
 require("plugin-config/lsp-colors")
 require("plugin-config/coc")
+require("plugin-config/blamer")
 require("plugin-config/nvim-dap")
 require("plugin-config/pretty-fold")
 require("plugin-config/neoformat")

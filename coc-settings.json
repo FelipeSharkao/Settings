@@ -4,6 +4,7 @@
   "diagnostic.infoSign": "",
   "diagnostic.warningSign": "",
   "Lua.hint.enable": false,
+  "Lua.telemetry.enable": true,
   "suggest.completionItemKindLabels": {
     "text": "  ",
     "method": "  ",
@@ -31,8 +32,7 @@
     "typeParameter": "  ",
     "default": "   "
   },
-  "semanticTokens.filetypes": ["*"],
   "sumneko-lua.enableNvimLuaDev": true,
   "svelte.enable-ts-plugin": true,
-  "Lua.telemetry.enable": true
+  "typescript.preferences.importModuleSpecifier": "non-relative"
 }
