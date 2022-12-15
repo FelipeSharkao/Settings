@@ -63,14 +63,21 @@ vim.o.hlsearch = true -- highlight the search results
 vim.o.lazyredraw = true -- useful for when executing macros.
 vim.o.ttimeoutlen = 10 -- ms to wait for a key code seq to complete
 
+-- ================= Word Wrap ================= --
+
+vim.wo.wrap = true
+vim.wo.linebreak = true
+vim.wo.breakindent = true
+vim.wo.breakindentopt = "min:40,shift:3,sbr"
+vim.o.showbreak = "↳"
+vim.wo.colorcolumn = "80,100"
+
 -- ================= Misc ================= --
 
-vim.wo.wrap = false -- don't wrap long text into multiple lines
 vim.o.history = 10000 -- numbers of entries in history for ':' commands and search patterns (10000 = max)
 vim.o.updatetime = 100 -- used for CursorHold event (for document highlighting detection)
 vim.o.mouse = "nv" -- allow mose in normal & visual mode
 vim.o.mousemodel = "extend" -- right click extends selection
-vim.api.nvim_command([[let &colorcolumn="81,".join(range(101,999),",")]])
 
 -- allows hidden buffers
 -- this means that a modified buffer doesn't need to be saved when changing
