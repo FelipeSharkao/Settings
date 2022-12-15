@@ -22,12 +22,24 @@ local packer = require("packer").startup(function(use)
 	-- show recent files on empty nvim command
 	use("mhinz/vim-startify")
 
-	-- Prettier
-	use("sbdchd/neoformat")
+	-- -- Prettier
+	-- use("sbdchd/neoformat")
+
+	-- floating terminal
+	use("voldikss/vim-floaterm")
+
+	-- LSP and linters
+	use("folke/lsp-colors.nvim")
+	use("williamboman/mason.nvim")
+	use("williamboman/mason-lspconfig.nvim")
+	use("neovim/nvim-lspconfig")
 
 	-- Debugging
 	use("mfussenegger/nvim-dap")
 	use("mxsdev/nvim-dap-vscode-js")
+
+	-- Linters and formatters
+	use("jose-elias-alvarez/null-ls.nvim")
 
 	-- telescope - searching / navigation
 	use({
@@ -53,14 +65,8 @@ local packer = require("packer").startup(function(use)
 	-- prettier tabs
 	use("romgrk/barbar.nvim")
 
-	-- floating terminal
-	use("voldikss/vim-floaterm")
-
-	-- support the missing lsp diagnostic colors
-	use("folke/lsp-colors.nvim")
-
-	-- Extensible LSP
-	use({ "neoclide/coc.nvim", branch = "release" })
+	-- -- Extensible LSP
+	-- use({ "neoclide/coc.nvim", branch = "release" })
 
 	-- Show commit messages
 	use("APZelos/blamer.nvim")
@@ -97,15 +103,14 @@ end)
 -- plugin specific configs go here
 require("plugin-config/telescope")
 require("plugin-config/floaterm")
+require("plugin-config/lsp")
+require("plugin-config/null-ls")
+require("plugin-config/dap")
 require("plugin-config/nvim-treesitter")
 require("plugin-config/barbar")
-require("plugin-config/lsp-colors")
-require("plugin-config/coc")
 require("plugin-config/blamer")
-require("plugin-config/nvim-dap")
 require("plugin-config/pretty-fold")
 require("plugin-config/copilot")
-require("plugin-config/neoformat")
 require("plugin-config/galaxyline")
 require("plugin-config/indent-guide-lines")
 require("plugin-config/nvim-tree")
