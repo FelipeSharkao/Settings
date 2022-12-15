@@ -40,24 +40,31 @@ local on_attach = function(_, bufnr)
   end, bopts)
 end
 
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
 lspconfig.tsserver.setup({
   on_attach = function(client, bufnr)
     client.resolved_capabilities.document_formatting = false
     on_attach(client, bufnr)
   end,
+  capabilities = capabilities,
 })
 lspconfig.rust_analyzer.setup({
   on_attach = on_attach,
+  capabilities = capabilities,
 })
 lspconfig.sumneko_lua.setup({
   on_attach = on_attach,
   settings = {
     Lua = { diagnostics = { globals = { "vim", "use" } } },
   },
+  capabilities = capabilities,
 })
 lspconfig.svelte.setup({
   on_attach = on_attach,
+  capabilities = capabilities,
 })
 lspconfig.prismals.setup({
   on_attach = on_attach,
+  capabilities = capabilities,
 })

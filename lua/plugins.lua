@@ -41,6 +41,15 @@ local packer = require("packer").startup(function(use)
   -- Linters and formatters
   use("jose-elias-alvarez/null-ls.nvim")
 
+  -- Suggestions and completion
+  use("hrsh7th/vim-vsnip")
+  use("hrsh7th/nvim-cmp")
+  use("hrsh7th/cmp-nvim-lsp")
+  use("hrsh7th/cmp-buffer")
+  use("hrsh7th/cmp-path")
+  use("hrsh7th/cmp-cmdline")
+  use("hrsh7th/cmp-vsnip")
+
   -- telescope - searching / navigation
   use({
     "nvim-telescope/telescope.nvim",
@@ -107,8 +116,9 @@ end)
 require("plugin-config/telescope")
 require("plugin-config/floaterm")
 require("plugin-config/lsp")
-require("plugin-config/null-ls")
 require("plugin-config/dap")
+require("plugin-config/null-ls")
+require("plugin-config/nvim-cmp")
 require("plugin-config/nvim-treesitter")
 require("plugin-config/barbar")
 require("plugin-config/blamer")
