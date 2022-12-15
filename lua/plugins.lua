@@ -72,8 +72,7 @@ local packer = require("packer").startup(function(use)
 	use("anuvyklack/pretty-fold.nvim")
 
 	-- Github Copilot
-	-- Sadly I won't pay it for now
-	-- use 'github/copilot.vim'
+	use("github/copilot.vim")
 
 	-- Multicursor
 	use("mg979/vim-visual-multi")
@@ -105,6 +104,7 @@ require("plugin-config/coc")
 require("plugin-config/blamer")
 require("plugin-config/nvim-dap")
 require("plugin-config/pretty-fold")
+require("plugin-config/copilot")
 require("plugin-config/neoformat")
 require("plugin-config/galaxyline")
 require("plugin-config/indent-guide-lines")
