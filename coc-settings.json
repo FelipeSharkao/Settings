@@ -5,6 +5,10 @@
   "diagnostic.warningSign": "",
   "Lua.hint.enable": false,
   "Lua.telemetry.enable": true,
+  "rust-analyzer.enable": true,
+  "rust-analyzer.inlayHints.closureReturnTypeHints.enable": "with_block",
+  "rust-analyzer.inlayHints.parameterHints.enable": false,
+  "rust-analyzer.inlayHints.typeHints.enable": false,
   "suggest.completionItemKindLabels": {
     "text": "  ",
     "method": "  ",
