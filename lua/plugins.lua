@@ -4,112 +4,107 @@ local installPath = DATA_PATH .. "/site/pack/packer/start/packer.nvim"
 -- install packer if it's not installed already
 local packerBootstrap = nil
 if fn.empty(fn.glob(installPath)) > 0 then
-  packerBootstrap =
-  fn.system({ "git", "clone", "--depth", "1", "https://github.com/wbthomason/packer.nvim", installPath })
-  vim.cmd([[packadd packer.nvim]])
+	packerBootstrap =
+		fn.system({ "git", "clone", "--depth", "1", "https://github.com/wbthomason/packer.nvim", installPath })
+	vim.cmd([[packadd packer.nvim]])
 end
 
 local packer = require("packer").startup(function(use)
-  -- Packer should manage itself
-  use("wbthomason/packer.nvim")
+	-- Packer should manage itself
+	use("wbthomason/packer.nvim")
 
-  -- surround vim
-  use("tpope/vim-surround")
+	-- surround vim
+	use("tpope/vim-surround")
 
-  -- status line
-  use("glepnir/galaxyline.nvim")
+	-- status line
+	use("glepnir/galaxyline.nvim")
 
-  -- show recent files on empty nvim command
-  use("mhinz/vim-startify")
+	-- show recent files on empty nvim command
+	use("mhinz/vim-startify")
 
-  -- -- Prettier
-  -- use("sbdchd/neoformat")
+	-- floating terminal
+	use("voldikss/vim-floaterm")
 
-  -- floating terminal
-  use("voldikss/vim-floaterm")
+	-- LSP and linters
+	use("folke/lsp-colors.nvim")
+	use("williamboman/mason.nvim")
+	use("williamboman/mason-lspconfig.nvim")
+	use("neovim/nvim-lspconfig")
 
-  -- LSP and linters
-  use("folke/lsp-colors.nvim")
-  use("williamboman/mason.nvim")
-  use("williamboman/mason-lspconfig.nvim")
-  use("neovim/nvim-lspconfig")
+	-- Debugging
+	use("mfussenegger/nvim-dap")
+	use("mxsdev/nvim-dap-vscode-js")
 
-  -- Debugging
-  use("mfussenegger/nvim-dap")
-  use("mxsdev/nvim-dap-vscode-js")
+	-- Linters and formatters
+	use("jose-elias-alvarez/null-ls.nvim")
 
-  -- Linters and formatters
-  use("jose-elias-alvarez/null-ls.nvim")
+	-- Suggestions and completion
+	use("hrsh7th/vim-vsnip")
+	use("hrsh7th/nvim-cmp")
+	use("hrsh7th/cmp-nvim-lsp")
+	use("hrsh7th/cmp-buffer")
+	use("hrsh7th/cmp-path")
+	use("hrsh7th/cmp-cmdline")
+	use("hrsh7th/cmp-vsnip")
 
-  -- Suggestions and completion
-  use("hrsh7th/vim-vsnip")
-  use("hrsh7th/nvim-cmp")
-  use("hrsh7th/cmp-nvim-lsp")
-  use("hrsh7th/cmp-buffer")
-  use("hrsh7th/cmp-path")
-  use("hrsh7th/cmp-cmdline")
-  use("hrsh7th/cmp-vsnip")
+	-- telescope - searching / navigation
+	use({
+		"nvim-telescope/telescope.nvim",
+		requires = {
+			{ "nvim-lua/plenary.nvim" },
+			{ "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
+			{ "nvim-telescope/telescope-project.nvim" },
+			{ "nvim-telescope/telescope-dap.nvim" },
+			{ "nvim-telescope/telescope-ui-select.nvim" },
+		},
+	})
 
-  -- telescope - searching / navigation
-  use({
-    "nvim-telescope/telescope.nvim",
-    requires = {
-      { "nvim-lua/plenary.nvim" },
-      { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
-      { "nvim-telescope/telescope-project.nvim" },
-      { "nvim-telescope/telescope-dap.nvim" },
-    },
-  })
+	-- better highlighting
+	use({ "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" })
+	use("evanleck/vim-svelte")
 
-  -- better highlighting
-  use({ "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" })
-  use("evanleck/vim-svelte")
+	-- File tree window
+	use({
+		"nvim-tree/nvim-tree.lua",
+		requires = { "nvim-tree/nvim-web-devicons" },
+	})
 
-  -- File tree window
-  use({
-    "nvim-tree/nvim-tree.lua",
-    requires = { "nvim-tree/nvim-web-devicons" },
-  })
+	-- prettier tabs
+	use("romgrk/barbar.nvim")
 
-  -- prettier tabs
-  use("romgrk/barbar.nvim")
+	-- Show commit messages
+	use("APZelos/blamer.nvim")
 
-  -- -- Extensible LSP
-  -- use({ "neoclide/coc.nvim", branch = "release" })
+	-- show indentation levels
+	use("lukas-reineke/indent-blankline.nvim")
 
-  -- Show commit messages
-  use("APZelos/blamer.nvim")
+	-- improve folding
+	use("anuvyklack/pretty-fold.nvim")
 
-  -- show indentation levels
-  use("lukas-reineke/indent-blankline.nvim")
+	-- Github Copilot
+	use("github/copilot.vim")
 
-  -- improve folding
-  use("anuvyklack/pretty-fold.nvim")
+	-- Multicursor
+	use("mg979/vim-visual-multi")
 
-  -- Github Copilot
-  use("github/copilot.vim")
+	-- Automaticly close () [] {} '' ""
+	use("jiangmiao/auto-pairs")
 
-  -- Multicursor
-  use("mg979/vim-visual-multi")
+	-- colorscheme
+	use({
+		"rose-pine/neovim",
+		as = "rose-pine",
+		tag = "v1.*",
+	})
 
-  -- Automaticly close () [] {} '' ""
-  use("jiangmiao/auto-pairs")
+	-- Connect to Discord's RPC
+	use("andweeb/presence.nvim")
 
-  -- colorscheme
-  use({
-    "rose-pine/neovim",
-    as = "rose-pine",
-    tag = "v1.*",
-  })
-
-  -- Connect to Discord's RPC
-  use("andweeb/presence.nvim")
-
-  -- this will automatically install listed dependencies
-  -- only the first time NeoVim is opened, because that's when Packer gets installed
-  if packerBootstrap then
-    require("packer").sync()
-  end
+	-- this will automatically install listed dependencies
+	-- only the first time NeoVim is opened, because that's when Packer gets installed
+	if packerBootstrap then
+		require("packer").sync()
+	end
 end)
 
 -- plugin specific configs go here
