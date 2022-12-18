@@ -62,6 +62,7 @@ local packer = require("packer").startup(function(use)
 	-- better highlighting
 	use({ "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" })
 	use("evanleck/vim-svelte")
+	use("preservim/vim-markdown")
 
 	-- File tree window
 	use({
