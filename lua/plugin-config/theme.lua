@@ -1,12 +1,10 @@
 require("rose-pine").setup({
-	---@usage 'main'|'moon'
 	dark_variant = "main",
 	bold_vert_split = false,
 	dim_nc_background = false,
 	disable_background = false,
 	disable_float_background = false,
 	disable_italics = false,
-	---@usage string hex value or named color from rosepinetheme.com/palette
 	groups = {
 		background = "base",
 		panel = "surface",
@@ -28,10 +26,7 @@ require("rose-pine").setup({
 			h5 = "pine",
 			h6 = "foam",
 		},
-		-- or set all headings at once
-		-- headings = 'subtle'
 	},
 })
 
--- set colorscheme after options
-vim.cmd("colorscheme rose-pine")
+vim.cmd("colorscheme oxocarbon")

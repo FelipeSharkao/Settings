@@ -92,11 +92,8 @@ local packer = require("packer").startup(function(use)
 	use("jiangmiao/auto-pairs")
 
 	-- colorscheme
-	use({
-		"rose-pine/neovim",
-		as = "rose-pine",
-		tag = "v1.*",
-	})
+	use({ "rose-pine/neovim", as = "rose-pine", tag = "v1.*" })
+	use("nyoom-engineering/oxocarbon.nvim")
 
 	-- Connect to Discord's RPC
 	use("andweeb/presence.nvim")
