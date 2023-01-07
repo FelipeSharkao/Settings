@@ -120,6 +120,7 @@ require("plugin-config/copilot")
 require("plugin-config/galaxyline")
 require("plugin-config/indent-guide-lines")
 require("plugin-config/nvim-tree")
+require("plugin-config/autopairs")
 require("plugin-config/theme")
 require("plugin-config/discord")
 
