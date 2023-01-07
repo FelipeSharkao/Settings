@@ -28,10 +28,10 @@ keymap("t", "<Esc>", "<C-\\><C-n>l", opts)
 keymap("n", "<Esc>", "<Cmd>noh<CR>", opts)
 
 -- fast scrolling
-keymap("n", "J", "9j", opts)
-keymap("n", "K", "9k", opts)
-keymap("v", "J", "9j", opts)
-keymap("v", "K", "9k", opts)
+keymap("n", "<C-J>", "10j", opts)
+keymap("n", "<C-K>", "10k", opts)
+keymap("v", "<C-J>", "10j", opts)
+keymap("v", "<C-K>", "10k", opts)
 
 -- stay in normal mode after inserting a new line
 keymap("", "o", "o <Bs><Esc>", opts)
@@ -64,13 +64,3 @@ keymap("v", "<Tab>", ">>_", opts)
 keymap("v", "<S-Tab>", "<<_", opts)
 keymap("i", "<Tab>", "\t", opts)
 keymap("i", "<S-Tab>", "\b", opts)
-
--- opening terminal with shortcut
-keymap("", "<Leader><CR>", "<Cmd>silent !$TERM &<CR>", opts)
-
--- jumping back and forth
-keymap("", "<C-K>", "<C-O>", opts)
-keymap("", "<C-L>", "<C-I>", opts)
-
--- I misclick Esc all the time
-keymap("", "<F1>", "<NOP>", opts)
