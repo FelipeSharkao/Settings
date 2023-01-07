@@ -4,6 +4,8 @@ local lspconfig = require("lspconfig")
 local opts = { noremap = true, silent = true }
 local xopts = { noremap = true, silent = true, expr = true }
 
+require("neodev").setup({})
+
 require("lsp-colors").setup({
 	Error = "#F44747",
 	Warning = "#FF8800",
@@ -57,9 +59,6 @@ lspconfig.rust_analyzer.setup({
 })
 lspconfig.sumneko_lua.setup({
 	on_attach = on_attach_no_format,
-	settings = {
-		Lua = { diagnostics = { globals = { "vim", "use" } } },
-	},
 	capabilities = capabilities,
 })
 lspconfig.svelte.setup({

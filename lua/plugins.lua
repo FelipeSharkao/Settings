@@ -47,6 +47,9 @@ require("lazy").setup({
 	"hrsh7th/cmp-cmdline",
 	"hrsh7th/cmp-vsnip",
 
+	-- Better suggestions in config files
+	"folke/neodev.nvim",
+
 	-- telescope - searching / navigation
 	{
 		"nvim-telescope/telescope.nvim",
