@@ -13,6 +13,22 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
+	-- UI framework
+	"MunifTanjim/nui.nvim",
+
+	-- Toast notifications
+	{
+		"rcarriga/nvim-notify",
+		init = function()
+			require("notify").setup({
+				stages = "fade",
+				background_colour = "FloatShadow",
+				timeout = 3000,
+			})
+			vim.notify = require("notify")
+		end,
+	},
+
 	-- surround vim
 	"tpope/vim-surround",
 
@@ -53,11 +69,11 @@ require("lazy").setup({
 	{
 		"nvim-telescope/telescope.nvim",
 		dependencies = {
-			{ "nvim-lua/plenary.nvim" },
+			"nvim-lua/plenary.nvim",
 			{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-			{ "nvim-telescope/telescope-project.nvim" },
-			{ "nvim-telescope/telescope-dap.nvim" },
-			{ "nvim-telescope/telescope-ui-select.nvim" },
+			"nvim-telescope/telescope-project.nvim",
+			"nvim-telescope/telescope-dap.nvim",
+			"nvim-telescope/telescope-ui-select.nvim",
 		},
 	},
 
