@@ -97,10 +97,13 @@ require("lazy").setup({
 	{ "nvim-tree/nvim-tree.lua", dependencies = { "nvim-tree/nvim-web-devicons" } },
 
 	-- prettier tabs
-	"romgrk/barbar.nvim",
+	{ "akinsho/bufferline.nvim", dependencies = { "nvim-tree/nvim-web-devicons" } },
 
 	-- Show commit messages
-	"APZelos/blamer.nvim",
+	{
+		"APZelos/blamer.nvim",
+		dependencies = { "nvim-tree/nvim-web-devicons", "akinsho/bufferline.nvim" },
+	},
 
 	-- show indentation levels
 	"lukas-reineke/indent-blankline.nvim",
@@ -136,7 +139,7 @@ require("plugin-config/lsp")
 require("plugin-config/dap")
 require("plugin-config/nvim-cmp")
 require("plugin-config/nvim-treesitter")
-require("plugin-config/barbar")
+require("plugin-config/bufferline")
 require("plugin-config/blamer")
 require("plugin-config/pretty-fold")
 require("plugin-config/copilot")

@@ -2,5 +2,6 @@
 
 -- ================= Visualization ================= --
 
+vim.cmd("colorscheme oxocarbon")
 vim.o.termguicolors = true
 vim.o.background = "dark"
