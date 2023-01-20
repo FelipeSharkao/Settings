@@ -1,5 +1,8 @@
 -- ################# Basic settings ################ --
 
+-- Set global nodejs path
+vim.g.node_host_prog = vim.env.HOME .. "/.asdf/shims/node"
+
 -- ================= File management ================= --
 
 -- swapfile has global & local config, eventhough help says otherwise
@@ -60,7 +63,6 @@ vim.o.hlsearch = true -- highlight the search results
 
 -- ================= Performance ================= --
 
-vim.o.lazyredraw = true -- useful for when executing macros.
 vim.o.ttimeoutlen = 10 -- ms to wait for a key code seq to complete
 
 -- ================= Word Wrap ================= --
