@@ -30,13 +30,12 @@ require("lazy").setup({
 	"williamboman/mason.nvim",
 	"williamboman/mason-lspconfig.nvim",
 	"neovim/nvim-lspconfig",
+	"jay-babu/mason-null-ls.nvim",
+	"jose-elias-alvarez/null-ls.nvim",
 
 	-- Debugging
 	"mfussenegger/nvim-dap",
 	"mxsdev/nvim-dap-vscode-js",
-
-	-- Linters and formatters
-	"jose-elias-alvarez/null-ls.nvim",
 
 	-- Suggestions and completion
 	"hrsh7th/vim-vsnip",
@@ -108,7 +107,6 @@ require("plugin-config/telescope")
 require("plugin-config/floaterm")
 require("plugin-config/lsp")
 require("plugin-config/dap")
-require("plugin-config/null-ls")
 require("plugin-config/nvim-cmp")
 require("plugin-config/nvim-treesitter")
 require("plugin-config/barbar")

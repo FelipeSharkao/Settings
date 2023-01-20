@@ -1,5 +1,6 @@
 local telescope = require("telescope.builtin")
 local lspconfig = require("lspconfig")
+local null_ls = require("null-ls")
 
 local opts = { noremap = true, silent = true }
 local xopts = { noremap = true, silent = true, expr = true }
@@ -37,8 +38,10 @@ local on_attach = function(_, bufnr)
 	vim.keymap.set("n", "gr", vim.lsp.buf.rename, bopts)
 	vim.keymap.set("n", "ga", vim.lsp.buf.code_action, bopts)
 	vim.keymap.set("n", "gk", vim.lsp.buf.signature_help, bopts)
+	vim.keymap.set("i", "<C-K>", vim.lsp.buf.signature_help, bopts)
+	vim.keymap.set("n", "ge", vim.diagnostic.open_float, bopts)
 	vim.keymap.set("n", "gf", function()
-		vim.lsp.buf.formatting()
+		vim.lsp.buf.format({ async = true })
 	end, bopts)
 end
 
@@ -68,4 +71,27 @@ lspconfig.svelte.setup({
 lspconfig.prismals.setup({
 	on_attach = on_attach,
 	capabilities = capabilities,
+})
+
+null_ls.setup({
+	sources = {
+		null_ls.builtins.code_actions.eslint_d,
+		null_ls.builtins.diagnostics.eslint_d,
+		null_ls.builtins.formatting.prettierd,
+		null_ls.builtins.formatting.rustfmt,
+		null_ls.builtins.formatting.prismaFmt,
+		null_ls.builtins.formatting.taplo,
+		null_ls.builtins.formatting.stylua,
+	},
+})
+require("mason-null-ls").setup({
+	ensure_installed = nil,
+	automatic_installation = true,
+	automatic_setup = false,
+})
+
+vim.api.nvim_create_autocmd("BufWritePre *", {
+	callback = function()
+		vim.lsp.buf.format({ async = false })
+	end,
 })
