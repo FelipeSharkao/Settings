@@ -91,8 +91,12 @@ require("lazy").setup({
 	-- Automaticly close () [] {} '' ""
 	"jiangmiao/auto-pairs",
 
+	-- Jump to pattern
+	{ "ggandor/leap.nvim", dependencies = { "tpope/vim-repeat" } },
+	"ggandor/flit.nvim",
+
 	-- colorscheme
-	{ "rose-pine/neovim", name = "rose-pine", varsion = "v1.*" },
+	{ "rose-pine/neovim", name = "rose-pine" },
 	"nyoom-engineering/oxocarbon.nvim",
 
 	-- Connect to Discord's RPC
@@ -115,5 +119,6 @@ require("plugin-config/galaxyline")
 require("plugin-config/indent-guide-lines")
 require("plugin-config/nvim-tree")
 require("plugin-config/autopairs")
+require("plugin-config/leap")
 require("plugin-config/theme")
 require("plugin-config/discord")
