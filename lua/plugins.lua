@@ -129,12 +129,17 @@ require("lazy").setup({
     { "ggandor/leap.nvim", dependencies = { "tpope/vim-repeat" } },
     "ggandor/flit.nvim",
 
-    -- colorscheme
-    { "rose-pine/neovim", name = "rose-pine" },
-    "nyoom-engineering/oxocarbon.nvim",
-
     -- Connect to Discord's RPC
     "andweeb/presence.nvim",
+
+    -- Remember last colorscheme
+    "raddari/last-color.nvim",
+
+    -- colorscheme
+    { "rose-pine/neovim", name = "rose-pine" },
+    { "nyoom-engineering/oxocarbon.nvim", name = "oxocarbon" },
+    { "folke/tokyonight.nvim", name = "tokyonight" },
+    { "catppuccin/nvim", name = "catppuccin" },
 })
 
 require("plugin-config/dressing")
@@ -154,5 +159,5 @@ require("plugin-config/indent-guide-lines")
 require("plugin-config/nvim-tree")
 require("plugin-config/autopairs")
 require("plugin-config/leap")
-require("plugin-config/theme")
 require("plugin-config/discord")
+require("plugin-config/theme")
