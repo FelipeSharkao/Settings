@@ -5,6 +5,8 @@ local null_ls = require("null-ls")
 local opts = { noremap = true, silent = true }
 local xopts = { noremap = true, silent = true, expr = true }
 
+local keymap = vim.keymap.set
+
 require("neodev").setup({})
 
 require("lsp-colors").setup({
@@ -19,28 +21,30 @@ require("mason-lspconfig").setup({
 	ensure_installed = { "tsserver", "prismals", "svelte", "sumneko_lua", "rust_analyzer" },
 })
 
-vim.api.nvim_set_keymap("i", "<Tab>", "pumvisible() ? '<C-n>' : '<Tab>'", xopts)
-vim.keymap.set("n", "<Leader>e", vim.diagnostic.open_float, opts)
-vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
-vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
-vim.keymap.set("n", "<Leader>q", vim.diagnostic.setloclist, opts)
+keymap("i", "<Tab>", "pumvisible() ? '<C-n>' : '<Tab>'", xopts)
+keymap("n", "<Leader>e", vim.diagnostic.open_float, opts)
+keymap("n", "[d", vim.diagnostic.goto_prev, opts)
+keymap("n", "]d", vim.diagnostic.goto_next, opts)
+keymap("n", "<Leader>q", vim.diagnostic.setloclist, opts)
 
 local on_attach = function(_, bufnr)
 	-- Enable completion triggered by <c-x><c-o>
 	vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
 	local bopts = { noremap = true, silent = true, buffer = bufnr }
-	vim.keymap.set("n", "gd", telescope.lsp_definitions, bopts)
-	vim.keymap.set("n", "gi", telescope.lsp_references, bopts)
-	vim.keymap.set("n", "gI", telescope.lsp_implementations, bopts)
-	vim.keymap.set("n", "gt", telescope.lsp_type_definitions, bopts)
-	vim.keymap.set("n", "gh", vim.lsp.buf.hover, bopts)
-	vim.keymap.set("n", "gr", vim.lsp.buf.rename, bopts)
-	vim.keymap.set("n", "ga", vim.lsp.buf.code_action, bopts)
-	vim.keymap.set("n", "gk", vim.lsp.buf.signature_help, bopts)
-	vim.keymap.set("i", "<C-K>", vim.lsp.buf.signature_help, bopts)
-	vim.keymap.set("n", "ge", vim.diagnostic.open_float, bopts)
-	vim.keymap.set("n", "gf", function()
+	keymap("n", "gd", telescope.lsp_definitions, bopts)
+	keymap("n", "gi", telescope.lsp_references, bopts)
+	keymap("n", "gI", telescope.lsp_implementations, bopts)
+	keymap("n", "gt", telescope.lsp_type_definitions, bopts)
+	keymap("n", "gh", vim.lsp.buf.hover, bopts)
+	keymap("n", "gr", vim.lsp.buf.rename, bopts)
+	keymap("n", "ga", vim.lsp.buf.code_action, bopts)
+	keymap("n", "gk", vim.lsp.buf.signature_help, bopts)
+	keymap("i", "<C-K>", vim.lsp.buf.signature_help, bopts)
+	keymap("n", "ge", vim.diagnostic.open_float, bopts)
+	keymap("n", "[e", vim.diagnostic.goto_prev, bopts)
+	keymap("n", "]e", vim.diagnostic.goto_next, bopts)
+	keymap("n", "gf", function()
 		vim.lsp.buf.format({ async = true })
 	end, bopts)
 end
@@ -92,6 +96,6 @@ require("mason-null-ls").setup({
 
 vim.api.nvim_create_autocmd("BufWritePre *", {
 	callback = function()
-		vim.lsp.buf.format({ async = false })
+		vim.lsp.buf.format({ async = false, silent = true })
 	end,
 })
