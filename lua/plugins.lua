@@ -29,6 +29,9 @@ require("lazy").setup({
         end,
     },
 
+    -- Indicator for git added and removed lines
+    "lewis6991/gitsigns.nvim",
+
     -- many, many features
     { "echasnovski/mini.nvim", version = false },
 
