@@ -61,9 +61,6 @@ keymap("n", "<C-S>", "<Cmd>w<CR>", opts)
 keymap("n", "<Leader><C-S>", "<Cmd>wall<CR>", opts)
 keymap("i", "<C-S>", esc .. ' . "<Cmd>w<CR>"', xopts)
 
--- CTRL-q to close term
-keymap("t", "<C-q>", "<Esc><Cmd>q<CR>", opts)
-
 -- indent via Tab
 keymap("n", "<Tab>", ">>_", opts)
 keymap("n", "<S-Tab>", "<<_", opts)
