@@ -65,6 +65,9 @@ require("lazy").setup({
 	-- Better suggestions in config files
 	"folke/neodev.nvim",
 
+	-- Respect .editorconfig file
+	"gpanders/editorconfig.nvim",
+
 	-- telescope - searching / navigation
 	{
 		"nvim-telescope/telescope.nvim",

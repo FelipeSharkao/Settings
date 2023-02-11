@@ -30,23 +30,12 @@ vim.o.scrolloff = 8 -- start scrolling when 8 lines away from margins
 
 -- ================= Indentation ================= --
 
--- pay attention to 'vim.bo' (buffer local options) and 'vim.o' (global options)
--- see :help options.txt
-
--- for some reason these values need to be set in both o and bo objects
--- eventhough these options are supposed to be local to buffer
 vim.o.tabstop = 2 -- maximum width of tab character (measured in spaces)
-vim.bo.tabstop = 2
 vim.o.shiftwidth = 2 -- size of indent (measured in spaces), should equal tabstop
-vim.bo.shiftwidth = 2
 vim.o.softtabstop = 2 -- should be the same as the other two above
-vim.bo.softtabstop = 2
 vim.o.expandtab = true -- expand tabs to spaces
-vim.bo.expandtab = true -- expand tabs to spaces
 vim.o.smartindent = true -- smart indenting on new line for C-like programs
-vim.bo.smartindent = true
 vim.o.autoindent = true -- copy the indentation from previous line
-vim.bo.autoindent = true
 vim.o.smarttab = true -- tab infront of a line inserts blanks based on shiftwidth
 
 -- ================= Number column ================= --
@@ -72,7 +61,7 @@ vim.wo.linebreak = true
 vim.wo.breakindent = true
 vim.wo.breakindentopt = "min:40,shift:3,sbr"
 vim.o.showbreak = "↳"
-vim.wo.colorcolumn = "80,100"
+vim.wo.colorcolumn = "+1"
 
 -- ================= Misc ================= --
 
