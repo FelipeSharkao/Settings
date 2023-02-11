@@ -29,6 +29,9 @@ require("lazy").setup({
         end,
     },
 
+    -- Better UI for select actions
+    { "stevearc/dressing.nvim", dependencies = { "MunifTanjim/nui.nvim" } },
+
     -- telescope - searching / navigation
     {
         "nvim-telescope/telescope.nvim",
@@ -134,9 +137,10 @@ require("lazy").setup({
     "andweeb/presence.nvim",
 })
 
+require("plugin-config/dressing")
+require("plugin-config/telescope")
 require("plugin-config/gitsigns")
 require("plugin-config/mini")
-require("plugin-config/telescope")
 require("plugin-config/floaterm")
 require("plugin-config/lsp")
 require("plugin-config/dap")
