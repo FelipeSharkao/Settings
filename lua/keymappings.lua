@@ -2,9 +2,9 @@ local leader = ";"
 vim.g.mapleader = leader
 
 -- defaults
+local keymap = vim.keymap.set
 local opts = { noremap = true, silent = true }
 local xopts = { noremap = true, silent = true, expr = true }
-local keymap = vim.api.nvim_set_keymap
 
 local esc = '(col(".") == 1 ? "<Esc>" : "<Esc><Right>")'
 

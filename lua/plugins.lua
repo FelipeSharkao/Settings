@@ -29,14 +29,22 @@ require("lazy").setup({
         end,
     },
 
+    -- telescope - searching / navigation
+    {
+        "nvim-telescope/telescope.nvim",
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+            "nvim-telescope/telescope-project.nvim",
+            "nvim-telescope/telescope-dap.nvim",
+        },
+    },
+
     -- Indicator for git added and removed lines
     "lewis6991/gitsigns.nvim",
 
     -- many, many features
-    { "echasnovski/mini.nvim", version = false },
-
-    -- surround vim
-    -- "tpope/vim-surround",
+    { "echasnovski/mini.nvim", version = false, dependencies = { "lewis6991/gitsigns.nvim" } },
 
     -- show recent files on empty nvim command
     "mhinz/vim-startify",
@@ -70,18 +78,6 @@ require("lazy").setup({
 
     -- Respect .editorconfig file
     "gpanders/editorconfig.nvim",
-
-    -- telescope - searching / navigation
-    {
-        "nvim-telescope/telescope.nvim",
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-            { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-            "nvim-telescope/telescope-project.nvim",
-            "nvim-telescope/telescope-dap.nvim",
-            "nvim-telescope/telescope-ui-select.nvim",
-        },
-    },
 
     -- better highlighting
     { "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" },
