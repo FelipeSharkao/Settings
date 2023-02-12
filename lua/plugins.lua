@@ -43,6 +43,9 @@ require("lazy").setup({
         },
     },
 
+    -- Scrollbar with code details
+    { "petertriho/nvim-scrollbar", dependencies = { "lewis6991/gitsigns.nvim" } },
+
     -- Indicator for git added and removed lines
     "lewis6991/gitsigns.nvim",
 
@@ -144,6 +147,7 @@ require("lazy").setup({
 
 require("plugin-config/dressing")
 require("plugin-config/telescope")
+require("plugin-config/nvim-scrollbar")
 require("plugin-config/gitsigns")
 require("plugin-config/mini")
 require("plugin-config/floaterm")
