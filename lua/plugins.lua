@@ -13,6 +13,10 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
+    -- ====== UI and visuals ======
+    -- show recent files on empty nvim command
+    "mhinz/vim-startify",
+
     -- UI framework
     "MunifTanjim/nui.nvim",
 
@@ -46,18 +50,22 @@ require("lazy").setup({
     -- Scrollbar with code details
     { "petertriho/nvim-scrollbar", dependencies = { "lewis6991/gitsigns.nvim" } },
 
-    -- Indicator for git added and removed lines
-    "lewis6991/gitsigns.nvim",
-
-    -- many, many features
-    { "echasnovski/mini.nvim", version = false, dependencies = { "lewis6991/gitsigns.nvim" } },
-
-    -- show recent files on empty nvim command
-    "mhinz/vim-startify",
-
     -- floating terminal
     "voldikss/vim-floaterm",
 
+    -- File tree window
+    { "nvim-tree/nvim-tree.lua", dependencies = { "nvim-tree/nvim-web-devicons" } },
+
+    -- prettier tabs
+    { "akinsho/bufferline.nvim", dependencies = { "nvim-tree/nvim-web-devicons" } },
+
+    -- show indentation levels
+    "lukas-reineke/indent-blankline.nvim",
+
+    -- improve folding
+    "anuvyklack/pretty-fold.nvim",
+
+    -- ====== Language features ======
     -- LSP and linters
     "folke/lsp-colors.nvim",
     "williamboman/mason.nvim",
@@ -70,6 +78,9 @@ require("lazy").setup({
     "mfussenegger/nvim-dap",
     "mxsdev/nvim-dap-vscode-js",
 
+    -- Better suggestions in config files
+    "folke/neodev.nvim",
+
     -- Suggestions and completion
     "hrsh7th/vim-vsnip",
     "hrsh7th/nvim-cmp",
@@ -78,12 +89,6 @@ require("lazy").setup({
     "hrsh7th/cmp-path",
     "hrsh7th/cmp-cmdline",
     "hrsh7th/cmp-vsnip",
-
-    -- Better suggestions in config files
-    "folke/neodev.nvim",
-
-    -- Respect .editorconfig file
-    "gpanders/editorconfig.nvim",
 
     -- better highlighting
     { "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" },
@@ -101,27 +106,7 @@ require("lazy").setup({
         ft = "markdown",
     },
 
-    -- File tree window
-    { "nvim-tree/nvim-tree.lua", dependencies = { "nvim-tree/nvim-web-devicons" } },
-
-    -- prettier tabs
-    { "akinsho/bufferline.nvim", dependencies = { "nvim-tree/nvim-web-devicons" } },
-
-    -- Show commit messages
-    {
-        "APZelos/blamer.nvim",
-        dependencies = { "nvim-tree/nvim-web-devicons", "akinsho/bufferline.nvim" },
-    },
-
-    -- show indentation levels
-    "lukas-reineke/indent-blankline.nvim",
-
-    -- improve folding
-    "anuvyklack/pretty-fold.nvim",
-
-    -- Github Copilot
-    "github/copilot.vim",
-
+    -- ====== Movement and editing ======
     -- Multicursor
     "mg979/vim-visual-multi",
 
@@ -132,13 +117,33 @@ require("lazy").setup({
     { "ggandor/leap.nvim", dependencies = { "tpope/vim-repeat" } },
     "ggandor/flit.nvim",
 
+    -- Indicator for git added and removed lines
+    "lewis6991/gitsigns.nvim",
+
+    -- ====== Integration ======
+    -- Show commit messages
+    {
+        "APZelos/blamer.nvim",
+        dependencies = { "nvim-tree/nvim-web-devicons", "akinsho/bufferline.nvim" },
+    },
+
+    -- Github Copilot
+    "github/copilot.vim",
+
     -- Connect to Discord's RPC
     "andweeb/presence.nvim",
+
+    -- Respect .editorconfig file
+    "gpanders/editorconfig.nvim",
+
+    -- ====== Misc ======
+    -- many, many features
+    { "echasnovski/mini.nvim", version = false, dependencies = { "lewis6991/gitsigns.nvim" } },
 
     -- Remember last colorscheme
     "raddari/last-color.nvim",
 
-    -- colorscheme
+    -- ====== colorscheme ======
     { "rose-pine/neovim", name = "rose-pine" },
     { "nyoom-engineering/oxocarbon.nvim", name = "oxocarbon" },
     { "folke/tokyonight.nvim", name = "tokyonight" },
