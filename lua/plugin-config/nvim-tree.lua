@@ -1,55 +1,52 @@
-local opts = { silent = true, noremap = true }
-vim.api.nvim_set_keymap("n", "N", "<Cmd>NvimTreeToggle<CR>", opts)
-
 require("nvim-tree").setup({
-	disable_netrw = true,
-	hijack_cursor = true,
-	open_on_setup = true,
-	actions = {
-		open_file = {
-			quit_on_open = true,
-		},
-	},
-	diagnostics = {
-		enable = false,
-		icons = {
-			hint = "",
-			info = "",
-			warning = "",
-			error = "",
-		},
-	},
-	update_focused_file = {
-		enable = true,
-	},
-	view = {
-		hide_root_folder = true,
-		float = {
-			enable = true,
-			open_win_config = function()
-				local win_h = vim.api.nvim_win_get_height(0)
-				local win_w = vim.api.nvim_win_get_width(0)
-				local w = 120
-				local h = win_h - 10
-
-				return {
-					relative = "editor",
-					border = "rounded",
-					width = w,
-					height = h,
-					row = (win_h - h) / 2,
-					col = (win_w / 2) - (w / 2),
-				}
-			end,
-		},
-	},
-	render = {
-		highlight_git = true,
-		highlight_opened_files = "all",
-	},
+    disable_netrw = true,
+    hijack_cursor = true,
+    diagnostics = {
+        enable = false,
+        icons = {
+            hint = "",
+            info = "",
+            warning = "",
+            error = "",
+        },
+    },
+    update_focused_file = {
+        enable = true,
+    },
+    view = {
+        hide_root_folder = true,
+    },
+    render = {
+        highlight_git = true,
+        highlight_opened_files = "all",
+    },
 })
 
 require("nvim-web-devicons").setup({
-	color_icons = true,
-	default = true,
+    color_icons = true,
+    default = true,
 })
+
+local api = require("nvim-tree.api")
+
+local function open_nvim_tree(data)
+    -- buffer is a real file on the disk
+    local real_file = vim.fn.filereadable(data.file) == 1
+
+    -- buffer is a [No Name]
+    local no_name = data.file == "" and vim.bo[data.buf].buftype == ""
+
+    if not real_file and not no_name then
+        return
+    end
+
+    -- open the tree, find the file but don't focus it
+    api.tree.toggle({ focus = false, find_file = true })
+end
+
+vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })
+
+local opts = { silent = true, noremap = true }
+vim.keymap.set("n", "N", function()
+    api.tree.open({ find_file = true })
+end, opts)
