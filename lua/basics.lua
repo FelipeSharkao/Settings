@@ -14,14 +14,14 @@ vim.o.autoread = true -- auto file change detection
 
 -- Triger `autoread` when files changes on disk
 vim.api.nvim_create_autocmd(
-	{ "FocusGained", "BufEnter", "CursorHold", "CursorHoldI" },
-	{ command = [[if mode() != 'c' | checktime | endif]] }
+    { "FocusGained", "BufEnter", "CursorHold", "CursorHoldI" },
+    { command = [[if mode() != 'c' | checktime | endif]] }
 )
 -- Notification after file change
 vim.api.nvim_create_autocmd("FileChangedShellPost", {
-	callback = function()
-		vim.api.nvim_echo({ { "File changed on disk. Buffer reloaded.", "WarningMsg" } }, true)
-	end,
+    callback = function()
+        vim.api.nvim_echo({ { "File changed on disk. Buffer reloaded.", "WarningMsg" } }, true, {})
+    end,
 })
 
 -- ================= Scrolling ================= --
@@ -42,6 +42,8 @@ vim.o.smarttab = true -- tab infront of a line inserts blanks based on shiftwidt
 
 vim.wo.number = true
 vim.wo.relativenumber = true
+vim.wo.signcolumn = "yes"
+vim.o.numberwidth = 3 -- width of number column, 3 for 999 lines
 
 -- ================= Search ================= --
 
