@@ -74,6 +74,9 @@ require("lazy").setup({
     "jay-babu/mason-null-ls.nvim",
     "jose-elias-alvarez/null-ls.nvim",
 
+    -- Show LSP inlay hints
+    "lvimuser/lsp-inlayhints.nvim",
+
     -- Debugging
     "mfussenegger/nvim-dap",
     "mxsdev/nvim-dap-vscode-js",
