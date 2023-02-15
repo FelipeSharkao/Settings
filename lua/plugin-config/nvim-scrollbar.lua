@@ -1,6 +1,7 @@
 require("scrollbar").setup({
     handle = {
         hide_if_all_visible = false,
+        highlight = "Folded",
     },
     marks = {
         GitAdd = {
@@ -12,6 +13,13 @@ require("scrollbar").setup({
         GitDelete = {
             text = "▎",
         },
+    },
+    excluded_buftypes = {
+        "terminal",
+        "nofile",
+    },
+    excluded_filetypes = {
+        "NvimTree",
     },
     handlers = {
         cursor = false,
