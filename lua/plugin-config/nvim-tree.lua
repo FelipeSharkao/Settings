@@ -47,6 +47,6 @@ end
 vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })
 
 local opts = { silent = true, noremap = true }
-vim.keymap.set("n", "N", function()
+vim.keymap.set("n", ";n", function()
     api.tree.open({ find_file = true })
 end, opts)
