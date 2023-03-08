@@ -1,3 +1,4 @@
+require("fptools")
 require("basics")
 require("globals")
 require("keymappings")
