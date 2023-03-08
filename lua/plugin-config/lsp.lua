@@ -19,7 +19,7 @@ require("lsp-colors").setup({
 
 require("mason").setup()
 require("mason-lspconfig").setup({
-    ensure_installed = { "tsserver", "prismals", "svelte", "sumneko_lua", "rust_analyzer" },
+    ensure_installed = { "tsserver", "prismals", "svelte", "lua_ls", "rust_analyzer" },
 })
 
 inlay_hints.setup()
@@ -83,7 +83,7 @@ lspconfig.rust_analyzer.setup({
         },
     },
 })
-lspconfig.sumneko_lua.setup({
+lspconfig.lua_ls.setup({
     on_attach = on_attach_no_format,
     capabilities = capabilities,
 })
