@@ -4,12 +4,14 @@ require("dressing").setup({
             n = {
                 ["<Esc>"] = "Close",
                 ["<C-q>"] = "Close",
+                ["<C-w>"] = "Close",
                 ["q"] = "Close",
                 ["<CR>"] = "Confirm",
                 ["<C-o>"] = "Confirm",
             },
             i = {
                 ["<C-q>"] = "Close",
+                ["<C-w>"] = "Close",
                 ["<CR>"] = "Confirm",
                 ["<C-o>"] = "Confirm",
                 ["<Up>"] = "HistoryPrev",
@@ -19,5 +21,15 @@ require("dressing").setup({
     },
     select = {
         backend = { "nui", "builtin" },
+        nui = {
+            max_width = 200,
+        },
+        mappings = {
+            ["<C-q>"] = "Close",
+            ["<C-w>"] = "Close",
+            ["q"] = "Close",
+            ["<CR>"] = "Confirm",
+            ["<C-o>"] = "Confirm",
+        },
     },
 })

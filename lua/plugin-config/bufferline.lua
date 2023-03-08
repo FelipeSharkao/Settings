@@ -1,4 +1,6 @@
+local bufferline = require("bufferline")
 local fp = require("fptools")
+local ui = require("ui")
 
 local opts = { noremap = true, silent = true }
 local keymap = vim.keymap.set
@@ -7,7 +9,7 @@ local buf_is_valid = function(buf)
     local loaded = vim.api.nvim_buf_is_loaded(buf)
     local listed = vim.api.nvim_buf_get_option(buf, "buflisted")
     local buftype = vim.api.nvim_buf_get_option(buf, "buftype")
-    return loaded and listed and buftype ~= "nofile"
+    return loaded and listed and buftype == ""
 end
 
 local list_valid_bufs = function()
@@ -40,13 +42,49 @@ local last_buf = function(win)
 end
 
 local delete_buf = function(buf)
-    local wins = vim.api.nvim_list_wins()
-    for _, win in ipairs(wins) do
-        if vim.api.nvim_win_get_buf(win) == buf then
-            next_buf(win, 1)
+    local modified = vim.api.nvim_buf_get_option(buf, "modified")
+    local file = vim.api.nvim_buf_get_name(buf):gsub("^" .. vim.fn.getcwd() .. "/", "")
+
+    local delete = function()
+        local wins = vim.api.nvim_list_wins()
+        for _, win in ipairs(wins) do
+            if vim.api.nvim_win_get_buf(win) == buf then
+                next_buf(win, 1)
+            end
         end
+
+        vim.api.nvim_buf_delete(buf, { force = true })
     end
-    vim.cmd("confirm bdelete " .. buf)
+
+    local save_and_delete = function()
+        if file == "" then
+            vim.ui.input({ prompt = "Save as: " }, function(name)
+                vim.cmd("silent! saveas " .. name)
+                delete()
+            end)
+            return
+        end
+
+        vim.cmd("silent! write")
+        delete()
+    end
+
+    if not modified then
+        delete()
+        return
+    end
+
+    ui.dialog(
+        { "&Save", "&Discard", "&Cancel" },
+        { prompt = "Save changes to " .. (file or "buffer") .. "?" },
+        function(choice)
+            if choice == "Save" then
+                save_and_delete()
+            elseif choice == "Discard" then
+                delete()
+            end
+        end
+    )
 end
 
 local delete_curr_buf = function()
@@ -92,7 +130,7 @@ keymap("n", "fl", fp.apply(last_buf, 0), opts)
 keymap("n", "fx", delete_curr_buf, opts)
 keymap("n", "fX", delete_surround_buf, opts)
 
-require("bufferline").setup({
+bufferline.setup({
     options = {
         close_command = delete_buf,
         right_mouse_command = delete_buf,
