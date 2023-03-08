@@ -2,7 +2,7 @@ require("nvim-tree").setup({
     disable_netrw = true,
     hijack_cursor = true,
     diagnostics = {
-        enable = false,
+        enable = true,
         icons = {
             hint = "",
             info = "",
@@ -16,7 +16,7 @@ require("nvim-tree").setup({
     view = {
         hide_root_folder = true,
     },
-    render = {
+    renderer = {
         highlight_git = true,
         highlight_opened_files = "all",
     },
