@@ -1,5 +1,35 @@
 local M = {}
 
+-- ================= String =================
+
+--- Pad the end of a string to a given length.
+--- @param str string The string to pad.
+--- @param len number The length to pad to.
+--- @param char string The character to pad with.
+--- @return string
+string.pad_right = function(str, len, char)
+    return str .. string.rep(char, len - #str)
+end
+
+--- Pad the start of a string to a given length.
+--- @param str string The string to pad.
+--- @param len number The length to pad to.
+--- @param char string The character to pad with.
+--- @return string
+string.pad_left = function(str, len, char)
+    return string.rep(char, len - #str) .. str
+end
+
+--- Pad the start and end of a string to a given length.
+--- @param str string The string to pad.
+--- @param len number The length to pad to.
+--- @param char string The character to pad with.
+--- @return string
+string.pad = function(str, len, char)
+    local pad_len = len - #str
+    return str:pad_left(math.floor(pad_len / 2) + #str, char):pad_right(len, char)
+end
+
 -- ================= Table =================
 
 --- Creates a new table applying a function to each element.
@@ -28,6 +58,20 @@ M.filter = function(list, fn)
         end
     end
     return result
+end
+
+--- Fold a table into a single value.
+--- @generic T, U
+--- @param initial U The initial value.
+--- @param list T[] The table to fold.
+--- @param fn fun(acc: U, item: T): U The function to apply to each element of the table.
+--- @return U
+M.fold = function(initial, list, fn)
+    local acc = initial
+    for _, v in ipairs(list) do
+        acc = fn(acc, v)
+    end
+    return acc
 end
 
 --- Finds the index of an element in a table.

@@ -43,7 +43,10 @@ end
 
 local delete_buf = function(buf)
     local modified = vim.api.nvim_buf_get_option(buf, "modified")
-    local file = vim.api.nvim_buf_get_name(buf):gsub("^" .. vim.fn.getcwd() .. "/", "")
+    local file = vim.api
+        .nvim_buf_get_name(buf)
+        :gsub("^" .. vim.fn.getcwd() .. "/", "")
+        :gsub("^" .. vim.env.HOME, "~")
 
     local delete = function()
         local wins = vim.api.nvim_list_wins()
@@ -78,9 +81,9 @@ local delete_buf = function(buf)
         { "&Save", "&Discard", "&Cancel" },
         { prompt = "Save changes to " .. (file or "buffer") .. "?" },
         function(choice)
-            if choice == "Save" then
+            if choice == 1 then
                 save_and_delete()
-            elseif choice == "Discard" then
+            elseif choice == 2 then
                 delete()
             end
         end
