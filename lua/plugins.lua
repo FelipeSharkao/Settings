@@ -36,25 +36,11 @@ require("lazy").setup({
     -- Better UI for select actions
     { "stevearc/dressing.nvim", dependencies = { "MunifTanjim/nui.nvim" } },
 
-    -- telescope - searching / navigation
-    {
-        "nvim-telescope/telescope.nvim",
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-            { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-            "nvim-telescope/telescope-project.nvim",
-            "nvim-telescope/telescope-dap.nvim",
-        },
-    },
-
     -- Scrollbar with code details
     { "petertriho/nvim-scrollbar", dependencies = { "lewis6991/gitsigns.nvim" } },
 
     -- floating terminal
     "voldikss/vim-floaterm",
-
-    -- File tree window
-    { "nvim-tree/nvim-tree.lua", dependencies = { "nvim-tree/nvim-web-devicons" } },
 
     -- prettier tabs
     { "akinsho/bufferline.nvim", dependencies = { "nvim-tree/nvim-web-devicons" } },
@@ -108,6 +94,23 @@ require("lazy").setup({
         lazy = true,
         ft = "markdown",
     },
+    --
+    -- ====== File and project management ======
+    -- telescope - searching / navigation
+    {
+        "nvim-telescope/telescope.nvim",
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+            "nvim-telescope/telescope-dap.nvim",
+        },
+    },
+
+    -- File tree window
+    { "nvim-tree/nvim-tree.lua", dependencies = { "nvim-tree/nvim-web-devicons" } },
+
+    -- project + session management
+    "gnikdroy/projections.nvim",
 
     -- ====== Movement and editing ======
     -- Multicursor
@@ -163,12 +166,13 @@ require("plugin-config/lsp")
 require("plugin-config/dap")
 require("plugin-config/nvim-cmp")
 require("plugin-config/nvim-treesitter")
+require("plugin-config/projections")
+require("plugin-config/nvim-tree")
 require("plugin-config/bufferline")
 require("plugin-config/blamer")
 require("plugin-config/pretty-fold")
 require("plugin-config/copilot")
 require("plugin-config/indent-guide-lines")
-require("plugin-config/nvim-tree")
 require("plugin-config/autopairs")
 require("plugin-config/leap")
 require("plugin-config/discord")

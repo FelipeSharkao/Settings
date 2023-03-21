@@ -35,6 +35,7 @@
         "/home/felipe/.local/share/nvim/lazy/lsp-colors.nvim",
         "/home/felipe/.local/share/nvim/lazy/galaxyline.nvim",
         "/home/felipe/.local/share/nvim/lazy/plenary.nvim",
-        "${3rd}/luassert/library"
+        "${3rd}/luassert/library",
+        "${3rd}/luv/library"
     ]
 }

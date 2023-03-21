@@ -3,7 +3,6 @@ local actions = require("telescope.actions")
 local builtin = require("telescope.builtin")
 local previewers = require("telescope.previewers")
 local sorters = require("telescope.sorters")
-local themes = require("telescope.themes")
 
 telescope.setup({
     defaults = {
@@ -64,24 +63,16 @@ telescope.setup({
             override_generic_sorter = false,
             override_file_sorter = true,
         },
-        project = {
-            sync_with_nvim_tree = true,
-        },
-        -- ["ui-select"] = {
-        --     themes.get_dropdown({}),
-        -- },
     },
 })
 
-telescope.load_extension("project")
 telescope.load_extension("dap")
--- telescope.load_extension("ui-select")
 
 local keymap = vim.keymap.set
 local opts = { silent = true, noremap = true }
 
 keymap("n", "<Leader>f", builtin.find_files, opts)
 keymap("n", "<Leader>g", builtin.live_grep, opts)
+keymap("n", "<Leader>b", builtin.buffers, opts)
 keymap("n", "<Leader>l", builtin.resume, opts)
 keymap("n", "<Leader>t", builtin.treesitter, opts)
-keymap("n", "<Leader>p", telescope.extensions.project.project, opts)
