@@ -19,7 +19,13 @@ require("lsp-colors").setup({
 
 require("mason").setup()
 require("mason-lspconfig").setup({
-    ensure_installed = { "tsserver", "prismals", "svelte", "lua_ls", "rust_analyzer" },
+    ensure_installed = {
+        "tsserver",
+        "prismals",
+        "svelte",
+        "lua_ls",
+        "rust_analyzer",
+    },
 })
 
 inlay_hints.setup()
@@ -105,6 +111,7 @@ null_ls.setup({
         null_ls.builtins.formatting.prismaFmt,
         null_ls.builtins.formatting.taplo,
         null_ls.builtins.formatting.stylua,
+        null_ls.builtins.formatting.fnlfmt,
     },
 })
 require("mason-null-ls").setup({
