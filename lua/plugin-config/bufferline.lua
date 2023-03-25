@@ -1,5 +1,5 @@
 local bufferline = require("bufferline")
-local fp = require("fptools")
+local utils = require("utils")
 local ui = require("ui")
 
 local opts = { noremap = true, silent = true }
@@ -13,13 +13,13 @@ local buf_is_valid = function(buf)
 end
 
 local list_valid_bufs = function()
-    return fp.filter(vim.api.nvim_list_bufs(), buf_is_valid)
+    return utils.filter(vim.api.nvim_list_bufs(), buf_is_valid)
 end
 
 local next_buf = function(win, count)
     local buf = vim.api.nvim_win_get_buf(win)
     local bufs = list_valid_bufs()
-    local idx = fp.index_of(bufs, buf) + count
+    local idx = utils.index_of(bufs, buf) + count
     if idx > #bufs then
         idx = idx - #bufs
     elseif idx < 1 then
@@ -97,7 +97,7 @@ end
 
 local delete_right_buf = function()
     local bufs = list_valid_bufs()
-    local idx = fp.index_of(bufs, vim.api.nvim_get_current_buf())
+    local idx = utils.index_of(bufs, vim.api.nvim_get_current_buf())
     for i, _ in ipairs(bufs) do
         if i > idx then
             delete_buf(bufs[i])
@@ -107,7 +107,7 @@ end
 
 local delete_left_buf = function()
     local bufs = list_valid_bufs()
-    local idx = fp.index_of(bufs, vim.api.nvim_get_current_buf())
+    local idx = utils.index_of(bufs, vim.api.nvim_get_current_buf())
     for i, _ in ipairs(bufs) do
         if i == idx then
             break
@@ -126,10 +126,10 @@ vim.api.nvim_create_user_command("BufCloseAllRight", delete_right_buf, { nargs =
 vim.api.nvim_create_user_command("BufCloseAllLeft", delete_left_buf, { nargs = 0 })
 vim.api.nvim_create_user_command("BufCloseSurround", delete_surround_buf, { nargs = 0 })
 
-keymap("n", "fj", fp.apply(next_buf, 0, -1), opts)
-keymap("n", "fk", fp.apply(next_buf, 0, 1), opts)
-keymap("n", "fh", fp.apply(first_buf, 0), opts)
-keymap("n", "fl", fp.apply(last_buf, 0), opts)
+keymap("n", "fj", utils.apply(next_buf, 0, -1), opts)
+keymap("n", "fk", utils.apply(next_buf, 0, 1), opts)
+keymap("n", "fh", utils.apply(first_buf, 0), opts)
+keymap("n", "fl", utils.apply(last_buf, 0), opts)
 keymap("n", "fx", delete_curr_buf, opts)
 keymap("n", "fX", delete_surround_buf, opts)
 
