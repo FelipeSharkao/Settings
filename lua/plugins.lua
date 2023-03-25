@@ -71,13 +71,17 @@ require("lazy").setup({
     "folke/neodev.nvim",
 
     -- Suggestions and completion
-    "hrsh7th/vim-vsnip",
-    "hrsh7th/nvim-cmp",
-    "hrsh7th/cmp-nvim-lsp",
-    "hrsh7th/cmp-buffer",
-    "hrsh7th/cmp-path",
-    "hrsh7th/cmp-cmdline",
-    "hrsh7th/cmp-vsnip",
+    {
+        "hrsh7th/nvim-cmp",
+        dependencies = {
+            "hrsh7th/cmp-nvim-lsp",
+            "hrsh7th/cmp-buffer",
+            "hrsh7th/cmp-path",
+            "hrsh7th/cmp-cmdline",
+            "hrsh7th/cmp-vsnip",
+            "onsails/lspkind.nvim",
+        },
+    },
 
     -- better highlighting
     { "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" },
