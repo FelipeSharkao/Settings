@@ -125,3 +125,9 @@ vim.api.nvim_create_autocmd("BufWritePre *", {
         vim.lsp.buf.format({ async = false, silent = true })
     end,
 })
+
+vim.api.nvim_create_autocmd("VimLeavePre", {
+    callback = function()
+        vim.lsp.stop_client(vim.lsp.get_active_clients())
+    end,
+})
