@@ -25,7 +25,7 @@ keymap("i", "<C-Right>", "<C-O>e<Right>", opts)
 keymap("i", "<Esc>", esc, xopts)
 keymap("i", "jj", esc, xopts)
 -- use Esc in terminal mode
-keymap("t", "<Esc>", "<C-\\><C-n>l", opts)
+keymap("t", "C-<Esc>", "<C-\\><C-n>l", opts)
 -- use Esc to cancel search
 keymap("n", "<Esc>", "<Cmd>noh<CR>", opts)
 

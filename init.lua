@@ -1,7 +1,6 @@
+require("neovide")
 require("utils")
-require("ui")
 require("basics")
 require("globals")
 require("keymappings")
 require("plugins")
-require("neovide")

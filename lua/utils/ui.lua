@@ -1,4 +1,5 @@
-local utils = require("utils")
+local F = require("utils.functions")
+local T = require("utils.table")
 
 local opts = { noremap = true, silent = true }
 
@@ -12,7 +13,7 @@ local M = {}
 --- @param options DialogOptions The options to use.
 --- @param callback fun(index: number) The callback to call when a choice is selected.
 M.dialog = function(choices, options, callback)
-    choices = utils.map(choices, function(item)
+    choices = T.map(choices, function(item)
         local i, j = item:find("&%w")
         if i ~= nil and j ~= nil then
             return {
@@ -31,7 +32,7 @@ M.dialog = function(choices, options, callback)
         Text(" " .. options.prompt .. " ", "Title"),
         M.Flex(
             { gap = { h = 2, v = 1 }, align = { h = "center" } },
-            utils.map(choices, function(choice)
+            T.map(choices, function(choice)
                 -- TODO: create highlight groups for this
                 return Text(choice.label, "Visual")
             end)
@@ -95,17 +96,17 @@ M.dialog = function(choices, options, callback)
         select(selected + diff)
     end
 
-    popup:map("n", "<C-q>", utils.apply(popup.unmount, popup), opts)
-    popup:map("n", "<C-w>", utils.apply(popup.unmount, popup), opts)
+    popup:map("n", "<C-q>", F.apply(popup.unmount, popup), opts)
+    popup:map("n", "<C-w>", F.apply(popup.unmount, popup), opts)
     popup:map("n", "<CR>", confirm, opts)
-    popup:map("n", "<Left>", utils.apply(move, -1), opts)
-    popup:map("n", "<Down>", utils.apply(move, 1), opts)
-    popup:map("n", "<Up>", utils.apply(move, -1), opts)
-    popup:map("n", "<Right>", utils.apply(move, 1), opts)
-    popup:map("n", "<C-h>", utils.apply(move, -1), opts)
-    popup:map("n", "<C-j>", utils.apply(move, 1), opts)
-    popup:map("n", "<C-k>", utils.apply(move, -1), opts)
-    popup:map("n", "<C-l>", utils.apply(move, 1), opts)
+    popup:map("n", "<Left>", F.apply(move, -1), opts)
+    popup:map("n", "<Down>", F.apply(move, 1), opts)
+    popup:map("n", "<Up>", F.apply(move, -1), opts)
+    popup:map("n", "<Right>", F.apply(move, 1), opts)
+    popup:map("n", "<C-h>", F.apply(move, -1), opts)
+    popup:map("n", "<C-j>", F.apply(move, 1), opts)
+    popup:map("n", "<C-k>", F.apply(move, -1), opts)
+    popup:map("n", "<C-l>", F.apply(move, 1), opts)
 
     for i, choice in ipairs(choices) do
         if choice.key ~= nil then
@@ -118,7 +119,7 @@ M.dialog = function(choices, options, callback)
         end
     end
 
-    popup:on({ "BufLeave", "BufWinLeave" }, utils.apply(popup.unmount, popup), { once = true })
+    popup:on({ "BufLeave", "BufWinLeave" }, F.apply(popup.unmount, popup), { once = true })
 end
 
 local shift = function(align, len, max)
@@ -177,14 +178,14 @@ local init_vbox = function()
         if self._options.width ~= nil then
             return self._options.width
         end
-        return utils.fold(0, self._items, function(acc, item)
+        return T.fold(0, self._items, function(acc, item)
             return math.max(acc, item:width())
         end)
     end
 
     function VBox:height()
         local total_gap = self._options.gap * (#self._items - 1)
-        return utils.fold(0, self._items, function(acc, item)
+        return T.fold(0, self._items, function(acc, item)
             return acc + el_height(item)
         end) + total_gap
     end
@@ -235,7 +236,7 @@ local init_hbox = function()
 
     function HBox:width()
         local total_gap = self._options.gap * (#self._items - 1)
-        return utils.fold(0, self._items, function(acc, item)
+        return T.fold(0, self._items, function(acc, item)
             return acc + item:width()
         end) + total_gap
     end
@@ -244,7 +245,7 @@ local init_hbox = function()
         if self._options.height ~= nil then
             return self._options.height
         end
-        return utils.fold(0, self._items, function(acc, item)
+        return T.fold(0, self._items, function(acc, item)
             return math.max(acc, item.height and item:height() or 1)
         end)
     end

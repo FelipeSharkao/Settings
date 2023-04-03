@@ -1,37 +1,5 @@
 local M = {}
 
--- ================= String =================
-
---- Pad the end of a string to a given length.
---- @param str string The string to pad.
---- @param len number The length to pad to.
---- @param char string The character to pad with.
---- @return string
-string.pad_right = function(str, len, char)
-    return str .. string.rep(char, len - #str)
-end
-
---- Pad the start of a string to a given length.
---- @param str string The string to pad.
---- @param len number The length to pad to.
---- @param char string The character to pad with.
---- @return string
-string.pad_left = function(str, len, char)
-    return string.rep(char, len - #str) .. str
-end
-
---- Pad the start and end of a string to a given length.
---- @param str string The string to pad.
---- @param len number The length to pad to.
---- @param char string The character to pad with.
---- @return string
-string.pad = function(str, len, char)
-    local pad_len = len - #str
-    return str:pad_left(math.floor(pad_len / 2) + #str, char):pad_right(len, char)
-end
-
--- ================= Table =================
-
 --- Creates a new table applying a function to each element.
 --- @generic T, U
 --- @param list T[] The original table.
@@ -88,6 +56,14 @@ M.index_of = function(list, item)
     return nil
 end
 
+--- Checks if a table contains an element.
+--- @param list any[] The table to search.
+--- @param item any The element to search for.
+--- @return boolean
+M.contains = function(list, item)
+    return M.index_of(list, item) ~= nil
+end
+
 --- Concatenates two tables.
 --- @generic T, U
 --- @param list T[] The first table.
@@ -104,18 +80,20 @@ M.concat = function(list, other)
     return result
 end
 
--- ================= Function =================
-
---- Creates a new function that calls the given function with the passed arguments.
---- @generic T
---- @param fn fun(...: any): T The function to call.
---- @param ... any The arguments to pass to the function.
---- @return fun(...: any): T
-M.apply = function(fn, ...)
-    local applied_args = { ... }
-    return function(...)
-        return fn(unpack(M.concat(applied_args, { ... })))
+--- Merge two key-value tables. If a key apears in more than one table, the value of the rightmost
+--- table will be used.
+--- @param ... table
+--- @return table
+M.merge = function(...)
+    local result = {}
+    for _, t in ipairs({ ... }) do
+        if type(t) == "table" then
+            for k, v in pairs(t) do
+                result[k] = v
+            end
+        end
     end
+    return result
 end
 
 return M
