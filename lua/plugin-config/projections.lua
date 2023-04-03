@@ -8,6 +8,14 @@ projections.setup({
             local tree_api = require("nvim-tree.api")
             tree_api.tree.close()
 
+            -- close invalid buffers
+            local utils = require("utils")
+            for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+                if not utils.buf_is_valid(buf) then
+                    utils.delete_buf(buf)
+                end
+            end
+
             -- Stop LSP to free up memory
             vim.lsp.stop_client(vim.lsp.get_active_clients())
         end,
@@ -17,7 +25,7 @@ projections.setup({
 vim.opt.sessionoptions:append("localoptions")
 
 -- Auto-store session on exit
-vim.api.nvim_create_autocmd({ "VimLeavePre" }, {
+vim.api.nvim_create_autocmd({ "VimLeavePre", "TabLeave" }, {
     callback = function()
         local session = require("projections.session")
         session.store(vim.loop.cwd())

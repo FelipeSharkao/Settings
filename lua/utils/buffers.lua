@@ -109,17 +109,29 @@ M.delete_buf = function(buf)
         return
     end
 
-    UI.dialog(
-        { "&Save", "&Discard", "&Cancel" },
-        { prompt = "Save changes to " .. (file or "buffer") .. "?" },
-        function(choice)
-            if choice == 1 then
-                save_and_delete()
-            elseif choice == 2 then
-                delete()
+    if M.buf_is_valid(buf) then
+        UI.dialog(
+            { "&Save", "&Discard", "&Cancel" },
+            { prompt = "Save changes to " .. (file or "buffer") .. "?" },
+            function(choice)
+                if choice == 1 then
+                    save_and_delete()
+                elseif choice == 2 then
+                    delete()
+                end
             end
-        end
-    )
+        )
+    else
+        UI.dialog(
+            { "&Close", "&Cancel" },
+            { prompt = "Close " .. (file or "buffer") .. "?" },
+            function(choice)
+                if choice == 1 then
+                    delete()
+                end
+            end
+        )
+    end
 end
 
 M.delete_curr_buf = function()
