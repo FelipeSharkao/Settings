@@ -87,6 +87,12 @@ require("lazy").setup({
     { "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" },
     "evanleck/vim-svelte",
     "preservim/vim-markdown",
+    {
+        "wuelnerdotexe/vim-astro",
+        init = function()
+            vim.g.astro_typescript = "enable"
+        end,
+    },
 
     -- preview markdown files
     {
