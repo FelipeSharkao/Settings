@@ -65,7 +65,18 @@ require("lazy").setup({
 
     -- Debugging
     "mfussenegger/nvim-dap",
-    "mxsdev/nvim-dap-vscode-js",
+    {
+        "mxsdev/nvim-dap-vscode-js",
+        dependencies = {
+            "mfussenegger/nvim-dap",
+            {
+                "microsoft/vscode-js-debug",
+                lazy = true,
+                build = "npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out",
+            },
+        },
+    },
+    { "rcarriga/nvim-dap-ui", dependencies = { "mfussenegger/nvim-dap" } },
 
     -- Better suggestions in config files
     "folke/neodev.nvim",
