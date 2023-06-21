@@ -131,7 +131,7 @@ require("lazy").setup({
     { "nvim-tree/nvim-tree.lua", dependencies = { "nvim-tree/nvim-web-devicons" } },
 
     -- project + session management
-    "gnikdroy/projections.nvim",
+    "olimorris/persisted.nvim",
 
     -- ====== Movement and editing ======
     -- Multicursor
@@ -187,7 +187,7 @@ require("plugin-config/lsp")
 require("plugin-config/dap")
 require("plugin-config/nvim-cmp")
 require("plugin-config/nvim-treesitter")
-require("plugin-config/projections")
+require("plugin-config/persisted")
 require("plugin-config/nvim-tree")
 require("plugin-config/bufferline")
 require("plugin-config/blamer")
