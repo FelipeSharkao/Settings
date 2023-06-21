@@ -1,7 +1,7 @@
 local keymap = vim.keymap.set
 
 if vim.g.neovide then
-    vim.opt.guifont = "Monocraft Nerd Font:h10"
+    vim.opt.guifont = "FiraCode Nerd Font Mono:h10.5"
 
     vim.g.neovide_scroll_animation_length = 0.2
     vim.g.neovide_input_use_logo = false
