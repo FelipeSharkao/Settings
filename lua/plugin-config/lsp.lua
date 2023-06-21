@@ -109,9 +109,9 @@ lspconfig.astro.setup({
 
 null_ls.setup({
     sources = {
-        null_ls.builtins.code_actions.eslint,
-        null_ls.builtins.diagnostics.eslint,
-        null_ls.builtins.formatting.prettier.with({
+        null_ls.builtins.code_actions.eslint_d,
+        null_ls.builtins.diagnostics.eslint_d,
+        null_ls.builtins.formatting.prettierd.with({
             {
                 "javascript",
                 "javascriptreact",
@@ -145,7 +145,8 @@ require("mason-null-ls").setup({
     automatic_setup = true,
 })
 
-vim.api.nvim_create_autocmd("BufWritePre *", {
+vim.api.nvim_create_autocmd("BufWritePre", {
+    pattern = "*",
     callback = function()
         vim.lsp.buf.format({ async = false, silent = true })
     end,
