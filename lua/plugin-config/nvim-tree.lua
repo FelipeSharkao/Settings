@@ -1,6 +1,7 @@
 require("nvim-tree").setup({
     disable_netrw = true,
     hijack_cursor = true,
+    sync_root_with_cwd = true,
     diagnostics = {
         enable = true,
         icons = {
@@ -13,10 +14,8 @@ require("nvim-tree").setup({
     update_focused_file = {
         enable = true,
     },
-    view = {
-        hide_root_folder = true,
-    },
     renderer = {
+        root_folder_label = false,
         highlight_git = true,
         highlight_opened_files = "all",
     },
