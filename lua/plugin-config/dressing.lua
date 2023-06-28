@@ -1,5 +1,7 @@
 require("dressing").setup({
     input = {
+        max_width = { 140, 0.9 },
+        min_width = { 40, 0.2 },
         mappings = {
             n = {
                 ["<Esc>"] = "Close",
@@ -21,9 +23,6 @@ require("dressing").setup({
     },
     select = {
         backend = { "nui", "builtin" },
-        nui = {
-            max_width = 200,
-        },
         mappings = {
             ["<C-q>"] = "Close",
             ["<C-w>"] = "Close",
