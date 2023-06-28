@@ -15,10 +15,27 @@ require("nvim-tree").setup({
         enable = true,
     },
     renderer = {
-        root_folder_label = false,
         highlight_git = true,
         highlight_opened_files = "all",
     },
+    on_attach = function(bufnr)
+        local api = require("nvim-tree.api")
+
+        local function opts(desc)
+            return {
+                desc = "nvim-tree: " .. desc,
+                buffer = bufnr,
+                noremap = true,
+                silent = true,
+                nowait = true,
+            }
+        end
+
+        api.config.mappings.default_on_attach(bufnr)
+
+        vim.keymap.set("n", "d", api.fs.trash, opts("Trash"))
+        vim.keymap.set("n", "D", api.fs.remove, opts("Delete"))
+    end,
 })
 
 require("nvim-web-devicons").setup({
