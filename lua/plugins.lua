@@ -143,6 +143,9 @@ require("lazy").setup({
     -- Indicator for git added and removed lines
     "lewis6991/gitsigns.nvim",
 
+    -- Text objects
+    { "chrisgrieser/nvim-various-textobjs", opts = { useDefaultKeymaps = true } },
+
     -- ====== Integration ======
     -- Show commit messages
     {
