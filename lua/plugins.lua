@@ -109,17 +109,6 @@ require("lazy").setup({
         end,
     },
 
-    -- preview markdown files
-    {
-        "iamcco/markdown-preview.nvim",
-        build = "cd app && pnpm i",
-        init = function()
-            vim.g.mkdp_auto_close = false
-        end,
-        lazy = true,
-        ft = "markdown",
-    },
-    --
     -- ====== File and project management ======
     -- close buffer without closing window
     "moll/vim-bbye",
