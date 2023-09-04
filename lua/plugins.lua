@@ -59,6 +59,10 @@ require("lazy").setup({
     "neovim/nvim-lspconfig",
     "jay-babu/mason-null-ls.nvim",
     "jose-elias-alvarez/null-ls.nvim",
+    {
+        "pmizio/typescript-tools.nvim",
+        dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+    },
 
     -- Show LSP inlay hints
     "lvimuser/lsp-inlayhints.nvim",

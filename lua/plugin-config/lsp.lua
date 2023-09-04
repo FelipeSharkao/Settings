@@ -20,9 +20,7 @@ require("lsp-colors").setup({
 require("mason").setup()
 require("mason-lspconfig").setup({
     ensure_installed = {
-        "tsserver",
         "prismals",
-        "svelte",
         "lua_ls",
         "rust_analyzer",
         "astro",
@@ -36,31 +34,25 @@ keymap("n", "<Leader>e", vim.diagnostic.open_float, opts)
 keymap("n", "[d", vim.diagnostic.goto_prev, opts)
 keymap("n", "]d", vim.diagnostic.goto_next, opts)
 keymap("n", "<Leader>q", vim.diagnostic.setloclist, opts)
+keymap("n", "gd", telescope.lsp_definitions, opts)
+keymap("n", "gi", telescope.lsp_references, opts)
+keymap("n", "gI", telescope.lsp_implementations, opts)
+keymap("n", "gt", telescope.lsp_type_definitions, opts)
+keymap("n", "gh", vim.lsp.buf.hover, opts)
+keymap("n", "gr", vim.lsp.buf.rename, opts)
+keymap("n", "ga", vim.lsp.buf.code_action, opts)
+keymap("n", "gk", vim.lsp.buf.signature_help, opts)
+keymap("i", "<C-K>", vim.lsp.buf.signature_help, opts)
+keymap("n", "ge", vim.diagnostic.open_float, opts)
+keymap("n", "[e", vim.diagnostic.goto_prev, opts)
+keymap("n", "]e", vim.diagnostic.goto_next, opts)
+keymap("n", "gf", function()
+    vim.lsp.buf.format({ async = true })
+end, opts)
 
 local on_attach = function(client, bufnr)
-    -- Enable completion triggered by <c-x><c-o>
     vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
-
-    -- Support for inlay hints
-    -- see https://github.com/neovim/neovim/issues/18086
     inlay_hints.on_attach(client, bufnr)
-
-    local bopts = { noremap = true, silent = true, buffer = bufnr }
-    keymap("n", "gd", telescope.lsp_definitions, bopts)
-    keymap("n", "gi", telescope.lsp_references, bopts)
-    keymap("n", "gI", telescope.lsp_implementations, bopts)
-    keymap("n", "gt", telescope.lsp_type_definitions, bopts)
-    keymap("n", "gh", vim.lsp.buf.hover, bopts)
-    keymap("n", "gr", vim.lsp.buf.rename, bopts)
-    keymap("n", "ga", vim.lsp.buf.code_action, bopts)
-    keymap("n", "gk", vim.lsp.buf.signature_help, bopts)
-    keymap("i", "<C-K>", vim.lsp.buf.signature_help, bopts)
-    keymap("n", "ge", vim.diagnostic.open_float, bopts)
-    keymap("n", "[e", vim.diagnostic.goto_prev, bopts)
-    keymap("n", "]e", vim.diagnostic.goto_next, bopts)
-    keymap("n", "gf", function()
-        vim.lsp.buf.format({ async = true })
-    end, bopts)
 end
 
 local on_attach_no_format = function(client, bufnr)
@@ -70,10 +62,23 @@ end
 
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-lspconfig.tsserver.setup({
+require("typescript-tools").setup({
     on_attach = on_attach_no_format,
     capabilities = capabilities,
+    settings = {
+        separate_diagnostic_server = true,
+        publish_diagnostic_on = "insert_leave",
+        tsserver_plugins = {},
+        tsserver_file_preferences = {
+            includeInlayVariableTypeHints = true,
+            includeInlayVariableTypeHintsWhenTypeMatchesName = false,
+            includeInlayPropertyDeclarationTypeHints = true,
+            includeInlayFunctionLikeReturnTypeHints = true,
+            includeInlayEnumMemberValueHints = true,
+        },
+    },
 })
+
 lspconfig.rust_analyzer.setup({
     on_attach = on_attach_no_format,
     capabilities = capabilities,
