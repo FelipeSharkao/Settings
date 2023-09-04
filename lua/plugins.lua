@@ -109,6 +109,13 @@ require("lazy").setup({
         end,
     },
 
+    -- Better UI for LSP actions
+    "RishabhRD/popfix",
+    "RishabhRD/nvim-lsputils",
+
+    -- Rename variables in real time
+    "smjonas/inc-rename.nvim",
+
     -- ====== File and project management ======
     -- close buffer without closing window
     "moll/vim-bbye",

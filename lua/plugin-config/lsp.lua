@@ -1,7 +1,10 @@
-local telescope = require("telescope.builtin")
 local lspconfig = require("lspconfig")
 local null_ls = require("null-ls")
 local inlay_hints = require("lsp-inlayhints")
+
+local lsputil_code_action = require("lsputil.codeAction")
+local lsputil_locations = require("lsputil.locations")
+local lsputil_symbols = require("lsputil.symbols")
 
 local opts = { noremap = true, silent = true }
 local xopts = { noremap = true, silent = true, expr = true }
@@ -29,17 +32,46 @@ require("mason-lspconfig").setup({
 
 inlay_hints.setup()
 
+require("inc_rename").setup()
+
+vim.lsp.handlers["textDocument/codeAction"] = lsputil_code_action.code_action_handler
+vim.lsp.handlers["textDocument/references"] = lsputil_locations.references_handler
+vim.lsp.handlers["textDocument/definition"] = lsputil_locations.definition_handler
+vim.lsp.handlers["textDocument/declaration"] = lsputil_locations.declaration_handler
+vim.lsp.handlers["textDocument/typeDefinition"] = lsputil_locations.typeDefinition_handler
+vim.lsp.handlers["textDocument/implementation"] = lsputil_locations.implementation_handler
+vim.lsp.handlers["textDocument/documentSymbol"] = lsputil_symbols.document_handler
+vim.lsp.handlers["workspace/symbol"] = lsputil_symbols.workspace_handler
+
+vim.g.lsp_utils_location_opts = {
+    height = 24,
+    list = {
+        border = false,
+        numbering = false,
+        highlight = "Normal",
+        selection_highlight = "Visual",
+        matching_highlight = "Identifier",
+    },
+    preview = {
+        border = false,
+        highlight = "Normal",
+        preview_highlight = "Visual",
+    },
+}
+
 keymap("i", "<Tab>", "pumvisible() ? '<C-n>' : '<Tab>'", xopts)
 keymap("n", "<Leader>e", vim.diagnostic.open_float, opts)
 keymap("n", "[d", vim.diagnostic.goto_prev, opts)
 keymap("n", "]d", vim.diagnostic.goto_next, opts)
 keymap("n", "<Leader>q", vim.diagnostic.setloclist, opts)
-keymap("n", "gd", telescope.lsp_definitions, opts)
-keymap("n", "gi", telescope.lsp_references, opts)
-keymap("n", "gI", telescope.lsp_implementations, opts)
-keymap("n", "gt", telescope.lsp_type_definitions, opts)
+keymap("n", "gd", vim.lsp.buf.definition, opts)
+keymap("n", "gi", vim.lsp.buf.references, opts)
+keymap("n", "gI", vim.lsp.buf.implementation, opts)
+keymap("n", "gt", vim.lsp.buf.type_definition, opts)
 keymap("n", "gh", vim.lsp.buf.hover, opts)
-keymap("n", "gr", vim.lsp.buf.rename, opts)
+keymap("n", "gr", function()
+    return ":IncRename " .. vim.fn.expand("<cword>")
+end, xopts)
 keymap("n", "ga", vim.lsp.buf.code_action, opts)
 keymap("n", "gk", vim.lsp.buf.signature_help, opts)
 keymap("i", "<C-K>", vim.lsp.buf.signature_help, opts)
