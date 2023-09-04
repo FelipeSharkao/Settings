@@ -4,10 +4,10 @@ local UI = require("utils.ui")
 local M = {}
 
 M.buf_is_valid = function(buf)
-    local loaded = vim.api.nvim_buf_is_loaded(buf)
-    local listed = vim.api.nvim_buf_get_option(buf, "buflisted")
-    local buftype = vim.api.nvim_buf_get_option(buf, "buftype")
-    return loaded and listed and buftype == ""
+    local is_listed = vim.api.nvim_buf_get_option(buf, "buflisted")
+    local is_file = vim.api.nvim_buf_get_option(buf, "buftype") == ""
+
+    return is_listed and is_file
 end
 
 M.list_bufs = function()
@@ -39,36 +39,6 @@ M.last_buf = function(win)
     vim.api.nvim_win_set_buf(win, bufs[#bufs])
 end
 
-local win_buf_queue = {}
-
-vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter", "WinEnter", "FocusGained" }, {
-    callback = function()
-        local win = vim.api.nvim_get_current_win()
-        local buf = vim.api.nvim_get_current_buf()
-        if M.buf_is_valid(buf) then
-            if win_buf_queue[win] == nil then
-                win_buf_queue[win] = {}
-            else
-                win_buf_queue[win] = T.filter(win_buf_queue[win], function(b)
-                    return b ~= buf
-                end)
-            end
-            table.insert(win_buf_queue[win], buf)
-        end
-    end,
-})
-
-M.last_opened_buf = function(win)
-    local queue = win_buf_queue[win] or {}
-    local buf = queue[#queue - 1]
-    print("win = " .. win .. ", buf = " .. buf)
-    if buf ~= nil then
-        vim.api.nvim_win_set_buf(win, buf)
-    else
-        M.next_buf(win, -1)
-    end
-end
-
 M.delete_buf = function(buf)
     local modified = vim.api.nvim_buf_get_option(buf, "modified")
     local file = vim.api
@@ -77,18 +47,8 @@ M.delete_buf = function(buf)
         :gsub("^" .. vim.env.HOME, "~")
 
     local delete = function()
-        local wins = vim.api.nvim_list_wins()
-        for _, win in ipairs(wins) do
-            if vim.api.nvim_win_get_buf(win) == buf then
-                M.last_opened_buf(win)
-            end
-
-            win_buf_queue[win] = T.filter(win_buf_queue[win] or {}, function(b)
-                return b ~= buf
-            end)
-        end
-
-        vim.api.nvim_buf_delete(buf, { force = true })
+        -- Use bbye to delete the buffer so the window doesn't close.
+        vim.cmd("Bdelete! " .. buf)
     end
 
     local save_and_delete = function()
@@ -154,9 +114,8 @@ M.delete_left_buf = function()
     local idx = T.index_of(bufs, vim.api.nvim_get_current_buf())
     for i, _ in ipairs(bufs) do
         if i < idx then
-            break
+            M.delete_buf(bufs[i])
         end
-        M.delete_buf(bufs[i])
     end
 end
 

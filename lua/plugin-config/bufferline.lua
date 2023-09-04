@@ -5,8 +5,8 @@ local opts = { noremap = true, silent = true }
 local keymap = vim.keymap.set
 
 vim.api.nvim_create_user_command("BufClose", utils.delete_curr_buf, { nargs = 0 })
-vim.api.nvim_create_user_command("BufCloseAllRight", utils.delete_right_buf, { nargs = 0 })
-vim.api.nvim_create_user_command("BufCloseAllLeft", utils.delete_left_buf, { nargs = 0 })
+vim.api.nvim_create_user_command("BufCloseRight", utils.delete_right_buf, { nargs = 0 })
+vim.api.nvim_create_user_command("BufCloseLeft", utils.delete_left_buf, { nargs = 0 })
 vim.api.nvim_create_user_command("BufCloseSurround", utils.delete_surround_buf, { nargs = 0 })
 
 keymap("n", "fj", utils.apply(utils.next_buf, 0, -1), opts)

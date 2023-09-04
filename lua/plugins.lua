@@ -121,6 +121,9 @@ require("lazy").setup({
     },
     --
     -- ====== File and project management ======
+    -- close buffer without closing window
+    "moll/vim-bbye",
+
     -- telescope - searching / navigation
     {
         "nvim-telescope/telescope.nvim",
