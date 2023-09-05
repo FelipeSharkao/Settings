@@ -21,18 +21,7 @@ local function autosave()
     end
 end
 
-vim.api.nvim_create_autocmd(
-    { "VimLeavePre", "BufEnter", "BufDelete", "BufWinEnter", "DirChangedPre" },
-    { pattern = "*", callback = autosave }
-)
-
--- vim.api.nvim_create_autocmd("User", {
---     pattern = "PersistedLoadPre",
---     callback = function()
---         autosave()
---         vim.cmd("SessionStop")
---     end,
--- })
+vim.api.nvim_create_autocmd({ "VimLeavePre" }, { callback = autosave })
 
 vim.api.nvim_create_autocmd("User", {
     pattern = "PersistedTelescopeLoadPre",
