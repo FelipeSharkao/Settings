@@ -113,9 +113,6 @@ require("lazy").setup({
     "RishabhRD/popfix",
     "RishabhRD/nvim-lsputils",
 
-    -- Rename variables in real time
-    "smjonas/inc-rename.nvim",
-
     -- Better comments
     { "numToStr/Comment.nvim", opts = {} },
 
