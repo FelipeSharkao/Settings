@@ -183,6 +183,7 @@ require("lazy").setup({
     { "catppuccin/nvim", name = "catppuccin" },
 })
 
+require("plugin-config/dashboard")
 require("plugin-config/dressing")
 require("plugin-config/telescope")
 require("plugin-config/nvim-scrollbar")
