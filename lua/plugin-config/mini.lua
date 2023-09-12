@@ -3,15 +3,6 @@
 -- Extends a/i textobjects
 require("mini.ai").setup()
 
--- Add/remove comments
-require("mini.comment").setup({
-    mappings = {
-        comment = ";",
-        comment_line = ";;",
-        textobject = ";",
-    },
-})
-
 -- Highlight the word under the cursor
 require("mini.cursorword").setup()
 

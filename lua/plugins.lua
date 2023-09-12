@@ -116,6 +116,9 @@ require("lazy").setup({
     -- Rename variables in real time
     "smjonas/inc-rename.nvim",
 
+    -- Better comments
+    { "numToStr/Comment.nvim", opts = {} },
+
     -- ====== File and project management ======
     -- close buffer without closing window
     "moll/vim-bbye",
