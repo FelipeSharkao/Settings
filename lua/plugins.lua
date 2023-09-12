@@ -82,6 +82,18 @@ require("lazy").setup({
     },
     { "rcarriga/nvim-dap-ui", dependencies = { "mfussenegger/nvim-dap" } },
 
+    -- Navigate through LSP symbols
+    {
+        "SmiteshP/nvim-navbuddy",
+        dependencies = {
+            "neovim/nvim-lspconfig",
+            "SmiteshP/nvim-navic",
+            "MunifTanjim/nui.nvim",
+            "numToStr/Comment.nvim",
+            "nvim-telescope/telescope.nvim",
+        },
+    },
+
     -- Better suggestions in config files
     "folke/neodev.nvim",
 

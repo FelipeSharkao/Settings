@@ -75,7 +75,6 @@ keymap("n", "<Leader>f", builtin.find_files, opts)
 keymap("n", "<Leader>g", builtin.live_grep, opts)
 keymap("n", "<Leader>b", builtin.buffers, opts)
 keymap("n", "<Leader>l", builtin.resume, opts)
-keymap("n", "<Leader>t", builtin.treesitter, opts)
 
 vim.api.nvim_create_user_command("Open", function(cmd)
     vim.cmd("cd " .. cmd.args)
