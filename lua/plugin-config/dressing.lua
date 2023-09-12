@@ -22,7 +22,11 @@ require("dressing").setup({
         },
     },
     select = {
-        backend = { "nui", "builtin" },
+        backend = { "builtin" },
+        builtin = {
+            relative = "cursor",
+            max_width = { 140, 0.9 },
+        },
         mappings = {
             ["<C-q>"] = "Close",
             ["<C-w>"] = "Close",
