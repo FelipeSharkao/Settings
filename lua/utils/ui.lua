@@ -1,5 +1,4 @@
-local F = require("utils.functions")
-local T = require("utils.table")
+local func = require("utils.functions")
 
 local opts = { noremap = true, silent = true }
 
@@ -13,7 +12,7 @@ local M = {}
 --- @param options DialogOptions The options to use.
 --- @param callback fun(index: number) The callback to call when a choice is selected.
 M.dialog = function(choices, options, callback)
-    choices = T.map(choices, function(item)
+    choices = vim.tbl_map(function(item)
         local i, j = item:find("&%w")
         if i ~= nil and j ~= nil then
             return {
@@ -23,7 +22,7 @@ M.dialog = function(choices, options, callback)
             }
         end
         return { choice = item, key = nil }
-    end)
+    end, choices)
 
     local Text = require("nui.text")
     local Popup = require("nui.popup")
@@ -32,10 +31,10 @@ M.dialog = function(choices, options, callback)
         Text(" " .. options.prompt .. " ", "Title"),
         M.Flex(
             { gap = { h = 2, v = 1 }, align = { h = "center" } },
-            T.map(choices, function(choice)
+            vim.tbl_map(function(choice)
                 -- TODO: create highlight groups for this
                 return Text(choice.label, "Visual")
-            end)
+            end, choices)
         ),
     })
 
@@ -96,17 +95,17 @@ M.dialog = function(choices, options, callback)
         select(selected + diff)
     end
 
-    popup:map("n", "<C-q>", F.apply(popup.unmount, popup), opts)
-    popup:map("n", "<C-w>", F.apply(popup.unmount, popup), opts)
+    popup:map("n", "<C-q>", func.apply(popup.unmount, popup), opts)
+    popup:map("n", "<C-w>", func.apply(popup.unmount, popup), opts)
     popup:map("n", "<CR>", confirm, opts)
-    popup:map("n", "<Left>", F.apply(move, -1), opts)
-    popup:map("n", "<Down>", F.apply(move, 1), opts)
-    popup:map("n", "<Up>", F.apply(move, -1), opts)
-    popup:map("n", "<Right>", F.apply(move, 1), opts)
-    popup:map("n", "<C-h>", F.apply(move, -1), opts)
-    popup:map("n", "<C-j>", F.apply(move, 1), opts)
-    popup:map("n", "<C-k>", F.apply(move, -1), opts)
-    popup:map("n", "<C-l>", F.apply(move, 1), opts)
+    popup:map("n", "<Left>", func.apply(move, -1), opts)
+    popup:map("n", "<Down>", func.apply(move, 1), opts)
+    popup:map("n", "<Up>", func.apply(move, -1), opts)
+    popup:map("n", "<Right>", func.apply(move, 1), opts)
+    popup:map("n", "<C-h>", func.apply(move, -1), opts)
+    popup:map("n", "<C-j>", func.apply(move, 1), opts)
+    popup:map("n", "<C-k>", func.apply(move, -1), opts)
+    popup:map("n", "<C-l>", func.apply(move, 1), opts)
 
     for i, choice in ipairs(choices) do
         if choice.key ~= nil then
@@ -119,7 +118,7 @@ M.dialog = function(choices, options, callback)
         end
     end
 
-    popup:on({ "BufLeave", "BufWinLeave" }, F.apply(popup.unmount, popup), { once = true })
+    popup:on({ "BufLeave", "BufWinLeave" }, func.apply(popup.unmount, popup), { once = true })
 end
 
 local shift = function(align, len, max)
@@ -178,16 +177,20 @@ local init_vbox = function()
         if self._options.width ~= nil then
             return self._options.width
         end
-        return T.fold(0, self._items, function(acc, item)
-            return math.max(acc, item:width())
-        end)
+
+        local width = 0
+        for _, item in ipairs(self._items) do
+            width = math.max(width, item:width())
+        end
+        return width
     end
 
     function VBox:height()
-        local total_gap = self._options.gap * (#self._items - 1)
-        return T.fold(0, self._items, function(acc, item)
-            return acc + el_height(item)
-        end) + total_gap
+        local height = 0
+        for _, item in ipairs(self._items) do
+            height = height + el_height(item)
+        end
+        return height + (self._options.gap * (#self._items - 1))
     end
 
     function VBox:render(bufnr, ns_id, linenr_start, byte_start)
@@ -235,19 +238,24 @@ local init_hbox = function()
     end
 
     function HBox:width()
-        local total_gap = self._options.gap * (#self._items - 1)
-        return T.fold(0, self._items, function(acc, item)
-            return acc + item:width()
-        end) + total_gap
+        local width = 0
+        for _, item in ipairs(self._items) do
+            width = width + item:width()
+        end
+        return width + (self._options.gap * (#self._items - 1))
     end
 
     function HBox:height()
         if self._options.height ~= nil then
             return self._options.height
         end
-        return T.fold(0, self._items, function(acc, item)
-            return math.max(acc, item.height and item:height() or 1)
-        end)
+
+        local height = 0
+        for _, item in ipairs(self._items) do
+            height = math.max(height, item.height and item:height() or 1)
+        end
+
+        return height
     end
 
     function HBox:render(bufnr, ns_id, linenr_start, byte_start)

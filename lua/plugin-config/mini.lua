@@ -28,7 +28,7 @@ local prefixes = "zx"
 local labels = "fgdsatrewquiopnmvcyb"
 starter.setup({
     evaluate_single = true,
-    header = require("utils.quotes").cowsay(),
+    header = require("utils").quotes.cowsay(),
     footer = "",
     items = {
         { section = "", name = "New File", action = "enew" },

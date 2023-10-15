@@ -1,5 +1,3 @@
-local T = require("utils.table")
-
 local M = {}
 
 --- Creates a new function that calls the given function with the passed arguments.
@@ -10,7 +8,8 @@ local M = {}
 M.apply = function(fn, ...)
     local applied_args = { ... }
     return function(...)
-        return fn(unpack(T.concat(applied_args, { ... })))
+        local args = vim.tbl_concat(applied_args, { ... })
+        return fn(unpack(args))
     end
 end
 
