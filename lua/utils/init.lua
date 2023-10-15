@@ -1,5 +1,8 @@
-require("utils.functions")
+require("utils.string")
+local func = require("utils.functions")
+local tbl = require("utils.table")
+local ui = require("utils.ui")
+local bufs = require("utils.buffers")
+require("utils.quotes")
 
-local T = require("utils.table")
-
-return T.merge(T, require("utils.functions"), require("utils.ui"), require("utils.buffers"))
+return tbl.merge(tbl, func, ui, bufs)

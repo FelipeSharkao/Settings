@@ -14,8 +14,6 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
     -- ====== UI and visuals ======
-    -- show recent files on empty nvim command
-    "mhinz/vim-startify",
 
     -- UI framework
     "MunifTanjim/nui.nvim",
@@ -195,7 +193,6 @@ require("lazy").setup({
     { "catppuccin/nvim", name = "catppuccin" },
 })
 
-require("plugin-config/dashboard")
 require("plugin-config/dressing")
 require("plugin-config/telescope")
 require("plugin-config/nvim-scrollbar")
