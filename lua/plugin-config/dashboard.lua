@@ -1,18 +1,24 @@
 local function list_sessions()
-    local sessions_dir = vim.fn.stdpath("data") .. "/sessions"
-    local sessions_files = vim.fn.readdir(sessions_dir)
+    local home = vim.fn.expand("$HOME")
+    local file = io.open(vim.fn.stdpath("data") .. "/persisted_recent", "r")
+
+    if not file then
+        return {}
+    end
 
     local entries = {}
 
-    for _, file in ipairs(sessions_files) do
-        local name = file:gsub(".vim$", ""):gsub("%%", "/"):gsub("@@(.*)", " (branch: %1)")
+    for line in file:lines() do
+        local name = line:gsub(".*/", "")
+            :gsub(".vim$", "")
+            :gsub("%%", "/")
+            :gsub("^" .. home, "~")
+            :gsub("@@(.*)", " (branch: %1)")
 
-        if name ~= "__LAST__" then
-            table.insert(entries, {
-                line = name,
-                cmd = "SessionLoadFromFile " .. sessions_dir .. "/" .. file,
-            })
-        end
+        table.insert(entries, {
+            line = name,
+            cmd = "SessionLoadFromFile " .. line,
+        })
     end
 
     return entries
