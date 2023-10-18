@@ -1,374 +1,73 @@
-local func = require("utils.functions")
-
-local opts = { noremap = true, silent = true }
+local popup = require("plenary.popup")
 
 local M = {}
 
+--- @class DialogChoice
+--- @field label string The label to show.
+--- @field callback fun()|nil The callback to call when this choice is selected.
+
 --- @class DialogOptions
---- @field prompt string The prompt to show.
+--- @field title string The title of the popup window.
+--- @field choices DialogChoice[] The choices to show.
 
 --- Shows a dialog popup.
---- @param choices string[] The choices to show.
 --- @param options DialogOptions The options to use.
---- @param callback fun(index: number) The callback to call when a choice is selected.
-M.dialog = function(choices, options, callback)
-    choices = vim.tbl_map(function(item)
-        local i, j = item:find("&%w")
-        if i ~= nil and j ~= nil then
-            return {
-                label = item:sub(1, i - 1) .. "(" .. item:sub(i + 1, j) .. ")" .. item:sub(j + 1),
-                choice = item:sub(1, i - 1) .. item:sub(i + 1, j) .. item:sub(j + 1),
-                key = item:sub(i + 1, j):lower(),
-            }
-        end
-        return { choice = item, key = nil }
-    end, choices)
+M.dialog = function(options)
+    local content_width = options.title:len() + 2
+    for _, choice in ipairs(options.choices) do
+        content_width = math.max(content_width, #choice.label + 5)
+    end
 
-    local Text = require("nui.text")
-    local Popup = require("nui.popup")
+    local width = content_width + 2
+    local height = #options.choices
 
-    local vbox = M.VBox({ align = "center", gap = 1 }, {
-        Text(" " .. options.prompt .. " ", "Title"),
-        M.Flex(
-            { gap = { h = 2, v = 1 }, align = { h = "center" } },
-            vim.tbl_map(function(choice)
-                -- TODO: create highlight groups for this
-                return Text(choice.label, "Visual")
-            end, choices)
-        ),
+    local choice_number = 0
+    local lines = vim.tbl_map(function(choice)
+        choice_number = choice_number + 1
+        return string.format("[%i] %s", choice_number, choice.label)
+    end, options.choices)
+
+    local win = nil
+    win = popup.create(lines, {
+        title = options.title,
+        line = math.floor((vim.o.lines - height) / 2 - 1),
+        col = math.floor((vim.o.columns - width) / 2),
+        minwidth = width,
+        minheight = height,
+        borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
+        callback = function(_, label)
+            local i = tonumber(label:match("^%[(%d+)%]"))
+            local choice = options.choices[i]
+
+            if choice and choice.callback then
+                choice.callback()
+            end
+
+            vim.api.nvim_win_close(win, true)
+        end,
     })
 
-    local popup = Popup({
-        border = { style = "rounded" },
-        relative = "editor",
-        position = "50%",
-        size = {
-            width = vbox:width(),
-            height = vbox:height(),
-        },
-        enter = true,
-        focusable = false,
-        buf_options = {
-            buftype = "nofile",
-            modifiable = false,
-            readonly = true,
-        },
-    })
-
-    popup:mount()
-
-    local bufnr = popup.bufnr
-    local ns_id = -1
-
-    local render = function()
-        -- enable changes
-        vim.api.nvim_buf_set_option(bufnr, "modifiable", true)
-        vim.api.nvim_buf_set_option(bufnr, "readonly", false)
-
-        vbox:create_lines(bufnr, ns_id, 1)
-
-        -- disable changes
-        vim.api.nvim_buf_set_option(bufnr, "modifiable", false)
-        vim.api.nvim_buf_set_option(bufnr, "readonly", true)
+    local function close()
+        vim.api.nvim_win_close(win, true)
     end
 
-    render()
+    local bufnr = vim.api.nvim_win_get_buf(win)
+    local keymap_opts = { buffer = bufnr, noremap = true, silent = true }
 
-    local selected = 1
-
-    local confirm = function()
-        popup:unmount()
-        callback(selected)
-    end
-
-    local select = function(index)
-        selected = index
-        if selected < 1 then
-            selected = #choices
-        elseif selected > #choices then
-            selected = 1
-        end
-        render()
-    end
-
-    local move = function(diff)
-        select(selected + diff)
-    end
-
-    popup:map("n", "<C-q>", func.apply(popup.unmount, popup), opts)
-    popup:map("n", "<C-w>", func.apply(popup.unmount, popup), opts)
-    popup:map("n", "<CR>", confirm, opts)
-    popup:map("n", "<Left>", func.apply(move, -1), opts)
-    popup:map("n", "<Down>", func.apply(move, 1), opts)
-    popup:map("n", "<Up>", func.apply(move, -1), opts)
-    popup:map("n", "<Right>", func.apply(move, 1), opts)
-    popup:map("n", "<C-h>", func.apply(move, -1), opts)
-    popup:map("n", "<C-j>", func.apply(move, 1), opts)
-    popup:map("n", "<C-k>", func.apply(move, -1), opts)
-    popup:map("n", "<C-l>", func.apply(move, 1), opts)
-
-    for i, choice in ipairs(choices) do
-        if choice.key ~= nil then
-            local action = function()
-                select(i)
-                confirm()
+    for i, choice in ipairs(options.choices) do
+        vim.keymap.set("n", tostring(i), function()
+            if choice.callback then
+                choice.callback()
             end
-            popup:map("n", choice.key:lower(), action, opts)
-            popup:map("n", choice.key:upper(), action, opts)
-        end
+
+            close()
+        end, keymap_opts)
     end
 
-    popup:on({ "BufLeave", "BufWinLeave" }, func.apply(popup.unmount, popup), { once = true })
-end
-
-local shift = function(align, len, max)
-    if align == "center" then
-        return math.floor((max - len) / 2)
-    elseif align == "end" then
-        return max - len
-    end
-    return 0
-end
-
-local el_height = function(el)
-    if el.height ~= nil then
-        return el:height()
-    end
-    return 1
-end
-
-local create_lines = function(el, bufnr, ns_id, linenr_start)
-    local Line = require("nui.line")
-
-    local height = el_height(el)
-    local width = el:width()
-
-    for i = 0, height - 1 do
-        local line = Line()
-        line:append(string.rep(" ", width))
-        line:render(bufnr, ns_id, linenr_start + i)
-    end
-end
-
-VBox = nil
-
-local init_vbox = function()
-    if VBox ~= nil then
-        return
-    end
-
-    local Object = require("nui.object")
-    VBox = Object("VBox")
-
-    function VBox:init(options, items)
-        self._options = {
-            align = options.align or "start",
-            gap = options.gap or 0,
-            width = options.width or nil,
-        }
-        self._items = items or {}
-    end
-
-    function VBox:append(item)
-        table.insert(self._items, item)
-    end
-
-    function VBox:width()
-        if self._options.width ~= nil then
-            return self._options.width
-        end
-
-        local width = 0
-        for _, item in ipairs(self._items) do
-            width = math.max(width, item:width())
-        end
-        return width
-    end
-
-    function VBox:height()
-        local height = 0
-        for _, item in ipairs(self._items) do
-            height = height + el_height(item)
-        end
-        return height + (self._options.gap * (#self._items - 1))
-    end
-
-    function VBox:render(bufnr, ns_id, linenr_start, byte_start)
-        local line = linenr_start
-        for _, item in ipairs(self._items) do
-            local col = byte_start + shift(self._options.align, item:width(), self:width())
-
-            item:render(bufnr, ns_id, line, col)
-            line = line + el_height(item) + self._options.gap
-        end
-    end
-
-    function VBox:create_lines(bufnr, ns_id, linenr_start)
-        create_lines(self, bufnr, ns_id, linenr_start)
-        self:render(bufnr, ns_id, linenr_start, 0)
-    end
-end
-
-M.VBox = function(options, items)
-    init_vbox()
-    return VBox:new(options, items)
-end
-
-HBox = nil
-
-local init_hbox = function()
-    if HBox ~= nil then
-        return
-    end
-
-    local Object = require("nui.object")
-    HBox = Object("HBox")
-
-    function HBox:init(options, items)
-        self._options = {
-            align = options.align or "start",
-            gap = options.gap or 0,
-            width = options.width or nil,
-        }
-        self._items = items or {}
-    end
-
-    function HBox:append(item)
-        table.insert(self._items, item)
-    end
-
-    function HBox:width()
-        local width = 0
-        for _, item in ipairs(self._items) do
-            width = width + item:width()
-        end
-        return width + (self._options.gap * (#self._items - 1))
-    end
-
-    function HBox:height()
-        if self._options.height ~= nil then
-            return self._options.height
-        end
-
-        local height = 0
-        for _, item in ipairs(self._items) do
-            height = math.max(height, item.height and item:height() or 1)
-        end
-
-        return height
-    end
-
-    function HBox:render(bufnr, ns_id, linenr_start, byte_start)
-        local col = byte_start
-        for _, item in ipairs(self._items) do
-            local line = linenr_start + shift(self._options.align, el_height(item), self:height())
-
-            item:render(bufnr, ns_id, line, col)
-            col = col + item:width() + self._options.gap
-        end
-    end
-
-    function HBox:create_lines(bufnr, ns_id, linenr_start)
-        create_lines(self, bufnr, ns_id, linenr_start)
-        self:render(bufnr, ns_id, linenr_start, 0)
-    end
-end
-
-M.HBox = function(options, items)
-    init_hbox()
-    return HBox:new(options, items)
-end
-
-Flex = nil
-
-local init_flex = function()
-    if Flex ~= nil then
-        return
-    end
-
-    local Object = require("nui.object")
-    Flex = Object("Flex")
-
-    function Flex:init(options, items)
-        self._options = {
-            align = {
-                h = (options.align or {}).h or "start",
-                v = (options.align or {}).v or "start",
-            },
-            gap = {
-                h = (options.gap or {}).h or 0,
-                v = (options.gap or {}).v or 0,
-            },
-            width = options.width or nil,
-            height = options.height or nil,
-        }
-        self._items = items or {}
-        self._container = nil
-    end
-
-    function Flex:append(item)
-        table.insert(self._items, item)
-        self._container = nil
-    end
-
-    function Flex:width()
-        if self._options.width ~= nil then
-            return self._options.width
-        end
-        self:_ensure_container()
-        return self._container:width()
-    end
-
-    function Flex:height()
-        if self._options.height ~= nil then
-            return self._options.height
-        end
-        self:_ensure_container()
-        return self._container:height()
-    end
-
-    function Flex:render(bufnr, ns_id, linenr_start, byte_start)
-        self:_ensure_container()
-        self._container:render(bufnr, ns_id, linenr_start, byte_start)
-    end
-
-    function Flex:create_lines(bufnr, ns_id, linenr_start)
-        self:_ensure_container()
-        self._container:create_lines(bufnr, ns_id, linenr_start)
-    end
-
-    function Flex:_ensure_container()
-        if self._container ~= nil then
-            return
-        end
-
-        local width = self._options.width
-        local height = self._options.height
-        local align = self._options.align
-        local gap = self._options.gap
-
-        self._container = M.VBox({ align = align.v, gap = gap.v, width = width })
-
-        if #self._items == 0 then
-            return
-        end
-
-        local hbox = M.HBox({ align = align.h, gap = gap.h, height = height })
-        self._container:append(hbox)
-
-        for _, item in ipairs(self._items) do
-            if width ~= nil and hbox:width() + item:width() > width then
-                hbox = M.HBox({ align = align.h, gap = gap.h, height = height })
-                self._container:append(hbox)
-            end
-            hbox:append(item)
-        end
-    end
-end
-
-M.Flex = function(options, items)
-    init_flex()
-    return Flex:new(options, items)
+    vim.keymap.set("n", "q", close, keymap_opts)
+    vim.keymap.set("n", "<Esc>", close, keymap_opts)
+    vim.keymap.set("n", "<C-c>", close, keymap_opts)
+    vim.keymap.set("n", "<C-q>", close, keymap_opts)
 end
 
 return M

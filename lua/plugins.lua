@@ -13,10 +13,10 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-    -- ====== UI and visuals ======
+    -- ====== APIs and libraries ======
+    "nvim-lua/plenary.nvim",
 
-    -- UI framework
-    "MunifTanjim/nui.nvim",
+    -- ====== UI and visuals ======
 
     -- Toast notifications
     {
@@ -192,25 +192,3 @@ require("lazy").setup({
     { "folke/tokyonight.nvim", name = "tokyonight" },
     { "catppuccin/nvim", name = "catppuccin" },
 })
-
-require("plugin-config/dressing")
-require("plugin-config/telescope")
-require("plugin-config/nvim-scrollbar")
-require("plugin-config/gitsigns")
-require("plugin-config/mini")
-require("plugin-config/floaterm")
-require("plugin-config/lsp")
-require("plugin-config/dap")
-require("plugin-config/nvim-cmp")
-require("plugin-config/nvim-treesitter")
-require("plugin-config/persisted")
-require("plugin-config/nvim-tree")
-require("plugin-config/bufferline")
-require("plugin-config/blamer")
-require("plugin-config/pretty-fold")
-require("plugin-config/copilot")
-require("plugin-config/indent-blankline")
-require("plugin-config/autopairs")
-require("plugin-config/leap")
-require("plugin-config/discord")
-require("plugin-config/theme")
