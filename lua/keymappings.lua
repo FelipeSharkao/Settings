@@ -43,6 +43,7 @@ keymap("n", "O", "O <BS><Esc>", opts)
 
 -- create a new line without breaking the current one
 keymap("i", "<C-CR>", "<C-O>o", opts)
+keymap("i", "<C-S-CR>", "<C-O>O", opts)
 
 -- Mapping Del and Backspace
 keymap("n", "<Del>", "dl", opts)
