@@ -10,7 +10,17 @@ require("mini.cursorword").setup()
 require("mini.statusline").setup()
 
 -- Surround actions
-require("mini.surround").setup({
+local surround = require("mini.surround")
+surround.setup({
+    custom_surroundings = {
+        ["g"] = {
+            input = { "%f[%w_][%w_]+%b<>", "^.-<().*()>$" },
+            output = function()
+                local type_name = surround.user_input("Type name")
+                return { left = type_name .. "<", right = ">" }
+            end,
+        },
+    },
     mappings = {
         add = "ys",
         delete = "ds",
