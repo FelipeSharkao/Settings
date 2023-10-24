@@ -48,10 +48,8 @@ keymap("i", "<C-S-CR>", "<C-O>O", opts)
 -- Mapping Del and Backspace
 keymap("n", "<Del>", "dl", opts)
 keymap("n", "<BS>", "dh", opts)
-keymap("n", "<C-Del>", "de", opts)
-keymap("n", "<C-BS>", "db", opts)
-keymap("i", "<C-Del>", "<C-O>de", opts)
-keymap("i", "<C-BS>", "<C-O>db", opts)
+keymap("i", "<C-Del>", '<C-O>"_de', opts)
+keymap("i", "<C-BS>", '<Esc>"_db"dli', opts)
 
 -- Mapping U to Redo.
 keymap("n", "U", "<C-r>", opts)
