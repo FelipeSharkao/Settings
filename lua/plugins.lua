@@ -150,8 +150,10 @@ require("lazy").setup({
     -- Multicursor
     "mg979/vim-visual-multi",
 
-    -- Automaticly close () [] {} '' ""
-    "jiangmiao/auto-pairs",
+    -- Automaticly close pairs
+    "altermo/ultimate-autopair.nvim",
+    "alvan/vim-closetag",
+    { "RRethy/nvim-treesitter-endwise", dependencies = { "nvim-treesitter/nvim-treesitter" } },
 
     -- Jump to pattern
     { "ggandor/leap.nvim", dependencies = { "tpope/vim-repeat" } },
