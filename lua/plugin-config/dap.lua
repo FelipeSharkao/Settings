@@ -30,7 +30,7 @@ end
 vim.fn.sign_define("DapBreakpoint", { text = "", texthl = "", linehl = "", numhl = "" })
 vim.fn.sign_define("DapStopped", { text = "", texthl = "", linehl = "", numhl = "" })
 
-vim.api.nvim_create_user_command("DebugAttach", function(opts)
+vim.api.nvim_create_user_command("DapAttachToCwd", function(opts)
     print("Attaching debugger")
     dap.run({
         type = opts.args,
@@ -41,10 +41,6 @@ vim.api.nvim_create_user_command("DebugAttach", function(opts)
         skipFiles = { "<node_internals>/**/*.js" },
     })
 end, { nargs = 1 })
-
-vim.api.nvim_create_user_command("DebugBr", function()
-    dap.toggle_breakpoint()
-end, { nargs = 0 })
 
 keymap("n", "<C-d>n", dap.continue, opts)
 keymap("n", "<C-d>k", dap.step_out, opts)
