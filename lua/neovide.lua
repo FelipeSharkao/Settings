@@ -10,12 +10,16 @@ if vim.g.neovide then
 
     vim.api.nvim_create_autocmd("BufEnter", {
         callback = function()
-            -- Paste
-            keymap("i", "<C-V>", "<Esc>gpi", { noremap = true })
-            keymap("i", "<C-S-V>", '<Esc>"+gpi', { noremap = true })
+            -- Copy
+            keymap("v", "<C-C>", "y", { noremap = true })
+            keymap("v", "<C-S-C>", '"+y', { noremap = true })
 
-            keymap("t", "<C-V>", "<C-\\><C-N>gpi", { noremap = true })
-            keymap("t", "<C-S-V>", '<C-\\><C-N>"+gpi', { noremap = true })
+            -- Paste
+            keymap("i", "<C-V>", "<C-O>gP", { noremap = true })
+            keymap("i", "<C-S-V>", '<C-O>"+gP', { noremap = true })
+
+            keymap("t", "<C-V>", "<C-\\><C-O>gP", { noremap = true })
+            keymap("t", "<C-S-V>", '<C-\\><C-O>"+gP', { noremap = true })
 
             keymap("c", "<C-V>", '<C-R>"', { noremap = true })
             keymap("c", "<C-S-V>", "<C-R>+", { noremap = true })
