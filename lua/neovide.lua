@@ -4,6 +4,7 @@ if vim.g.neovide then
     vim.opt.guifont = "FiraCode Nerd Font Mono:h10.5"
 
     vim.g.neovide_scale_factor = 1.0
+    vim.g.neovide_transparency = 0.9
     vim.g.neovide_scroll_animation_length = 0.2
     vim.g.neovide_input_use_logo = false
     vim.g.neovide_input_macos_alt_is_meta = true
