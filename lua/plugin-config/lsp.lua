@@ -1,4 +1,3 @@
-local lspconfig = require("lspconfig")
 local null_ls = require("null-ls")
 local inlay_hints = require("lsp-inlayhints")
 
@@ -37,6 +36,8 @@ inlay_hints.setup()
 navbuddy.setup({
     window = { border = "rounded" },
 })
+
+require("lspconfig.configs").vtsls = require("vtsls").lspconfig
 
 vim.lsp.handlers["textDocument/codeAction"] = lsputil_code_action.code_action_handler
 vim.lsp.handlers["textDocument/references"] = lsputil_locations.references_handler
@@ -84,6 +85,8 @@ keymap("n", "gf", function()
     vim.lsp.buf.format({ async = true })
 end, opts)
 
+local lspconfig = require("lspconfig")
+
 local on_attach = function(client, bufnr)
     vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
@@ -101,19 +104,20 @@ end
 
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-require("typescript-tools").setup({
+lspconfig.vtsls.setup({
     on_attach = on_attach_no_format,
     capabilities = capabilities,
     settings = {
-        separate_diagnostic_server = false,
         publish_diagnostic_on = "insert_leave",
-        tsserver_plugins = {},
-        tsserver_file_preferences = {
-            includeInlayVariableTypeHints = true,
-            includeInlayVariableTypeHintsWhenTypeMatchesName = false,
-            includeInlayPropertyDeclarationTypeHints = true,
-            includeInlayFunctionLikeReturnTypeHints = true,
-            includeInlayEnumMemberValueHints = true,
+        typescript = {
+            inlayHints = {
+                parameterNames = { enabled = "literals" },
+                parameterTypes = { enabled = true },
+                variableTypes = { enabled = true },
+                propertyDeclarationTypes = { enabled = true },
+                functionLikeReturnTypes = { enabled = true },
+                enumMemberValues = { enabled = true },
+            },
         },
     },
 })

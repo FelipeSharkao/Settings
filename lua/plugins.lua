@@ -58,8 +58,17 @@ require("lazy").setup({
     "jay-babu/mason-null-ls.nvim",
     "jose-elias-alvarez/null-ls.nvim",
     {
-        "pmizio/typescript-tools.nvim",
-        dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+        "yioneko/nvim-vtsls",
+        dependencies = { "neovim/nvim-lspconfig" },
+        -- since asdf will change the node path for different projects, I can't just install the
+        -- package globally and call it a day. Instead, I'll download the package and installing it
+        -- locally and symlink the executable to my $PATH
+        build = [[
+           rm -rf package; wget $(npm view @vtsls/language-server dist.tarball) -O - | tar -xzf -;
+           cd package;
+           npm install --save-prod;
+           ln -sf $(pwd)/bin/vtsls.js $HOME/.local/bin/vtsls;
+        ]],
     },
 
     -- Show LSP inlay hints
@@ -74,7 +83,7 @@ require("lazy").setup({
             {
                 "microsoft/vscode-js-debug",
                 lazy = true,
-                build = "npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out",
+                build = "npm install && npx gulp vsDebugServerBundle && mv dist out",
             },
         },
     },
