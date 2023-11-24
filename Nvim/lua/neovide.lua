@@ -26,10 +26,10 @@ if vim.g.neovide then
             keymap("c", "<C-S-V>", "<C-R>+", { noremap = true })
 
             -- Change font scale
-            local change_scale_factor = function(delta)
-                local new_scale_factor = vim.g.neovide_scale_factor + delta
+            local change_scale_factor = function(scale)
+                local new_scale_factor = vim.g.neovide_scale_factor * scale
 
-                if new_scale_factor < 0.1 then
+                if new_scale_factor < 0.4 then
                     return
                 end
 
@@ -37,11 +37,11 @@ if vim.g.neovide then
             end
 
             vim.keymap.set("n", "<C-=>", function()
-                change_scale_factor(0.1)
+                change_scale_factor(1.25)
             end)
 
             vim.keymap.set("n", "<C-->", function()
-                change_scale_factor(-0.1)
+                change_scale_factor(0.8)
             end)
         end,
     })
