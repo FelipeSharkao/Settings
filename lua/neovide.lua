@@ -3,6 +3,7 @@ local keymap = vim.keymap.set
 if vim.g.neovide then
     vim.opt.guifont = "FiraCode Nerd Font Mono:h10.5"
 
+    vim.g.neovide_scale_factor = 1.0
     vim.g.neovide_scroll_animation_length = 0.2
     vim.g.neovide_input_use_logo = false
     vim.g.neovide_input_macos_alt_is_meta = true
@@ -18,6 +19,25 @@ if vim.g.neovide then
 
             keymap("c", "<C-V>", '<C-R>"', { noremap = true })
             keymap("c", "<C-S-V>", "<C-R>+", { noremap = true })
+
+            -- Change font scale
+            local change_scale_factor = function(delta)
+                local new_scale_factor = vim.g.neovide_scale_factor + delta
+
+                if new_scale_factor < 0.1 then
+                    return
+                end
+
+                vim.g.neovide_scale_factor = new_scale_factor
+            end
+
+            vim.keymap.set("n", "<C-=>", function()
+                change_scale_factor(0.1)
+            end)
+
+            vim.keymap.set("n", "<C-->", function()
+                change_scale_factor(-0.1)
+            end)
         end,
     })
 end
