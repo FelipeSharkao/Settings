@@ -9,3 +9,4 @@ link() {
 link Zsh/zshrc "$HOME/.zshrc"
 link Zsh/p10k.zsh "$HOME/.p10k.zsh"
 link Nvim "$HOME/.config/nvim"
+link Kitty "$HOME/.config/kitty"
