@@ -168,19 +168,10 @@ require("lazy").setup({
     { "ggandor/leap.nvim", dependencies = { "tpope/vim-repeat" } },
     "ggandor/flit.nvim",
 
-    -- Indicator for git added and removed lines
-    "lewis6991/gitsigns.nvim",
-
     -- Text objects
     { "chrisgrieser/nvim-various-textobjs", opts = { useDefaultKeymaps = true } },
 
     -- ====== Integration ======
-    -- Show commit messages
-    {
-        "APZelos/blamer.nvim",
-        dependencies = { "nvim-tree/nvim-web-devicons", "akinsho/bufferline.nvim" },
-    },
-
     -- Github Copilot
     "github/copilot.vim",
 
@@ -189,6 +180,14 @@ require("lazy").setup({
 
     -- Respect .editorconfig file
     "gpanders/editorconfig.nvim",
+
+    -- Git
+    "lewis6991/gitsigns.nvim",
+    "sindrets/diffview.nvim",
+    {
+        "APZelos/blamer.nvim",
+        dependencies = { "nvim-tree/nvim-web-devicons", "akinsho/bufferline.nvim" },
+    },
 
     -- ====== Misc ======
     -- many, many features
