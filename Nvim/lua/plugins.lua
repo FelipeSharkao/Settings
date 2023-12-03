@@ -56,7 +56,7 @@ require("lazy").setup({
     "williamboman/mason-lspconfig.nvim",
     "neovim/nvim-lspconfig",
     "jay-babu/mason-null-ls.nvim",
-    "nvimtools/none-ls.nvim",
+    "nvimtools/none-ls.nvim", -- replaces jose-elias-alvarez/null-ls.nvim
     {
         "yioneko/nvim-vtsls",
         dependencies = { "neovim/nvim-lspconfig" },
@@ -159,7 +159,7 @@ require("lazy").setup({
     -- Multicursor
     "mg979/vim-visual-multi",
 
-    -- Automaticly close pairs
+    -- Automatically close pairs
     "altermo/ultimate-autopair.nvim",
     "alvan/vim-closetag",
     { "RRethy/nvim-treesitter-endwise", dependencies = { "nvim-treesitter/nvim-treesitter" } },

@@ -65,11 +65,17 @@ vim.wo.breakindentopt = "min:40,shift:3,sbr"
 vim.o.showbreak = "↳"
 vim.wo.colorcolumn = "+1"
 
+-- ================= Spell checking ================= --
+
+vim.o.spell = true
+vim.o.spelllang = "pt,en"
+vim.o.spelloptions = "camel"
+
 -- ================= Misc ================= --
 
 vim.o.history = 10000 -- numbers of entries in history for ':' commands and search patterns (10000 = max)
 vim.o.updatetime = 100 -- used for CursorHold event (for document highlighting detection)
-vim.o.mouse = "nv" -- allow mose in normal & visual mode
+vim.o.mouse = "nv" -- allow mouse in normal & visual mode
 vim.o.mousemodel = "extend" -- right click extends selection
 
 -- allows hidden buffers
