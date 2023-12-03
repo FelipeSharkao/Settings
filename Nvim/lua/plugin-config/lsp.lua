@@ -111,30 +111,22 @@ lspconfig.vtsls.setup({
         publish_diagnostic_on = "insert_leave",
         typescript = {
             inlayHints = {
-                parameterNames = { enabled = "literals" },
-                parameterTypes = { enabled = true },
                 variableTypes = { enabled = true },
                 propertyDeclarationTypes = { enabled = true },
                 functionLikeReturnTypes = { enabled = true },
                 enumMemberValues = { enabled = true },
             },
         },
+        vtsls = { experimental = { entriesLimit = 30 } },
     },
 })
-
 lspconfig.rust_analyzer.setup({
     on_attach = on_attach_no_format,
     capabilities = capabilities,
     settings = {
         ["rust-analyzer"] = {
-            cargo = {
-                buildScripts = {
-                    enable = true,
-                },
-            },
-            procMacro = {
-                enable = true,
-            },
+            cargo = { buildScripts = { enable = true } },
+            procMacro = { enable = true },
         },
     },
 })
