@@ -6,7 +6,8 @@ link() {
     ln -sf "$BASEDIR/$1" "$2"
 }
 
-link Zsh/zshrc "$HOME/.zshrc"
-link Nvim "$HOME/.config/nvim"
 link Kitty "$HOME/.config/kitty"
 link Lazygit "$HOME/.config/lazygit"
+link Nvim "$HOME/.config/nvim"
+link WezTerm/wezterm.lua "$HOME/.wezterm.lua"
+link Zsh/zshrc "$HOME/.zshrc"
