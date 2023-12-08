@@ -46,27 +46,25 @@ starter.setup({
 
         -- Recent sessions
         function()
+            local sessions = require("plugin-config.sessions")
             local home = vim.fn.expand("$HOME/")
-            local file = io.open(vim.fn.stdpath("data") .. "/persisted_recent", "r")
-
-            if not file then
-                return {}
-            end
 
             local entries = {}
 
-            for line in file:lines() do
-                local name = line:gsub(".*/", "")
-                    :gsub(".vim$", "")
-                    :gsub("%%", "/")
-                    :gsub("^" .. home, "")
-                    :gsub("@@(.*)", " (branch: %1)")
+            for _, session in ipairs(sessions.recent_sessions()) do
+                local name = sessions.get_session_cwd(session):gsub("^" .. home, "")
 
                 table.insert(entries, {
                     section = "Recent sessions",
                     name = name,
-                    action = "SessionLoadFromFile " .. line,
+                    action = function()
+                        sessions.load_session(session)
+                    end,
                 })
+
+                if #entries >= 10 then
+                    break
+                end
             end
 
             return entries
