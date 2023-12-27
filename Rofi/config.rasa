@@ -5,3 +5,54 @@ configuration {
         directories-first: true;
     }
 }
+
+@theme "~/.cache/wal/colors-rofi-dark"
+
+window, prompt, entry, element, element-text, element-icon {
+    background-color: @background;
+    text-color: @foreground;
+    vertical-align: 0.5;
+}
+
+window {
+    padding: 0;
+}
+
+inputbar {
+    children: [ entry ];
+    padding: 0;
+}
+
+entry {
+    placeholder: "Digite aqui...";
+    padding: 0.5em 0.8em;
+}
+
+listview {
+    scrollbar: false;
+    padding: 0;
+}
+
+element {
+    padding: 0.2em 0.5em;
+    spacing: 0.5em;
+}
+
+element-icon {
+    size: 1.4em;
+}
+
+element selected.normal, element-text selected.normal, element-icon selected.normal {
+    background-color: @selected-normal-background;
+    text-color: @background;
+}
+
+element selected.urgent, element-text selected.urgent, element-icon selected.urgent {
+    background-color: @selected-urgent-background;
+    text-color: @background;
+}
+
+element selected.active, element-text selected.active, element-icon selected.active {
+    background-color: @selected-active-background;
+    text-color: @background;
+}

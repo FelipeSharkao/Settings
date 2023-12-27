@@ -127,6 +127,12 @@ require("lazy").setup({
     -- Better comments
     { "numToStr/Comment.nvim", opts = {} },
 
+    -- Preview CSS colors
+    {
+        "NvChad/nvim-colorizer.lua",
+        opts = { user_default_options = { css = true, tailwind = true } },
+    },
+
     -- ====== File and project management ======
     -- close buffer without closing window
     "moll/vim-bbye",
@@ -193,4 +199,5 @@ require("lazy").setup({
     { "nyoom-engineering/oxocarbon.nvim", name = "oxocarbon" },
     { "folke/tokyonight.nvim", name = "tokyonight" },
     { "catppuccin/nvim", name = "catppuccin" },
+    { "AlphaTechnolog/pywal.nvim", as = "pywal" },
 })

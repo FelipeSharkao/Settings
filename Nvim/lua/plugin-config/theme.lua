@@ -53,9 +53,8 @@ require("catppuccin").setup({
     },
 })
 
-local theme = require("last-color").recall() or "rose-pine"
-
-vim.cmd("colorscheme " .. theme)
-
 vim.o.termguicolors = true
 vim.o.background = "dark"
+
+local theme = require("last-color").recall() or "wal"
+vim.cmd("colorscheme " .. theme)
