@@ -60,15 +60,7 @@ require("lazy").setup({
     {
         "yioneko/nvim-vtsls",
         dependencies = { "neovim/nvim-lspconfig" },
-        -- since asdf will change the node path for different projects, I can't just install the
-        -- package globally and call it a day. Instead, I'll download the package and installing it
-        -- locally and symlink the executable to my $PATH
-        build = [[
-           rm -rf package; wget $(npm view @vtsls/language-server dist.tarball) -O - | tar -xzf -;
-           cd package;
-           npm install --save-prod;
-           ln -sf $(pwd)/bin/vtsls.js $HOME/.local/bin/vtsls;
-        ]],
+        build = "bun add -g @vtsls/language-server",
     },
 
     -- Show LSP inlay hints

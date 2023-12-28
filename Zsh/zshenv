@@ -1,0 +1,50 @@
+export SETTINGS="$(cat $HOME/.local/share/settings_path)"
+
+export PATH=$PATH:$HOME/.local/bin
+
+# Aliases
+
+NVIM_REMOTE="nvr --remote-tab-wait +'setl bufhidden=wipe'"
+
+if [ -n "$NVIM" ]; then
+    alias nvim="$NVIM_REMOTE"
+    alias vim="$NVIM_REMOTE"
+else
+    alias vim=nvim
+fi
+
+if [ -n "$NVIM" ]; then
+    export VISUAL="$NVIM_REMOTE"
+    export EDITOR="$NVIM_REMOTE"
+    export GIT_EDITOR="$NVIM_REMOTE"
+else
+    export VISUAL="nvim"
+    export EDITOR="nvim"
+    export GIT_EDITOR="nvim"
+fi
+
+alias git-purge="git gc; \
+git fetch --prune --all; \
+git branch --merged | grep -v '*' > /tmp/merged-branches; \
+nano /tmp/merged-branches; \
+xargs git branch -d < /tmp/merged-branches; \
+rm /tmp/merged-branches"
+
+alias gmc="git merge --continue"
+
+# Bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+[ -s "$BUN_INSTALL/_bun" ] && source "$BUN_INSTALL/_bun"
+
+# Java
+export ANDROID_SDK_ROOT=$HOME/Android/Sdk
+export PATH=$PATH:$ANDROID_SDK_ROOT/emulator
+export PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools
+export _JAVA_OPTIONS="-Xms4000m -Xmx8000m"
+
+# asdf
+[[ ! -f $HOME/.asdf/plugins/java/set-java-home.zsh ]] || . $HOME/.asdf/plugins/java/set-java-home.zsh
+
+# Rust
+. $HOME/.cargo/env

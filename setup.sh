@@ -8,9 +8,12 @@ link() {
     echo "Created symlink $2 -> $1"
 }
 
+link Zsh/zshrc "$HOME/.zshrc"
+link Zsh/zshenv "$HOME/.zshenv"
 link Kitty "$HOME/.config/kitty"
 link Lazygit "$HOME/.config/lazygit"
 link Nvim "$HOME/.config/nvim"
 link WezTerm/wezterm.lua "$HOME/.wezterm.lua"
 link Zsh/zshrc "$HOME/.zshrc"
+link Pywal "$HOME/.config/wal"
 link Hypr "$HOME/.config/hypr"
