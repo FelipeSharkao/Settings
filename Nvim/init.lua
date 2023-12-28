@@ -1,4 +1,4 @@
-require("neovide")
+require("gui")
 require("basics")
 require("plugins")
 require("utils")
