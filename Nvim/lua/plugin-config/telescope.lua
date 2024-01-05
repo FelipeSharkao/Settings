@@ -35,6 +35,7 @@ telescope.setup({
             prompt_position = "top",
             mirror = true,
         },
+        winblend = 15,
         file_sorter = sorters.get_fuzzy_file,
         file_ignore_patterns = { "node_modules/.*" },
         generic_sorter = sorters.get_generic_fuzzy_sorter,

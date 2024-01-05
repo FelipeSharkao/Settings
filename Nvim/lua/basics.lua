@@ -71,6 +71,10 @@ vim.o.spell = true
 vim.o.spelllang = "pt,en"
 vim.o.spelloptions = "camel"
 
+-- ================= Widows config ================= --
+vim.o.winblend = 15
+vim.o.pumblend = 15
+
 -- ================= Misc ================= --
 
 vim.o.history = 10000 -- numbers of entries in history for ':' commands and search patterns (10000 = max)
