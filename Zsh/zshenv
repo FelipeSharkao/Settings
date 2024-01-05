@@ -31,6 +31,7 @@ xargs git branch -d < /tmp/merged-branches; \
 rm /tmp/merged-branches"
 
 alias gmc="git merge --continue"
+alias glon="git log --no-merges --pretty=\"%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset\""
 
 # Bun
 export BUN_INSTALL="$HOME/.bun"
