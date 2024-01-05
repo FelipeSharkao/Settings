@@ -3,19 +3,12 @@ local keymap = vim.keymap.set
 if vim.fn.has("gui_running") == 1 then
     vim.opt.guifont = "FiraCode Nerd Font Mono:h11"
 
-    -- Copy
-    keymap("v", "<C-C>", "y", { noremap = true })
-    keymap("v", "<C-S-C>", '"+y', { noremap = true })
-
     -- Paste
-    keymap("i", "<C-V>", "<C-O>gP", { noremap = true })
-    keymap("i", "<C-S-V>", '<C-O>"+gP', { noremap = true })
+    keymap({ "i", "c" }, "<C-V>", '<C-R><C-O>"', { noremap = true })
+    keymap({ "i", "c" }, "<C-S-V>", "<C-R><C-O>+", { noremap = true })
 
     keymap("t", "<C-V>", "<C-\\><C-O>gp", { noremap = true })
     keymap("t", "<C-S-V>", '<C-\\><C-O>"+gp', { noremap = true })
-
-    keymap("c", "<C-V>", '<C-R>"', { noremap = true })
-    keymap("c", "<C-S-V>", "<C-R>+", { noremap = true })
 end
 
 if vim.g.neovide then
