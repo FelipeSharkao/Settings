@@ -1,7 +1,7 @@
 local keymap = vim.keymap.set
 
 if vim.fn.has("gui_running") == 1 then
-    vim.opt.guifont = "FiraCode Nerd Font Mono:h11"
+    vim.opt.guifont = "FiraCode Nerd Font Mono:h10.5"
 
     -- Paste
     keymap({ "i", "c" }, "<C-V>", '<C-R><C-O>"', { noremap = true })
