@@ -13,7 +13,7 @@
     },
     "clock": {
         "format": "{:%H:%M}",
-        "tooltip-format": "{:%A, %m de %d de %Y}",
+        "tooltip-format": "{:%A, %d de %m de %Y}",
     },
     "network": {
         "format": " ",
