@@ -3,6 +3,17 @@ local actions = require("telescope.actions")
 local builtin = require("telescope.builtin")
 local previewers = require("telescope.previewers")
 local sorters = require("telescope.sorters")
+local fb_actions = require("telescope").extensions.file_browser.actions
+
+local function fb_trash_action(prompt_bufnr)
+    local action_state = require("telescope.actions.state")
+    local current_picker = action_state.get_current_picker(prompt_bufnr)
+
+    current_picker:delete_selection(function(selection)
+        vim.fn.system({ "trash-put", selection.Path:absolute() })
+        return vim.v.shell_error == 0
+    end)
+end
 
 telescope.setup({
     defaults = {
@@ -63,10 +74,33 @@ telescope.setup({
             override_generic_sorter = false,
             override_file_sorter = true,
         },
+        file_browser = {
+            layout_strategy = "horizontal",
+            layout_config = {
+                prompt_position = "top",
+                mirror = false,
+            },
+            hijack_netrw = true,
+            grouped = true,
+            select_buffer = true,
+            follow_symlinks = true,
+            hide_parent_dirs = true,
+            display_stat = false,
+            mappings = {
+                i = {
+                    ["<A-d>"] = fb_trash_action,
+                },
+                n = {
+                    ["d"] = fb_trash_action,
+                    ["<BS>"] = fb_actions.goto_parent_dir,
+                },
+            },
+        },
     },
 })
 
 telescope.load_extension("dap")
+telescope.load_extension("file_browser")
 
 local keymap = vim.keymap.set
 local opts = { silent = true, noremap = true }
@@ -75,5 +109,8 @@ keymap("n", "<Leader>f", builtin.find_files, opts)
 keymap("n", "<Leader>g", builtin.live_grep, opts)
 keymap("n", "<Leader>b", builtin.buffers, opts)
 keymap("n", "<Leader>l", builtin.resume, opts)
+keymap("n", "<Leader>F", function()
+    telescope.extensions.file_browser.file_browser({ path = "%:p:h" })
+end, opts)
 
 keymap("n", "z=", builtin.spell_suggest, opts)

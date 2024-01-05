@@ -148,7 +148,10 @@ require("lazy").setup({
     },
 
     -- File tree window
-    { "nvim-tree/nvim-tree.lua", dependencies = { "nvim-tree/nvim-web-devicons" } },
+    {
+        "nvim-telescope/telescope-file-browser.nvim",
+        dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
+    },
 
     -- project + session management
     "olimorris/persisted.nvim",
