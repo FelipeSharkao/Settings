@@ -40,9 +40,6 @@ require("lazy").setup({
     -- floating terminal
     "voldikss/vim-floaterm",
 
-    -- prettier tabs
-    { "akinsho/bufferline.nvim", dependencies = { "nvim-tree/nvim-web-devicons" } },
-
     -- show indentation levels
     "lukas-reineke/indent-blankline.nvim",
 
@@ -137,6 +134,9 @@ require("lazy").setup({
     -- close buffer without closing window
     "moll/vim-bbye",
 
+    -- close unused buffers when the buffer list gets too crowded
+    "axkirillov/hbac.nvim",
+
     -- telescope - searching / navigation
     {
         "nvim-telescope/telescope.nvim",
@@ -185,10 +185,7 @@ require("lazy").setup({
     -- Git
     "lewis6991/gitsigns.nvim",
     "sindrets/diffview.nvim",
-    {
-        "APZelos/blamer.nvim",
-        dependencies = { "nvim-tree/nvim-web-devicons", "akinsho/bufferline.nvim" },
-    },
+    { "APZelos/blamer.nvim", dependencies = { "nvim-tree/nvim-web-devicons" } },
 
     -- ====== Misc ======
     -- many, many features

@@ -15,6 +15,18 @@ local function fb_trash_action(prompt_bufnr)
     end)
 end
 
+local function buf_delete_action(prompt_bufnr)
+    local action_state = require("telescope.actions.state")
+    local current_picker = action_state.get_current_picker(prompt_bufnr)
+
+    current_picker:delete_selection(function(selection)
+        if vim.api.nvim_buf_get_option(selection.bufnr, "modified") then
+            return false
+        end
+        vim.cmd.BufDel({ selection.bufnr })
+    end)
+end
+
 telescope.setup({
     defaults = {
         -- program to use for searching with its arguments
@@ -70,11 +82,20 @@ telescope.setup({
             },
         },
     },
-    extensions = {
-        fzy_native = {
-            override_generic_sorter = false,
-            override_file_sorter = true,
+    pickers = {
+        buffers = {
+            sort_lastused = true,
+            mappings = {
+                i = {
+                    ["<C-d>"] = buf_delete_action,
+                },
+                n = {
+                    ["d"] = buf_delete_action,
+                },
+            },
         },
+    },
+    extensions = {
         file_browser = {
             layout_strategy = "horizontal",
             layout_config = {

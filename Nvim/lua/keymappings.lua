@@ -67,3 +67,7 @@ keymap("v", "<Tab>", ">>_", opts)
 keymap("v", "<S-Tab>", "<<_", opts)
 keymap("i", "<Tab>", "\t", opts)
 keymap("i", "<S-Tab>", "\b", opts)
+
+-- go to next/previous buffer
+keymap("n", "[b", "<Cmd>edit #<CR>", opts)
+keymap("n", "]b", "<Cmd>bnext<CR>", opts)
