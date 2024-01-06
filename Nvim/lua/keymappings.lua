@@ -62,11 +62,10 @@ keymap("i", "<C-S>", esc .. ' . "<Cmd>w<CR>"', xopts)
 
 -- indent via Tab
 keymap("n", "<Tab>", ">>_", opts)
+keymap("v", "<Tab>", ">_", opts)
 keymap("n", "<S-Tab>", "<<_", opts)
-keymap("v", "<Tab>", ">>_", opts)
-keymap("v", "<S-Tab>", "<<_", opts)
-keymap("i", "<Tab>", "\t", opts)
-keymap("i", "<S-Tab>", "\b", opts)
+keymap("i", "<S-Tab>", "<C-O><<<C-O>_", opts)
+keymap("v", "<S-Tab>", "<_", opts)
 
 -- go to next/previous buffer
 keymap("n", "[b", "<Cmd>edit #<CR>", opts)
