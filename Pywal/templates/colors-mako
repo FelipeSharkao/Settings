@@ -1,0 +1,14 @@
+layer=overlay
+background-color={background}
+text-color={foreground}
+progress-color={color11}
+border-size=1
+border-color={color11}
+border-radius=6
+default-timeout=5000
+font=Noto Sans 11
+
+[urgency=high]
+border-size=2
+border-color=#bf616a
+default-timeout=0

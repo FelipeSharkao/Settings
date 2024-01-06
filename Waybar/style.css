@@ -4,7 +4,7 @@
 @define-color warning mix(@color1, yellow, 0.5);
 
 * {
-    font-family: JetBrains Mono;
+    font-family: Noto Sans;
     font-size: 11pt;
     border: none;
     border-radius: 0;
