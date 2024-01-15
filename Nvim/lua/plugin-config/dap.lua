@@ -42,11 +42,11 @@ vim.api.nvim_create_user_command("DapAttachToCwd", function(opts)
     })
 end, { nargs = 1 })
 
-keymap("n", "<C-d>n", dap.continue, opts)
-keymap("n", "<C-d>k", dap.step_out, opts)
-keymap("n", "<C-d>j", dap.step_into, opts)
-keymap("n", "<C-d>l", dap.step_over, opts)
-keymap("n", "<C-d>h", dapui.float_element, opts)
+-- keymap("n", "<C-d>n", dap.continue, opts)
+-- keymap("n", "<C-d>k", dap.step_out, opts)
+-- keymap("n", "<C-d>j", dap.step_into, opts)
+-- keymap("n", "<C-d>l", dap.step_over, opts)
+-- keymap("n", "<C-d>h", dapui.float_element, opts)
 
 dapui.setup()
 

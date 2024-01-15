@@ -3,15 +3,13 @@ local lspkind = require("lspkind")
 
 cmp.setup({
     mapping = {
-        ["<C-,>"] = cmp.mapping.scroll_docs(-4),
-        ["<C-.>"] = cmp.mapping.scroll_docs(4),
+        ["<C-N>"] = cmp.mapping.select_next_item(),
+        ["<C-P>"] = cmp.mapping.select_prev_item(),
+        ["<C-D>"] = cmp.mapping.scroll_docs(-4),
+        ["<C-U>"] = cmp.mapping.scroll_docs(4),
         ["<C-Space>"] = cmp.mapping.complete({}),
         ["<C-W>"] = cmp.mapping.abort(),
-        ["<Enter>"] = cmp.mapping.confirm({ select = false }),
-        ["<Tab>"] = cmp.mapping.select_next_item(),
-        ["<S-Tab>"] = cmp.mapping.select_prev_item(),
-        ["<Down>"] = cmp.mapping.select_next_item(),
-        ["<Up>"] = cmp.mapping.select_prev_item(),
+        ["<Tab>"] = cmp.mapping.confirm({ select = true }),
     },
     sources = cmp.config.sources({
         { name = "nvim_lsp" },
