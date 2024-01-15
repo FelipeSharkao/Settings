@@ -24,7 +24,7 @@ require("lsp-colors").setup({
 require("mason").setup()
 require("mason-lspconfig").setup({
     ensure_installed = {
-        "prismals",
+        "vtsls",
         "lua_ls",
         "rust_analyzer",
         "astro",
@@ -36,8 +36,6 @@ inlay_hints.setup()
 navbuddy.setup({
     window = { border = "rounded" },
 })
-
-require("lspconfig.configs").vtsls = require("vtsls").lspconfig
 
 vim.lsp.handlers["textDocument/codeAction"] = lsputil_code_action.code_action_handler
 vim.lsp.handlers["textDocument/references"] = lsputil_locations.references_handler
@@ -103,19 +101,25 @@ end
 
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
+local vtsls_lang_settings = {
+    inlayHints = {
+        variableTypes = { enabled = true },
+        propertyDeclarationTypes = { enabled = true },
+        functionLikeReturnTypes = { enabled = true },
+        enumMemberValues = { enabled = true },
+    },
+    preferences = {
+        preferTypeOnlyAutoImports = true,
+    },
+}
+
 lspconfig.vtsls.setup({
     on_attach = on_attach_no_format,
     capabilities = capabilities,
     settings = {
         publish_diagnostic_on = "insert_leave",
-        typescript = {
-            inlayHints = {
-                variableTypes = { enabled = true },
-                propertyDeclarationTypes = { enabled = true },
-                functionLikeReturnTypes = { enabled = true },
-                enumMemberValues = { enabled = true },
-            },
-        },
+        typescript = vtsls_lang_settings,
+        javascript = vtsls_lang_settings,
         vtsls = { experimental = { entriesLimit = 30 } },
     },
 })

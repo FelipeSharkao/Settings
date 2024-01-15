@@ -54,11 +54,6 @@ require("lazy").setup({
     "neovim/nvim-lspconfig",
     "jay-babu/mason-null-ls.nvim",
     "nvimtools/none-ls.nvim", -- replaces jose-elias-alvarez/null-ls.nvim
-    {
-        "yioneko/nvim-vtsls",
-        dependencies = { "neovim/nvim-lspconfig" },
-        build = "bun add -g @vtsls/language-server",
-    },
 
     -- Show LSP inlay hints
     "lvimuser/lsp-inlayhints.nvim",
@@ -170,7 +165,10 @@ require("lazy").setup({
     "ggandor/flit.nvim",
 
     -- Text objects
-    { "chrisgrieser/nvim-various-textobjs", opts = { useDefaultKeymaps = true } },
+    {
+        "chrisgrieser/nvim-various-textobjs",
+        opts = { useDefaultKeymaps = true, disable_keymaps = { "gc" } },
+    },
 
     -- ====== Integration ======
     -- Github Copilot
