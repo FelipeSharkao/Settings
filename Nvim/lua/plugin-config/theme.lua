@@ -56,5 +56,14 @@ require("catppuccin").setup({
 vim.o.termguicolors = true
 vim.o.background = "dark"
 
+vim.api.nvim_create_autocmd("ColorScheme", {
+    pattern = "*",
+    callback = function()
+        if vim.fn.has("gui_running") == 0 then
+            vim.cmd("hi Normal guibg=NONE")
+        end
+    end,
+})
+
 local theme = require("last-color").recall() or "wal"
 vim.cmd("colorscheme " .. theme)
