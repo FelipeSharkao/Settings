@@ -10,12 +10,13 @@ local colors = pywal_core.get_colors()
 -- unpredictable, will just try a bunch
 -- using colors.foreground leads to somewhat boring results
 local fg_colors = {
-    colors.color11,
-    colors.color10,
-    colors.color9,
-    colors.color12,
-    colors.color13,
-    colors.color14,
+    colors.color1,
+    colors.color2,
+    colors.color3,
+    colors.color4,
+    colors.color5,
+    colors.color6,
+    colors.color7,
     colors.foreground,
 }
 

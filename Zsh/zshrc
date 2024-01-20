@@ -1,5 +1,5 @@
-# Restore theme from Pywal
-wal -Renq &> /dev/null
+# Restore theme from Wallust
+cat ~/.cache/wallust/sequences 2> /dev/null
 neofetch 2> /dev/null
 
 # OhMyZsh

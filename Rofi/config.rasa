@@ -6,7 +6,7 @@ configuration {
     }
 }
 
-@theme "~/.cache/wal/colors-rofi-dark"
+@theme "~/.cache/wallust/colors-rofi-dark"
 
 window, prompt, entry, element, element-text, element-icon {
     background-color: @background;
