@@ -25,7 +25,7 @@ surround.setup({
         add = "ys",
         delete = "ds",
         replace = "cs",
-        highlight = "hs",
+        highlight = "",
         find = "",
         find_left = "",
         update_n_lines = "",
