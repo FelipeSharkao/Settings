@@ -40,7 +40,7 @@ config.window_padding = {
 }
 
 config.color_scheme = "Catppuccin Mocha"
-config.window_background_opacity = 0.8
+config.window_background_opacity = 0.9
 
 config.font = wezterm.font("JetBrains Mono")
 config.font_size = 11
