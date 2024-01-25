@@ -4,10 +4,7 @@ if vim.fn.has("gui_running") == 1 then
     vim.opt.guifont = "FiraCode Nerd Font Mono:h10.5"
 
     -- Paste
-    keymap({ "i", "c" }, "<C-V>", '<C-R><C-O>"', { noremap = true })
     keymap({ "i", "c" }, "<C-S-V>", "<C-R><C-O>+", { noremap = true })
-
-    keymap("t", "<C-V>", "<C-\\><C-O>gp", { noremap = true })
     keymap("t", "<C-S-V>", '<C-\\><C-O>"+gp', { noremap = true })
 end
 

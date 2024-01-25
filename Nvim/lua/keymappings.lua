@@ -67,3 +67,7 @@ keymap("v", "<S-Tab>", "<_", opts)
 -- go to next/previous buffer
 keymap("n", "[b", "<Cmd>edit #<CR>", opts)
 keymap("n", "]b", "<Cmd>bnext<CR>", opts)
+
+-- CTRL-v to paste
+keymap({ "i", "c" }, "<C-V>", '<C-R><C-O>"', opts)
+keymap("t", "<C-V>", "<C-\\><C-O>gp", opts)
