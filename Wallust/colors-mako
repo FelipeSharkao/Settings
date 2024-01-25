@@ -7,6 +7,8 @@ border-color={color11}
 border-radius=6
 default-timeout=5000
 font=Noto Sans 11
+icons=1
+icon-path=/usr/share/icons/breeze-dark
 
 [urgency=high]
 border-size=2

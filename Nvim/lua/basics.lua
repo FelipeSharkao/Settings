@@ -89,3 +89,29 @@ vim.o.hidden = true
 
 -- set completion mode on command line to be similar to cli
 vim.o.wildmode = "list:longest"
+
+-- use system notifications
+vim.notify = function(msg, log_level, _opts)
+    if
+        log_level == vim.log.levels.OFF
+        or log_level == vim.log.levels.TRACE
+        or log_level == vim.log.levels.DEBUG
+    then
+        print(msg)
+    end
+
+    local cmd = { "notify-send", "Neovim", msg }
+
+    if log_level == vim.log.levels.INFO then
+        table.insert(cmd, "--expire-time=1000")
+    elseif log_level == vim.log.levels.WARN then
+        table.insert(cmd, "--icon=data-warning")
+        table.insert(cmd, "--expire-time=2000")
+    elseif log_level == vim.log.levels.ERROR then
+        table.insert(cmd, "--urgency=critical")
+        table.insert(cmd, "--icon=data-error")
+        table.insert(cmd, "--expire-time=3000")
+    end
+
+    vim.fn.system(cmd)
+end

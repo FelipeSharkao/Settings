@@ -18,19 +18,6 @@ require("lazy").setup({
 
     -- ====== UI and visuals ======
 
-    -- Toast notifications
-    {
-        "rcarriga/nvim-notify",
-        init = function()
-            require("notify").setup({
-                stages = "fade",
-                background_colour = "FloatShadow",
-                timeout = 3000,
-            })
-            vim.notify = require("notify")
-        end,
-    },
-
     -- Better UI for select actions
     { "stevearc/dressing.nvim", dependencies = { "MunifTanjim/nui.nvim" } },
 
@@ -111,6 +98,7 @@ require("lazy").setup({
             vim.g.astro_typescript = "enable"
         end,
     },
+    "uarun/vim-protobuf",
 
     -- Better UI for LSP actions
     "RishabhRD/popfix",
