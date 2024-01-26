@@ -10,8 +10,6 @@ local xopts = { noremap = true, silent = true, expr = true }
 
 local keymap = vim.keymap.set
 
-require("neodev").setup({})
-
 require("lsp-colors").setup({
     Error = "#F44747",
     Warning = "#FF8800",
@@ -27,6 +25,27 @@ require("mason-lspconfig").setup({
         "rust_analyzer",
         "astro",
     },
+})
+null_ls.setup({
+    sources = {
+        null_ls.builtins.code_actions.eslint_d,
+        null_ls.builtins.diagnostics.eslint_d,
+        null_ls.builtins.formatting.prettierd.with({
+            extra_filetypes = { "astro" },
+        }),
+        null_ls.builtins.formatting.rustfmt,
+        null_ls.builtins.formatting.prismaFmt,
+        null_ls.builtins.formatting.taplo,
+        null_ls.builtins.formatting.stylua,
+    },
+})
+require("mason-null-ls").setup({
+    ensure_installed = nil,
+    automatic_installation = true,
+    automatic_setup = true,
+})
+require("mason-nvim-dap").setup({
+    ensure_installed = { "node2" },
 })
 
 inlay_hints.setup()
@@ -152,44 +171,6 @@ lspconfig.prismals.setup({
 lspconfig.astro.setup({
     on_attach = on_attach,
     capabilities = capabilities,
-})
-
-null_ls.setup({
-    sources = {
-        null_ls.builtins.code_actions.eslint_d,
-        null_ls.builtins.diagnostics.eslint_d,
-        null_ls.builtins.formatting.prettierd.with({
-            {
-                "javascript",
-                "javascriptreact",
-                "typescript",
-                "typescriptreact",
-                "vue",
-                "css",
-                "scss",
-                "less",
-                "html",
-                "json",
-                "jsonc",
-                "yaml",
-                "markdown",
-                "markdown.mdx",
-                "graphql",
-                "handlebars",
-                "astro",
-            },
-        }),
-        null_ls.builtins.formatting.rustfmt,
-        null_ls.builtins.formatting.prismaFmt,
-        null_ls.builtins.formatting.taplo,
-        null_ls.builtins.formatting.stylua,
-        null_ls.builtins.formatting.fnlfmt,
-    },
-})
-require("mason-null-ls").setup({
-    ensure_installed = nil,
-    automatic_installation = true,
-    automatic_setup = true,
 })
 
 vim.api.nvim_create_autocmd("BufWritePre", {

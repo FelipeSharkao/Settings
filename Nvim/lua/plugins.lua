@@ -13,9 +13,6 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-    -- ====== APIs and libraries ======
-    "nvim-lua/plenary.nvim",
-
     -- ====== UI and visuals ======
 
     -- Better UI for select actions
@@ -40,6 +37,7 @@ require("lazy").setup({
     "williamboman/mason-lspconfig.nvim",
     "neovim/nvim-lspconfig",
     "jay-babu/mason-null-ls.nvim",
+    "jay-babu/mason-nvim-dap.nvim",
     "nvimtools/none-ls.nvim", -- replaces jose-elias-alvarez/null-ls.nvim
 
     -- Show LSP inlay hints
@@ -47,21 +45,7 @@ require("lazy").setup({
 
     -- Debugging
     "mfussenegger/nvim-dap",
-    {
-        "mxsdev/nvim-dap-vscode-js",
-        dependencies = {
-            "mfussenegger/nvim-dap",
-            {
-                "microsoft/vscode-js-debug",
-                lazy = true,
-                build = "npm install && npx gulp vsDebugServerBundle && mv dist out",
-            },
-        },
-    },
-    { "rcarriga/nvim-dap-ui", dependencies = { "mfussenegger/nvim-dap" } },
-
-    -- Better suggestions in config files
-    "folke/neodev.nvim",
+    "rcarriga/nvim-dap-ui",
 
     -- Suggestions and completion
     {
@@ -75,6 +59,8 @@ require("lazy").setup({
             "onsails/lspkind.nvim",
         },
     },
+    "hrsh7th/vim-vsnip",
+    "hrsh7th/vim-vsnip-integ",
 
     -- Show previous indentation levels at top of file
     {
