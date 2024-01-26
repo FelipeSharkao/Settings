@@ -60,18 +60,6 @@ require("lazy").setup({
     },
     { "rcarriga/nvim-dap-ui", dependencies = { "mfussenegger/nvim-dap" } },
 
-    -- Navigate through LSP symbols
-    {
-        "SmiteshP/nvim-navbuddy",
-        dependencies = {
-            "neovim/nvim-lspconfig",
-            "SmiteshP/nvim-navic",
-            "MunifTanjim/nui.nvim",
-            "numToStr/Comment.nvim",
-            "nvim-telescope/telescope.nvim",
-        },
-    },
-
     -- Better suggestions in config files
     "folke/neodev.nvim",
 
@@ -86,6 +74,15 @@ require("lazy").setup({
             "hrsh7th/cmp-vsnip",
             "onsails/lspkind.nvim",
         },
+    },
+
+    -- Show previous indentation levels at top of file
+    {
+        "wellle/context.vim",
+        init = function()
+            vim.g.context_highlight_tag = "<hide>"
+            vim.g.context_highlight_border = "<hide>"
+        end,
     },
 
     -- better highlighting

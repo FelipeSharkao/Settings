@@ -5,8 +5,6 @@ local lsputil_code_action = require("lsputil.codeAction")
 local lsputil_locations = require("lsputil.locations")
 local lsputil_symbols = require("lsputil.symbols")
 
-local navbuddy = require("nvim-navbuddy")
-
 local opts = { noremap = true, silent = true }
 local xopts = { noremap = true, silent = true, expr = true }
 
@@ -32,10 +30,6 @@ require("mason-lspconfig").setup({
 })
 
 inlay_hints.setup()
-
-navbuddy.setup({
-    window = { border = "rounded" },
-})
 
 vim.lsp.handlers["textDocument/codeAction"] = lsputil_code_action.code_action_handler
 vim.lsp.handlers["textDocument/references"] = lsputil_locations.references_handler
@@ -64,7 +58,6 @@ vim.g.lsp_utils_location_opts = {
 
 keymap("i", "<Tab>", "pumvisible() ? '<C-n>' : '<Tab>'", xopts)
 keymap("n", "<Leader>q", vim.diagnostic.setloclist, opts)
-keymap("n", "<Leader>t", navbuddy.open, opts)
 keymap("n", "[d", vim.diagnostic.goto_prev, opts)
 keymap("n", "]d", vim.diagnostic.goto_next, opts)
 keymap("n", "[e", function()
@@ -100,7 +93,6 @@ local on_attach = function(client, bufnr)
     vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
     inlay_hints.on_attach(client, bufnr)
-    navbuddy.attach(client, bufnr)
 
     -- Use internal formatting for bindings like gq
     vim.api.nvim_buf_set_option(bufnr, "formatexpr", "")
