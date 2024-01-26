@@ -1,13 +1,6 @@
-local leader = ";"
-vim.g.mapleader = leader
-
 -- defaults
 local keymap = vim.keymap.set
 local opts = { noremap = true, silent = true }
-local xopts = { noremap = true, silent = true, expr = true }
-
--- disable leader action
-keymap("n", leader, "<NOP>", opts)
 
 -- clipboard
 keymap("n", "+", '"+', opts)
