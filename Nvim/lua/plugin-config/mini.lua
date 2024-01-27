@@ -1,34 +1,61 @@
--- mini.nvim adds a lot of modolar features, improving the general experience
+-- mini.nvim adds a lot of modular features, improving the general experience
+
+-- Usefull stuff
+local extra = require("mini.extra")
+extra.setup()
 
 -- Extends a/i textobjects
 require("mini.ai").setup()
 
+-- Align text
+require("mini.align").setup()
+
 -- Highlight the word under the cursor
 require("mini.cursorword").setup()
+
+-- File explorer
+require("mini.files").setup({
+    options = {
+        permanent_delete = false,
+    },
+})
+vim.keymap.set("n", "<Leader>e", function()
+    MiniFiles.open(vim.api.nvim_buf_get_name(0))
+end)
+
+-- Jump within visible lines
+require("mini.jump2d").setup()
+
+-- Move selected lines around
+require("mini.move").setup()
+
+-- Pickers
+require("mini.pick").setup({
+    mappings = {
+        caret_left = "<C-h>",
+        caret_right = "<C-l>",
+    },
+})
+vim.keymap.set("n", "<Leader>f", "<Cmd>Pick files<CR>")
+vim.keymap.set("n", "<Leader>g", "<Cmd>Pick grep_live<CR>")
+vim.keymap.set("n", "<Leader>b", "<Cmd>Pick buffers<CR>")
+vim.keymap.set("n", "z=", "<Cmd>Pick spellsuggest<CR>")
 
 -- Opinated statusline
 require("mini.statusline").setup()
 
 -- Surround actions
-local surround = require("mini.surround")
-surround.setup({
+require("mini.surround").setup({
     custom_surroundings = {
         ["g"] = {
             input = { "%f[%w_][%w_]+%b<>", "^.-<().*()>$" },
             output = function()
-                local type_name = surround.user_input("Type name")
-                return { left = type_name .. "<", right = ">" }
+                local type_name = MiniSurround.user_input("Type name")
+                if type_name then
+                    return { left = type_name .. "<", right = ">" }
+                end
             end,
         },
-    },
-    mappings = {
-        add = "ys",
-        delete = "ds",
-        replace = "cs",
-        highlight = "",
-        find = "",
-        find_left = "",
-        update_n_lines = "",
     },
 })
 

@@ -113,12 +113,6 @@ require("lazy").setup({
         },
     },
 
-    -- File tree window
-    {
-        "nvim-telescope/telescope-file-browser.nvim",
-        dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
-    },
-
     -- project + session management
     "olimorris/persisted.nvim",
 
@@ -130,10 +124,6 @@ require("lazy").setup({
     "altermo/ultimate-autopair.nvim",
     "alvan/vim-closetag",
     { "RRethy/nvim-treesitter-endwise", dependencies = { "nvim-treesitter/nvim-treesitter" } },
-
-    -- Jump to pattern
-    { "ggandor/leap.nvim", dependencies = { "tpope/vim-repeat" } },
-    "ggandor/flit.nvim",
 
     -- Text objects
     {
