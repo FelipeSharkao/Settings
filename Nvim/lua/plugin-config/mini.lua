@@ -36,10 +36,6 @@ require("mini.pick").setup({
         caret_right = "<C-l>",
     },
 })
-vim.keymap.set("n", "<Leader>f", "<Cmd>Pick files<CR>")
-vim.keymap.set("n", "<Leader>g", "<Cmd>Pick grep_live<CR>")
-vim.keymap.set("n", "<Leader>b", "<Cmd>Pick buffers<CR>")
-vim.keymap.set("n", "z=", "<Cmd>Pick spellsuggest<CR>")
 
 -- Opinated statusline
 require("mini.statusline").setup()

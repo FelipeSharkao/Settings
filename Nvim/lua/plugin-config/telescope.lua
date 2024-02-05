@@ -2,6 +2,19 @@ local telescope = require("telescope")
 local actions = require("telescope.actions")
 local previewers = require("telescope.previewers")
 local sorters = require("telescope.sorters")
+local builtin = require("telescope.builtin")
+
+local function buf_delete_action(prompt_bufnr)
+    local action_state = require("telescope.actions.state")
+    local current_picker = action_state.get_current_picker(prompt_bufnr)
+
+    current_picker:delete_selection(function(selection)
+        if vim.api.nvim_buf_get_option(selection.bufnr, "modified") then
+            return false
+        end
+        vim.cmd.BufDel({ selection.bufnr })
+    end)
+end
 
 telescope.setup({
     defaults = {
@@ -49,6 +62,33 @@ telescope.setup({
             },
         },
     },
+    pickers = {
+        buffers = {
+            sort_lastused = true,
+            mappings = {
+                i = {
+                    ["<C-d>"] = buf_delete_action,
+                },
+                n = {
+                    ["d"] = buf_delete_action,
+                    ["<C-d>"] = buf_delete_action,
+                },
+            },
+        },
+    },
 })
 
 telescope.load_extension("dap")
+
+local keymap = vim.keymap.set
+local opts = { silent = true, noremap = true }
+
+keymap("n", "<Leader>f", builtin.find_files, opts)
+keymap("n", "<Leader>g", builtin.live_grep, opts)
+keymap("n", "<Leader>b", builtin.buffers, opts)
+keymap("n", "<Leader>l", builtin.resume, opts)
+keymap("n", "<Leader>F", function()
+    telescope.extensions.file_browser.file_browser({ path = "%:p:h" })
+end, opts)
+
+keymap("n", "z=", builtin.spell_suggest, opts)
