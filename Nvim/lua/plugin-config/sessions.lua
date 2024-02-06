@@ -98,6 +98,7 @@ M.update_sessions = function()
 end
 
 require("persisted").setup({
+    use_git_branch = false,
     should_autosave = M.should_autosave,
 })
 
@@ -116,7 +117,8 @@ vim.api.nvim_create_autocmd("User", {
             vim.cmd("SessionSave")
         end
 
-        vim.cmd("silent! bufdo! noa bwipeout!")
+        vim.cmd("bufdo! noa bwipeout!")
+        vim.cmd("LspRestart")
     end,
 })
 
@@ -140,7 +142,8 @@ vim.api.nvim_create_user_command("Open", function(cmd)
     vim.cmd("SessionStop")
 
     vim.cmd("cd " .. cmd.args)
-    vim.cmd("%bwipeout!")
+    vim.cmd("bufdo! noa bwipeout!")
+    vim.cmd("LspRestart")
 
     vim.cmd("SessionLoad")
 end, { nargs = 1, complete = "dir" })

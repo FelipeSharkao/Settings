@@ -128,7 +128,7 @@ require("lazy").setup({
     -- Text objects
     {
         "chrisgrieser/nvim-various-textobjs",
-        opts = { useDefaultKeymaps = true, disable_keymaps = { "gc" } },
+        opts = { useDefaultKeymaps = true, disableKeymaps = { "gc" } },
     },
 
     -- ====== Integration ======
