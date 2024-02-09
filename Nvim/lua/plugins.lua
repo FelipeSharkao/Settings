@@ -133,7 +133,20 @@ require("lazy").setup({
 
     -- ====== Integration ======
     -- Github Copilot
-    "github/copilot.vim",
+    {
+        "zbirenbaum/copilot.lua",
+        lazy = true,
+        cmd = "Copilot",
+        event = "InsertEnter",
+        opts = {
+            suggestion = {
+                auto_trigger = true,
+                keymap = {
+                    accept = "<Right>",
+                },
+            },
+        },
+    },
 
     -- Connect to Discord's RPC
     "andweeb/presence.nvim",
