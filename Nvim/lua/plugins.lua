@@ -21,9 +21,6 @@ require("lazy").setup({
     -- Scrollbar with code details
     { "petertriho/nvim-scrollbar", dependencies = { "lewis6991/gitsigns.nvim" } },
 
-    -- floating terminal
-    "voldikss/vim-floaterm",
-
     -- show indentation levels
     "lukas-reineke/indent-blankline.nvim",
 
@@ -142,7 +139,7 @@ require("lazy").setup({
             suggestion = {
                 auto_trigger = true,
                 keymap = {
-                    accept = "<Right>",
+                    accept_line = "<Right>",
                 },
             },
         },

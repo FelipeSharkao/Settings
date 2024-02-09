@@ -8,5 +8,3 @@ require("diffview").setup({
         mergetool = { layout = "diff4_mixed" },
     },
 })
-
-vim.api.nvim_create_user_command("Git", "FloatermNew --cwd=<buffer> lazygit", {})

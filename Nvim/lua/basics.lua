@@ -30,9 +30,9 @@ vim.o.scrolloff = 8 -- start scrolling when 8 lines away from margins
 
 -- ================= Indentation ================= --
 
-vim.o.tabstop = 2 -- maximum width of tab character (measured in spaces)
-vim.o.shiftwidth = 2 -- size of indent (measured in spaces), should equal tabstop
-vim.o.softtabstop = 2 -- should be the same as the other two above
+vim.o.tabstop = 4 -- maximum width of tab character (measured in spaces)
+vim.o.shiftwidth = 4 -- size of indent (measured in spaces), should equal tabstop
+vim.o.softtabstop = 4 -- should be the same as the other two above
 vim.o.expandtab = true -- expand tabs to spaces
 vim.o.smartindent = true -- smart indenting on new line for C-like programs
 vim.o.autoindent = true -- copy the indentation from previous line
@@ -72,6 +72,7 @@ vim.o.spelllang = "pt,en"
 vim.o.spelloptions = "camel"
 
 -- ================= Widows config ================= --
+
 vim.o.winblend = 15
 vim.o.pumblend = 15
 
