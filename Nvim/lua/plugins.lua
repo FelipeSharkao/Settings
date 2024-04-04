@@ -18,9 +18,6 @@ require("lazy").setup({
     -- Better UI for select actions
     { "stevearc/dressing.nvim", dependencies = { "MunifTanjim/nui.nvim" } },
 
-    -- Scrollbar with code details
-    { "petertriho/nvim-scrollbar", dependencies = { "lewis6991/gitsigns.nvim" } },
-
     -- show indentation levels
     "lukas-reineke/indent-blankline.nvim",
 
@@ -36,13 +33,11 @@ require("lazy").setup({
     "jay-babu/mason-null-ls.nvim",
     "jay-babu/mason-nvim-dap.nvim",
     "nvimtools/none-ls.nvim", -- replaces jose-elias-alvarez/null-ls.nvim
-
-    -- Show LSP inlay hints
     "lvimuser/lsp-inlayhints.nvim",
 
     -- Debugging
     "mfussenegger/nvim-dap",
-    "rcarriga/nvim-dap-ui",
+    { "rcarriga/nvim-dap-ui", dependencies = { "nvim-neotest/nvim-nio" } },
 
     -- Suggestions and completion
     {
@@ -59,17 +54,12 @@ require("lazy").setup({
     "hrsh7th/vim-vsnip",
     "hrsh7th/vim-vsnip-integ",
 
-    -- Show previous indentation levels at top of file
-    {
-        "wellle/context.vim",
-        init = function()
-            vim.g.context_highlight_tag = "<hide>"
-            vim.g.context_highlight_border = "<hide>"
-        end,
-    },
+    -- Auto-detect identation
+    "tpope/vim-sleuth",
 
     -- better highlighting
     { "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" },
+    { "nvim-treesitter/nvim-treesitter-context", opts = { enable = true } },
     "evanleck/vim-svelte",
     "preservim/vim-markdown",
     {
@@ -98,7 +88,16 @@ require("lazy").setup({
     "moll/vim-bbye",
 
     -- close unused buffers when the buffer list gets too crowded
-    "axkirillov/hbac.nvim",
+    {
+        "axkirillov/hbac.nvim",
+        lazy = true,
+        event = "BufEnter",
+        opts = {
+            autoclose = true,
+            threshold = 10,
+            close_buffers_with_windows = false,
+        },
+    },
 
     -- telescope - searching / navigation
     {
@@ -158,7 +157,10 @@ require("lazy").setup({
 
     -- ====== Misc ======
     -- many, many features
-    { "echasnovski/mini.nvim", version = false, dependencies = { "lewis6991/gitsigns.nvim" } },
+    {
+        "echasnovski/mini.nvim",
+        dependencies = { "lewis6991/gitsigns.nvim" },
+    },
 
     -- Remember last colorscheme
     "raddari/last-color.nvim",
