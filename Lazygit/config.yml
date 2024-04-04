@@ -9,8 +9,3 @@ git:
     paging:
         colorArg: always
         pager: delta --dark --paging=never
-
-keybinding:
-    universal:
-        return: <c-w>
-        quit: <c-q>

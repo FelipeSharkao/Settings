@@ -50,4 +50,4 @@ export _JAVA_OPTIONS="-Xms4000m -Xmx8000m"
 [[ ! -f $HOME/.asdf/plugins/java/set-java-home.zsh ]] || . $HOME/.asdf/plugins/java/set-java-home.zsh
 
 # Rust
-. $HOME/.cargo/env
+. $HOME/.cargo/env 2> /dev/null

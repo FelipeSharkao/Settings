@@ -23,9 +23,6 @@ vim.keymap.set("n", "<Leader>e", function()
     MiniFiles.open(vim.api.nvim_buf_get_name(0))
 end)
 
--- Jump within visible lines
-require("mini.jump2d").setup()
-
 -- Move selected lines around
 require("mini.move").setup()
 
@@ -42,6 +39,15 @@ require("mini.statusline").setup()
 
 -- Surround actions
 require("mini.surround").setup({
+    mappings = {
+      add = 'ys',
+      delete = 'ds',
+      find = 'fs',
+      find_left = 'Fs',
+      highlight = 'vs',
+      replace = 'cs',
+      update_n_lines = '',
+    },
     custom_surroundings = {
         ["g"] = {
             input = { "%f[%w_][%w_]+%b<>", "^.-<().*()>$" },

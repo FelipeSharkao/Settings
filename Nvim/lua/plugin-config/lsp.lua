@@ -21,21 +21,19 @@ require("mason").setup()
 require("mason-lspconfig").setup({
     ensure_installed = {
         "vtsls",
+        "eslint",
         "lua_ls",
         "rust_analyzer",
+        "taplo",
         "astro",
     },
 })
 null_ls.setup({
     sources = {
-        null_ls.builtins.code_actions.eslint_d,
-        null_ls.builtins.diagnostics.eslint_d,
         null_ls.builtins.formatting.prettierd.with({
             extra_filetypes = { "astro" },
         }),
-        null_ls.builtins.formatting.rustfmt,
         null_ls.builtins.formatting.prismaFmt,
-        null_ls.builtins.formatting.taplo,
         null_ls.builtins.formatting.stylua,
     },
 })
@@ -146,8 +144,12 @@ lspconfig.vtsls.setup({
         vtsls = { experimental = { entriesLimit = 30 } },
     },
 })
-lspconfig.rust_analyzer.setup({
+lspconfig.eslint.setup({
     on_attach = on_attach_no_format,
+    capabilities = capabilities,
+})
+lspconfig.rust_analyzer.setup({
+    on_attach = on_attach,
     capabilities = capabilities,
     settings = {
         ["rust-analyzer"] = {
@@ -155,6 +157,10 @@ lspconfig.rust_analyzer.setup({
             procMacro = { enable = true },
         },
     },
+})
+lspconfig.taplo.setup({
+    on_attach = on_attach,
+    capabilities = capabilities,
 })
 lspconfig.lua_ls.setup({
     on_attach = on_attach_no_format,
