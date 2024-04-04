@@ -1,6 +1,6 @@
 # Restore theme from Wallust
 cat ~/.cache/wallust/sequences 2> /dev/null
-neofetch 2> /dev/null
+fastfetch 2> /dev/null
 
 # OhMyZsh
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
