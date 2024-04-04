@@ -51,3 +51,6 @@ export _JAVA_OPTIONS="-Xms4000m -Xmx8000m"
 
 # Rust
 . $HOME/.cargo/env 2> /dev/null
+
+alias asm="objdump -ldSwrt --visualize-jumps=extended-color --no-addresses --no-show-raw-insn -Mintel"
+
