@@ -11,6 +11,5 @@ waybar &> /dev/null & disown
 killall mako &> /dev/null
 mako &> /dev/null & disown
 
-pywalfox update
-walogram -B
-nvr --serverlist | xargs -I{} nvr --servername "{}" +"colorscheme wal"
+pywalfox update &> /dev/null & disown
+nvr --serverlist | xargs -I{} zsh -c 'nvr --nostart --servername "{}" +"colorscheme wal" || true' &> /dev/null & disown
