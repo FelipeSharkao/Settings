@@ -12,7 +12,7 @@ local function buf_delete_action(prompt_bufnr)
         if vim.api.nvim_buf_get_option(selection.bufnr, "modified") then
             return false
         end
-        vim.cmd.BufDel({ selection.bufnr })
+        vim.cmd.Bdelete({ selection.bufnr })
     end)
 end
 
@@ -64,7 +64,8 @@ telescope.setup({
     },
     pickers = {
         buffers = {
-            sort_lastused = true,
+            ignore_current_buffer = true,
+            sort_mru = true,
             mappings = {
                 i = {
                     ["<C-d>"] = buf_delete_action,
