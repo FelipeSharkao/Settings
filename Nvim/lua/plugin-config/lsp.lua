@@ -107,12 +107,11 @@ end, opts)
 local lspconfig = require("lspconfig")
 
 local on_attach = function(client, bufnr)
-    vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+    vim.api.nvim_set_option_value("omnifunc", "v:lua.vim.lsp.omnifunc", { buf = bufnr })
+    -- Use internal formatting for bindings like gq
+    vim.api.nvim_set_option_value("formatexpr", "", { buf = bufnr })
 
     inlay_hints.on_attach(client, bufnr)
-
-    -- Use internal formatting for bindings like gq
-    vim.api.nvim_buf_set_option(bufnr, "formatexpr", "")
 end
 
 local on_attach_no_format = function(client, bufnr)
