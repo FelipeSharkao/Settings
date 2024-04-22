@@ -117,7 +117,6 @@ require("lazy").setup({
     "mg979/vim-visual-multi",
 
     -- Automatically close pairs
-    "altermo/ultimate-autopair.nvim",
     "alvan/vim-closetag",
     { "RRethy/nvim-treesitter-endwise", dependencies = { "nvim-treesitter/nvim-treesitter" } },
 
