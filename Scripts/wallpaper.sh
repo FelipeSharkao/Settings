@@ -1,7 +1,8 @@
 WALLPAPER=$(find "$1" -type f | shuf -n 1)
 
 swww img "$WALLPAPER" --transition-step 40 2> /dev/null
-gsettings get org.gnome.desktop.background picture-uri "file:/$WALLPAPER" 2> /dev/null
+gsettings set org.gnome.desktop.background picture-uri "file://$WALLPAPER" 2> /dev/null
+gsettings set org.gnome.desktop.background picture-uri-dark "file://$WALLPAPER" 2> /dev/null
 
 wallust "$WALLPAPER"
 
