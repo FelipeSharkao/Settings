@@ -72,33 +72,6 @@ starter.setup({
     items = {
         { section = "", name = "New File", action = "enew" },
         { section = "", name = "Quit", action = "qa" },
-
-        -- Recent sessions
-        function()
-            local sessions = require("plugin-config.sessions")
-            local home = vim.fn.expand("$HOME/")
-
-            local entries = {}
-
-            for _, session in ipairs(sessions.recent_sessions()) do
-                local name = sessions.get_session_cwd(session):gsub("^" .. home, "")
-
-                table.insert(entries, {
-                    section = "Recent sessions",
-                    name = name,
-                    action = function()
-                        sessions.load_session(session)
-                    end,
-                })
-
-                if #entries >= 10 then
-                    break
-                end
-            end
-
-            return entries
-        end,
-
         starter.sections.recent_files(10, false),
     },
     content_hooks = {

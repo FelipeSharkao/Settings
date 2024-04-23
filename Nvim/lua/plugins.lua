@@ -109,9 +109,6 @@ require("lazy").setup({
         },
     },
 
-    -- project + session management
-    "olimorris/persisted.nvim",
-
     -- ====== Movement and editing ======
     -- Multicursor
     "mg979/vim-visual-multi",
