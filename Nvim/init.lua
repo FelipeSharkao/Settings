@@ -18,4 +18,3 @@ require("plugin-config/discord")
 require("plugin-config/theme")
 
 require("keymappings")
-require("commands")
