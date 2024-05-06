@@ -115,9 +115,6 @@ require("lazy").setup({
     "RishabhRD/popfix",
     "RishabhRD/nvim-lsputils",
 
-    -- Better comments
-    { "numToStr/Comment.nvim", opts = {} },
-
     -- Preview CSS colors
     {
         "NvChad/nvim-colorizer.lua",
@@ -158,12 +155,6 @@ require("lazy").setup({
     -- Automatically close pairs
     "alvan/vim-closetag",
     { "RRethy/nvim-treesitter-endwise", dependencies = { "nvim-treesitter/nvim-treesitter" } },
-
-    -- Text objects
-    {
-        "chrisgrieser/nvim-various-textobjs",
-        opts = { useDefaultKeymaps = true, disableKeymaps = { "gc" } },
-    },
 
     -- ====== Integration ======
     -- Github Copilot

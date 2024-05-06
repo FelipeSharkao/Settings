@@ -37,6 +37,9 @@ require("mini.pick").setup({
 -- Opinated statusline
 require("mini.statusline").setup()
 
+-- Toggle and textobject for comments
+require("mini.comment")
+
 -- Surround actions
 require("mini.surround").setup({
     mappings = {
