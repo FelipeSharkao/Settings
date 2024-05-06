@@ -30,7 +30,11 @@ config.keys = {
         mods = "CTRL|SHIFT",
         action = wezterm.action.CloseCurrentPane({ confirm = true }),
     },
-    { key = "q", mods = "CTRL|SHIFT", action = wezterm.action.CloseCurrentTab({ confirm = true }) },
+    {
+        key = "q",
+        mods = "CTRL|SHIFT",
+        action = wezterm.action.CloseCurrentTab({ confirm = true }),
+    },
     {
         key = "k",
         mods = "CTRL|SHIFT",
@@ -50,5 +54,8 @@ config.window_background_opacity = 0.9
 
 config.font = wezterm.font("JetBrains Mono")
 config.font_size = 11
+
+config.initial_cols = 160
+config.initial_rows = 48
 
 return config
