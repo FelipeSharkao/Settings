@@ -33,7 +33,6 @@ null_ls.setup({
         null_ls.builtins.formatting.prettierd.with({
             extra_filetypes = { "astro" },
         }),
-        null_ls.builtins.formatting.prismaFmt,
         null_ls.builtins.formatting.stylua,
     },
 })
