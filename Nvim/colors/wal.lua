@@ -32,3 +32,6 @@ for _, fg in ipairs(fg_colors) do
         break
     end
 end
+
+vim.cmd("hi WinBar guibg=NONE")
+vim.cmd("hi link LspInlayHint Commnet")

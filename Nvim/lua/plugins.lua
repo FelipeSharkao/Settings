@@ -54,12 +54,35 @@ require("lazy").setup({
     "hrsh7th/vim-vsnip",
     "hrsh7th/vim-vsnip-integ",
 
+    -- Breadcrumbs winbar
+    {
+        "Bekaboo/dropbar.nvim",
+        dependencies = { "nvim-telescope/telescope-fzf-native.nvim" },
+        opts = {},
+        event = { "BufEnter" },
+        keys = {
+            {
+                mode = "n",
+                "<Leader>c",
+                function()
+                    require("dropbar.api").pick()
+                end,
+            },
+            {
+                mode = "n",
+                "[c",
+                function()
+                    require("dropbar.api").goto_context_start()
+                end,
+            },
+        },
+    },
+
     -- Auto-detect identation
     "tpope/vim-sleuth",
 
     -- better highlighting
     { "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" },
-    { "nvim-treesitter/nvim-treesitter-context", opts = { enable = true } },
     "evanleck/vim-svelte",
     "preservim/vim-markdown",
     {
