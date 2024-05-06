@@ -24,6 +24,13 @@ require("lazy").setup({
     -- improve folding
     "anuvyklack/pretty-fold.nvim",
 
+    -- Notifications
+    {
+        "j-hui/fidget.nvim",
+        opts = { progress = { lsp = { progress_ringbuf_size = 1024 } } },
+        event = "BufEnter",
+    },
+
     -- ====== Language features ======
     -- LSP and linters
     "folke/lsp-colors.nvim",
@@ -78,6 +85,17 @@ require("lazy").setup({
         },
     },
 
+    -- Show function signature at edit mode
+    {
+        "ray-x/lsp_signature.nvim",
+        opts = {
+            doc_lines = 2,
+            hint_enable = false,
+            transparency = 15,
+            handler_opts = { border = "none" },
+        },
+    },
+
     -- Auto-detect identation
     "tpope/vim-sleuth",
 
@@ -104,6 +122,7 @@ require("lazy").setup({
     {
         "NvChad/nvim-colorizer.lua",
         opts = { user_default_options = { css = true, tailwind = true } },
+        event = { event = "BufEnter", pattern = { "*.css", "*.scss", "*.jsx", "*.tsx" } },
     },
 
     -- ====== File and project management ======
