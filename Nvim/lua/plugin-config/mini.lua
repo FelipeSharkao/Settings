@@ -40,13 +40,12 @@ require("mini.statusline").setup()
 -- Surround actions
 require("mini.surround").setup({
     mappings = {
-      add = 'ys',
-      delete = 'ds',
-      find = 'fs',
-      find_left = 'Fs',
-      highlight = 'vs',
-      replace = 'cs',
-      update_n_lines = '',
+        add = "sa",
+        delete = "sd",
+        find = "sf",
+        find_left = "sF",
+        highlight = "sv",
+        replace = "sc",
     },
     custom_surroundings = {
         ["g"] = {
