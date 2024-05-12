@@ -93,7 +93,7 @@ vim.o.pumblend = 15
 
 vim.o.history = 10000 -- numbers of entries in history for ':' commands and search patterns (10000 = max)
 vim.o.updatetime = 100 -- used for CursorHold event (for document highlighting detection)
-vim.o.mouse = "nv" -- allow mouse in normal & visual mode
+vim.o.mouse = "h" -- allow mouse only in help files
 vim.o.mousemodel = "extend" -- right click extends selection
 
 -- allows hidden buffers
