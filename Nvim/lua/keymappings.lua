@@ -6,15 +6,6 @@ local opts = { noremap = true, silent = true }
 keymap("n", "+", '"+', opts)
 keymap("v", "+", '"+', opts)
 
--- enable word movement in insert and command mode
-keymap({ "i", "c" }, "<C-H>", "<Left>", opts)
-keymap({ "i", "c" }, "<C-J>", "<Down>", opts)
-keymap({ "i", "c" }, "<C-K>", "<Up>", opts)
-keymap({ "i", "c" }, "<C-L>", "<Right>", opts)
-keymap({ "i", "c" }, "<C-B>", "<C-O>b", opts)
-keymap({ "i", "c" }, "<C-W>", "<C-O>w", opts)
-keymap({ "i", "c" }, "<C-E>", "<C-O>e<Right>", opts)
-
 -- Disable arrow keys (git gut)
 local arrow_keys = { "<Up>", "<Down>", "<Left>", "<Right>", "<PageUp>", "<PageDown>" }
 for _, key in ipairs(arrow_keys) do
@@ -43,3 +34,15 @@ keymap("i", "<C-S>", "<Esc><Cmd>w<CR>", opts)
 -- CTRL-v to paste
 keymap({ "i", "c" }, "<C-V>", '<C-R><C-O>"', opts)
 keymap("t", "<C-V>", "<C-\\><C-O>gp", opts)
+
+-- loclist and quickfix
+keymap("n", "]l", "<Cmd>lnext<CR>", opts)
+keymap("n", "[l", "<Cmd>lprev<CR>", opts)
+keymap("n", "]q", "<Cmd>cnext<CR>", opts)
+keymap("n", "[q", "<Cmd>cprev<CR>", opts)
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "qf",
+    callback = function()
+        keymap("n", "<CR>", "<CR><Cmd>lcl<CR>", vim.tbl_extend("force", opts, { buffer = 0 }))
+    end,
+})

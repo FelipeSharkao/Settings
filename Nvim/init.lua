@@ -4,7 +4,6 @@ require("plugins")
 require("utils")
 require("globals")
 
-require("plugin-config/dressing")
 require("plugin-config/telescope")
 require("plugin-config/git")
 require("plugin-config/mini")

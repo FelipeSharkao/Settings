@@ -15,9 +15,6 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
     -- ====== UI and visuals ======
 
-    -- Better UI for select actions
-    { "stevearc/dressing.nvim", dependencies = { "MunifTanjim/nui.nvim" } },
-
     -- show indentation levels
     "lukas-reineke/indent-blankline.nvim",
 
@@ -41,6 +38,7 @@ require("lazy").setup({
     "jay-babu/mason-nvim-dap.nvim",
     "nvimtools/none-ls.nvim", -- replaces jose-elias-alvarez/null-ls.nvim
     "lvimuser/lsp-inlayhints.nvim",
+    { "RishabhRD/lspactions", dependencies = { "nvim-lua/plenary.nvim", "nvim-lua/popup.nvim" } },
 
     -- Debugging
     "mfussenegger/nvim-dap",
@@ -85,17 +83,6 @@ require("lazy").setup({
         },
     },
 
-    -- Show function signature at edit mode
-    {
-        "ray-x/lsp_signature.nvim",
-        opts = {
-            doc_lines = 2,
-            hint_enable = false,
-            transparency = 15,
-            handler_opts = { border = "none" },
-        },
-    },
-
     -- Auto-detect identation
     "tpope/vim-sleuth",
 
@@ -109,11 +96,6 @@ require("lazy").setup({
             vim.g.astro_typescript = "enable"
         end,
     },
-    "uarun/vim-protobuf",
-
-    -- Better UI for LSP actions
-    "RishabhRD/popfix",
-    "RishabhRD/nvim-lsputils",
 
     -- Preview CSS colors
     {
@@ -126,18 +108,6 @@ require("lazy").setup({
     -- close buffer without closing window
     "moll/vim-bbye",
 
-    -- close unused buffers when the buffer list gets too crowded
-    {
-        "axkirillov/hbac.nvim",
-        lazy = true,
-        event = "BufEnter",
-        opts = {
-            autoclose = true,
-            threshold = 10,
-            close_buffers_with_windows = false,
-        },
-    },
-
     -- telescope - searching / navigation
     {
         "nvim-telescope/telescope.nvim",
@@ -148,13 +118,72 @@ require("lazy").setup({
         },
     },
 
+    -- File explorer as a buffer
+    {
+        "stevearc/oil.nvim",
+        dependencies = { "nvim-tree/nvim-web-devicons" },
+        opts = {
+            delete_to_trash = true,
+            skip_confirm_for_simple_edits = true,
+            experimental_watch_for_changes = true,
+            keymaps = {
+                ["<C-q>"] = "actions.close",
+                ["q"] = "actions.close",
+                ["<BS>"] = "actions.parent",
+                ["<C-h>"] = "actions.toggle_hidden",
+                ["<C-l>"] = "action.send_to_qflist",
+                ["="] = {
+                    mode = "n",
+                    callback = function()
+                        require("oil").save()
+                    end,
+                },
+            },
+        },
+        keys = {
+            {
+                "<Leader>e",
+                "<Cmd>Oil<CR>",
+                mode = { "n" },
+            },
+        },
+    },
+
     -- ====== Movement and editing ======
     -- Multicursor
-    "mg979/vim-visual-multi",
-
-    -- Automatically close pairs
-    "alvan/vim-closetag",
-    { "RRethy/nvim-treesitter-endwise", dependencies = { "nvim-treesitter/nvim-treesitter" } },
+    {
+        "brenton-leighton/multiple-cursors.nvim",
+        opts = {},
+        keys = {
+            {
+                "<C-j>",
+                "<Cmd>MultipleCursorsAddDown<CR>",
+                mode = { "n", "x" },
+            },
+            {
+                "<C-k>",
+                "<Cmd>MultipleCursorsAddUp<CR>",
+                mode = { "n", "x" },
+            },
+            {
+                "<C-n>",
+                "<Cmd>MultipleCursorsAddJumpNextMatch<CR>",
+                mode = { "n", "x" },
+            },
+            {
+                "<C-q>",
+                "<Cmd>MultipleCursorsJumpNextMatch<CR>",
+                mode = { "n", "x" },
+            },
+            {
+                "<C-|>",
+                function()
+                    require("multiple-cursors").align()
+                end,
+                mode = { "n", "x" },
+            },
+        },
+    },
 
     -- ====== Integration ======
     -- Github Copilot
