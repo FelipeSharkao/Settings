@@ -66,6 +66,7 @@ telescope.setup({
         buffers = {
             ignore_current_buffer = true,
             sort_mru = true,
+            only_cwd = true,
             mappings = {
                 i = {
                     ["<C-d>"] = buf_delete_action,
@@ -88,8 +89,5 @@ keymap("n", "<Leader>f", builtin.find_files, opts)
 keymap("n", "<Leader>g", builtin.live_grep, opts)
 keymap("n", "<Leader>b", builtin.buffers, opts)
 keymap("n", "<Leader>l", builtin.resume, opts)
-keymap("n", "<Leader>F", function()
-    telescope.extensions.file_browser.file_browser({ path = "%:p:h" })
-end, opts)
 
 keymap("n", "z=", builtin.spell_suggest, opts)

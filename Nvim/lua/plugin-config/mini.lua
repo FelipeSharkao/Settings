@@ -13,16 +13,6 @@ require("mini.align").setup()
 -- Highlight the word under the cursor
 require("mini.cursorword").setup()
 
--- File explorer
-require("mini.files").setup({
-    options = {
-        permanent_delete = false,
-    },
-})
-vim.keymap.set("n", "<Leader>e", function()
-    MiniFiles.open(vim.api.nvim_buf_get_name(0))
-end)
-
 -- Move selected lines around
 require("mini.move").setup()
 
