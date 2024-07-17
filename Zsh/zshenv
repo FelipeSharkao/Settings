@@ -23,8 +23,6 @@ else
     export GIT_EDITOR="nvim"
 fi
 
-alias yay="GITFLAGS=\"--filter=tree:0 --depth=1\" yay"
-
 alias git-purge="git gc; \
 git fetch --prune --all; \
 git branch --merged | grep -v '*' > /tmp/merged-branches; \
