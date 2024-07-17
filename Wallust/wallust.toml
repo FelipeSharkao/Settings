@@ -1,41 +1,31 @@
 backend = "resized"
 color_space = "lab"
-threshold = 30
-filter = "dark16"
+palette = "dark16"
 check_contrast = true
-#saturation = 35
-#alpha = 100
 
-[[entry]]
-template = "colors-rofi-dark.rasi"
-target = "~/.cache/wallust/colors-rofi-dark.rasi"
+[templates]
+rofi-dark.template = "colors-rofi-dark.rasi"
+rofi-dark.target = "~/.cache/wal/colors-rofi-dark.rasi"
 
-[[entry]]
-template = "colors-gtk.css"
-target = "~/.cache/wallust/colors-gtk.css"
+gtk.template = "colors-gtk.css"
+gtk.target = "~/.cache/wal/colors-gtk.css"
 
 # mako config can't import a file, so we'll use the whole config there
-[[entry]]
-template = "colors-mako"
-target = "~/.config/mako/config"
+mako.template = "colors-mako"
+mako.target = "~/.config/mako/config"
 
 # Compatibility with pywal
-[[entry]]
-template = "wal"
-target = "~/.cache/wal/wal"
+wal.template = "wal"
+wal.target = "~/.cache/wal/wal"
 
-[[entry]]
-template = "colors"
-target = "~/.cache/wal/colors"
+colors.template = "colors"
+colors.target = "~/.cache/wal/colors"
 
-[[entry]]
-template = "colors.json"
-target = "~/.cache/wal/colors.json"
+colors-json.template = "colors.json"
+colors-json.target = "~/.cache/wal/colors.json"
 
-[[entry]]
-template = "colors.sh"
-target = "~/.cache/wal/colors.sh"
+colors-sh.template = "colors.sh"
+colors-sh.target = "~/.cache/wal/colors.sh"
 
-[[entry]]
-template = "colors-wal.vim"
-target = "~/.cache/wal/colors-wal.vim"
+vim.template = "colors-wal.vim"
+vim.target = "~/.cache/wal/colors-wal.vim"

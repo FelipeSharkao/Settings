@@ -6,16 +6,18 @@ configuration {
     }
 }
 
-@theme "~/.cache/wallust/colors-rofi-dark"
+@theme "~/.cache/wal/colors-rofi-dark"
 
 window, prompt, entry, element, element-text, element-icon {
     background-color: @background;
     text-color: @foreground;
+    transparency: "real";
     vertical-align: 0.5;
 }
 
 window {
-    padding: 0;
+    padding: 150 400;
+    fullscreen: true;
 }
 
 inputbar {

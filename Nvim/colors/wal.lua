@@ -1,28 +1,22 @@
-require("pywal").setup()
-
 vim.o.termguicolors = true
 vim.o.background = "dark"
 
-local pywal_core = require("pywal.core")
-local colors = pywal_core.get_colors()
+vim.cmd("source $HOME/.cache/wal/colors-wal.vim")
 
--- mini.hues will fail if background and foreground are too similar. As the colors are a little
--- unpredictable, will just try a bunch
 -- using colors.foreground leads to somewhat boring results
 local fg_colors = {
-    colors.color1,
-    colors.color2,
-    colors.color3,
-    colors.color4,
-    colors.color5,
-    colors.color6,
-    colors.color7,
-    colors.foreground,
+    vim.g.color9,
+    vim.g.color10,
+    vim.g.color11,
+    vim.g.color12,
+    vim.g.color13,
+    vim.g.color14,
+    vim.g.foreground,
 }
 
 for _, fg in ipairs(fg_colors) do
     local success = pcall(require("mini.hues").setup, {
-        background = colors.background,
+        background = vim.g.background,
         foreground = fg,
         saturation = "medium",
         accent = "fg",
@@ -34,4 +28,3 @@ for _, fg in ipairs(fg_colors) do
 end
 
 vim.cmd("hi WinBar guibg=NONE")
-vim.cmd("hi link LspInlayHint Commnet")

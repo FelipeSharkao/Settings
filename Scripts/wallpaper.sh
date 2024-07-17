@@ -1,10 +1,12 @@
 WALLPAPER=$(find "$1" -type f | shuf -n 1)
 
-swww img "$WALLPAPER" --transition-step 40 2> /dev/null
+killall swaybg &> /dev/null
+swaybg --image "$WALLPAPER" --mode fill &> /dev/null & disown
+
 gsettings set org.gnome.desktop.background picture-uri "file://$WALLPAPER" 2> /dev/null
 gsettings set org.gnome.desktop.background picture-uri-dark "file://$WALLPAPER" 2> /dev/null
 
-wallust "$WALLPAPER"
+wallust run "$WALLPAPER"
 
 killall waybar &> /dev/null
 waybar &> /dev/null & disown

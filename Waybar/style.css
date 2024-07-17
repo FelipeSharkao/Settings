@@ -1,4 +1,4 @@
-@import "../../.cache/wallust/colors-gtk.css";
+@import "../../.cache/wal/colors-gtk.css";
 
 @define-color danger mix(@color1, red, 0.5);
 @define-color warning mix(@color1, yellow, 0.5);
