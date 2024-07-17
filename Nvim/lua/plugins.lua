@@ -18,9 +18,6 @@ require("lazy").setup({
     -- show indentation levels
     "lukas-reineke/indent-blankline.nvim",
 
-    -- improve folding
-    "anuvyklack/pretty-fold.nvim",
-
     -- Notifications
     {
         "j-hui/fidget.nvim",
@@ -220,21 +217,21 @@ require("lazy").setup({
     },
 
     -- ====== Integration ======
-    -- Github Copilot
-    {
-        "zbirenbaum/copilot.lua",
-        lazy = true,
-        cmd = "Copilot",
-        event = "InsertEnter",
-        opts = {
-            suggestion = {
-                auto_trigger = true,
-                keymap = {
-                    accept_line = "<Right>",
-                },
-            },
-        },
-    },
+    -- -- Github Copilot
+    -- {
+    --     "zbirenbaum/copilot.lua",
+    --     lazy = true,
+    --     cmd = "Copilot",
+    --     event = "InsertEnter",
+    --     opts = {
+    --         suggestion = {
+    --             auto_trigger = true,
+    --             keymap = {
+    --                 accept_line = "<Right>",
+    --             },
+    --         },
+    --     },
+    -- },
 
     -- Connect to Discord's RPC
     "andweeb/presence.nvim",
@@ -262,5 +259,4 @@ require("lazy").setup({
     { "nyoom-engineering/oxocarbon.nvim", name = "oxocarbon" },
     { "folke/tokyonight.nvim", name = "tokyonight" },
     { "catppuccin/nvim", name = "catppuccin" },
-    { "AlphaTechnolog/pywal.nvim", as = "pywal" },
 })
