@@ -8,8 +8,8 @@ gsettings set org.gnome.desktop.background picture-uri-dark "file://$WALLPAPER" 
 
 wallust run "$WALLPAPER"
 
-killall waybar &> /dev/null
-waybar &> /dev/null & disown
+killall nwg-panel &> /dev/null
+nwg-panel &> /dev/null & disown
 
 killall mako &> /dev/null
 mako &> /dev/null & disown
