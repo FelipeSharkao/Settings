@@ -1,15 +1,15 @@
 [submodule "Zsh/OhMyZsh"]
-	path = zsh/oh-my-zsh
+	path = shell/oh-my-zsh
 	url = https://github.com/ohmyzsh/ohmyzsh.git
 [submodule "Zsh/Custom/plugins/fast-syntax-highlighting"]
-	path = zsh/custom/plugins/fast-syntax-highlighting
+	path = shell/custom/plugins/fast-syntax-highlighting
 	url = https://github.com/zdharma-continuum/fast-syntax-highlighting.git
 [submodule "Zsh/Custom/plugins/zsh-autosuggestions"]
-	path = zsh/custom/plugins/zsh-autosuggestions
+	path = shell/custom/plugins/zsh-autosuggestions
 	url = https://github.com/zsh-users/zsh-autosuggestions.git
 [submodule "Zsh/Custom/plugins/zsh-syntax-highlighting"]
-	path = zsh/custom/plugins/zsh-syntax-highlighting
+	path = shell/custom/plugins/zsh-syntax-highlighting
 	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
 [submodule "Zsh/Custom/themes/powerlevel10k"]
-	path = zsh/custom/themes/powerlevel10k
+	path = shell/custom/themes/powerlevel10k
 	url = https://github.com/romkatv/powerlevel10k.git

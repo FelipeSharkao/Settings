@@ -8,9 +8,13 @@ link() {
     echo "Created symlink $2 -> $1"
 }
 
-link zsh/zshrc "$HOME/.zshrc"
-link zsh/zshenv "$HOME/.zshenv"
-link zsh/zshrc "$HOME/.zshrc"
+link shell/zshrc "$HOME/.zshrc"
+link shell/profile "$HOME/.profile"
+link shell/profile "$HOME/.xprofile"
+link shell/profile "$HOME/.bash_profile"
+link shell/profile "$HOME/.zprofile"
+link shell/profile "$HOME/.zlogin"
+link shell/profile "$HOME/.zshenv"
 link lazygit "$HOME/.config/lazygit"
 link nvim "$HOME/.config/nvim"
 link wezterm/wezterm.lua "$HOME/.wezterm.lua"
