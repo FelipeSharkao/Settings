@@ -5,6 +5,3 @@ require("nvim-treesitter.configs").setup({
     indent = { enable = true },
     endwise = { enable = true },
 })
-
-vim.wo.foldmethod = "indent"
-vim.wo.foldlevel = 0

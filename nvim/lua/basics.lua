@@ -89,6 +89,11 @@ vim.o.spelloptions = "camel"
 vim.o.winblend = 15
 vim.o.pumblend = 15
 
+-- ================= Fold ================= --
+
+vim.wo.foldmethod = "indent"
+vim.wo.foldlevel = 0
+
 -- ================= Misc ================= --
 
 vim.o.history = 10000 -- numbers of entries in history for ':' commands and search patterns (10000 = max)
