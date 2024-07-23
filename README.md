@@ -9,20 +9,26 @@ These are Arch packages. Adapt them if your using something else.
 ### Hyprland
 
 -   hyprland-git
--   hyprcursor
--   waybar
+-   hyprcursor-git
 -   wlogout
 -   xdg-desktop-portal-hyprland-git
--   brightnessctl
 -   mako
--   rofi
+-   rofi-wayland
 -   cliphist
 -   wl-clipboard
--   swww-git
+-   swaybg
 -   nwg-displays
+-   nwg-panel
+-   nwg-look
 -   physlock
--   wallust
+-   wallust-git
 -   python-pywalfox
+
+#### Screenshot
+
+-   grim
+-   grimblast
+-   satty
 
 ### Neovim
 
