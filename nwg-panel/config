@@ -51,24 +51,28 @@
         }
       ],
       "menu": {
-        "name": "Exit",
+        "name": "Sair",
         "icon": "system-shutdown-symbolic",
         "items": [
           {
-            "name": "Lock",
-            "cmd": "swaylock -f -c 000000"
+            "name": "Suspender",
+            "cmd": "sh $SETTINGS/scripts/lock.sh suspend"
           },
           {
-            "name": "Logout",
-            "cmd": "swaymsg exit"
+            "name": "Sair",
+            "cmd": "hyprctl dispatch exit"
           },
           {
-            "name": "Reboot",
+            "name": "Hibernar",
+            "cmd": "sh $SETTINGS/scripts/lock.sh hibernate"
+          },
+          {
+            "name": "Reiniciar",
             "cmd": "systemctl reboot"
           },
           {
-            "name": "Shutdown",
-            "cmd": "systemctl -i poweroff"
+            "name": "Desligar",
+            "cmd": "systemctl poweroff"
           }
         ]
       },
