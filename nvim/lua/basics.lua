@@ -93,6 +93,12 @@ vim.o.pumblend = 15
 
 vim.wo.foldmethod = "indent"
 vim.wo.foldlevel = 0
+vim.o.foldopen = "block,mark,percent,quickfix,search,tag,undo,jump,insert"
+
+-- ================= Themes ================= --
+
+vim.o.termguicolors = true
+vim.o.background = "dark"
 
 -- ================= Misc ================= --
 

@@ -13,6 +13,5 @@ require("plugin-config/nvim-cmp")
 require("plugin-config/nvim-treesitter")
 require("plugin-config/indent-blankline")
 require("plugin-config/discord")
-require("plugin-config/theme")
 
 require("keymappings")

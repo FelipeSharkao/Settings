@@ -181,39 +181,23 @@ require("lazy").setup({
     },
 
     -- ====== Movement and editing ======
-    -- Multicursor
     {
-        "brenton-leighton/multiple-cursors.nvim",
-        opts = {},
+        "haya14busa/vim-asterisk",
+        lazy = true,
+        config = function()
+            vim.g["asterisk#keeppos"] = true
+        end,
         keys = {
-            {
-                "<C-j>",
-                "<Cmd>MultipleCursorsAddDown<CR>",
-                mode = { "n", "x" },
-            },
-            {
-                "<C-k>",
-                "<Cmd>MultipleCursorsAddUp<CR>",
-                mode = { "n", "x" },
-            },
-            {
-                "<C-n>",
-                "<Cmd>MultipleCursorsAddJumpNextMatch<CR>",
-                mode = { "n", "x" },
-            },
-            {
-                "<C-q>",
-                "<Cmd>MultipleCursorsJumpNextMatch<CR>",
-                mode = { "n", "x" },
-            },
-            {
-                "<C-|>",
-                function()
-                    require("multiple-cursors").align()
-                end,
-                mode = { "n", "x" },
-            },
+            { "*", "<Plug>(asterisk-z*)", mode = { "n", "v" } },
+            { "#", "<Plug>(asterisk-z#)", mode = { "n", "v" } },
+            { "g*", "<Plug>(asterisk-gz*)", mode = { "n", "v" } },
+            { "g#", "<Plug>(asterisk-gz#)", mode = { "n", "v" } },
         },
+    },
+    {
+        "tpope/vim-abolish",
+        lazy = true,
+        cmd = { "Subvert", "S", "Abolish" },
     },
 
     -- ====== Integration ======
@@ -252,11 +236,11 @@ require("lazy").setup({
     },
 
     -- Remember last colorscheme
-    "raddari/last-color.nvim",
-
-    -- ====== colorscheme ======
-    { "rose-pine/neovim", name = "rose-pine" },
-    { "nyoom-engineering/oxocarbon.nvim", name = "oxocarbon" },
-    { "folke/tokyonight.nvim", name = "tokyonight" },
-    { "catppuccin/nvim", name = "catppuccin" },
+    {
+        "raddari/last-color.nvim",
+        init = function()
+            local theme = require("last-color").recall() or "wal"
+            vim.cmd("colorscheme " .. theme)
+        end,
+    },
 })

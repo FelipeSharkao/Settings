@@ -2,11 +2,21 @@ local keymap = vim.keymap.set
 
 if vim.fn.has("gui_running") == 1 then
     vim.opt.guifont = "FiraCode Nerd Font Mono:h10.5"
+    vim.cmd("hi Normal guibg=NONE")
 
     -- Paste
     keymap({ "i", "c" }, "<C-S-V>", "<C-R><C-O>+", { noremap = true })
     keymap("t", "<C-S-V>", '<C-\\><C-O>"+gp', { noremap = true })
 end
+
+vim.api.nvim_create_autocmd("ColorScheme", {
+    pattern = "*",
+    callback = function()
+        if vim.fn.has("gui_running") == 0 then
+            vim.cmd("hi Normal guibg=NONE")
+        end
+    end,
+})
 
 if vim.g.neovide then
     vim.g.neovide_scale_factor = 1.0
