@@ -35,6 +35,10 @@ keymap("i", "<C-S>", "<Esc><Cmd>w<CR>", opts)
 keymap({ "i", "c" }, "<C-V>", '<C-R><C-O>"', opts)
 keymap("t", "<C-V>", "<C-\\><C-O>gp", opts)
 
+-- tabs
+keymap("n", "[t", "<Cmd>tabp<CR>", opts)
+keymap("n", "]t", "<Cmd>tabn<CR>", opts)
+
 -- loclist and quickfix
 keymap("n", "]l", "<Cmd>lnext<CR>", opts)
 keymap("n", "[l", "<Cmd>lprev<CR>", opts)
@@ -43,6 +47,6 @@ keymap("n", "[q", "<Cmd>cprev<CR>", opts)
 vim.api.nvim_create_autocmd("FileType", {
     pattern = "qf",
     callback = function()
-        keymap("n", "<CR>", "<CR><Cmd>lcl<CR>", vim.tbl_extend("force", opts, { buffer = 0 }))
+        keymap("n", "<CR>", "<CR><Cmd>cclose<CR>", vim.tbl_extend("force", opts, { buffer = 0 }))
     end,
 })

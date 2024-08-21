@@ -166,7 +166,7 @@ lspconfig.zls.setup({
 vim.api.nvim_create_autocmd("BufWritePre", {
     pattern = "*",
     callback = function()
-        vim.lsp.buf.format({ silent = true, async = true })
+        vim.lsp.buf.format({ silent = true, async = false })
     end,
 })
 
