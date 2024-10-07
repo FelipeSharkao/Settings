@@ -2,6 +2,8 @@ export SETTINGS="$(cat $HOME/.local/share/settings_path)"
 
 export PATH=$PATH:$HOME/.local/bin
 
+export BROWSER=zen-browser
+
 # Aliases
 
 NVIM_REMOTE="nvr --remote-tab-wait +'setl bufhidden=wipe'"
@@ -48,7 +50,6 @@ export _JAVA_OPTIONS="-Xms4000m -Xmx8000m"
 [[ ! -f $HOME/.asdf/plugins/java/set-java-home.zsh ]] || . $HOME/.asdf/plugins/java/set-java-home.zsh
 
 # Rust
-. $HOME/.cargo/env 2> /dev/null
+export PATH=$PATH:$HOME/.cargo/bin
 
 alias asm="objdump -ldSwrt --visualize-jumps=extended-color --no-addresses --no-show-raw-insn -Mintel"
-

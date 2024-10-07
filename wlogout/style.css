@@ -55,8 +55,8 @@ button:hover {
     background-image: image(url("icons/hibernate.png"));
 }
 
-#shutdown {
-    background-image: image(url("icons/shutdown.png"));
+#poweroff {
+    background-image: image(url("icons/poweroff.png"));
 }
 
 #reboot {

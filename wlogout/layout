@@ -14,19 +14,19 @@
     "label" : "logout",
     "action" : "sleep 1; hyprctl dispatch exit",
     "text" : "Encerrar sessão",
-    "keybind" : "e"
+    "keybind" : "q"
 }
 {
-    "label" : "shutdown",
-    "action" : "sleep 1; systemctl poweroff",
+    "label" : "poweroff",
+    "action" : "systemctl poweroff",
     "text" : "Desligar",
-    "keybind" : "s"
+    "keybind" : "o"
 }
 {
     "label" : "suspend",
     "action" : "sleep 1; sh $SETTINGS/scripts/lock.sh suspend",
     "text" : "Suspender",
-    "keybind" : "u"
+    "keybind" : "s"
 }
 {
     "label" : "reboot",

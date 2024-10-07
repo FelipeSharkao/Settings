@@ -23,6 +23,7 @@ require("mason-lspconfig").setup({
         "taplo",
         "astro",
         "zls",
+        "dockerls",
     },
 })
 null_ls.setup({
@@ -160,6 +161,10 @@ lspconfig.astro.setup({
 })
 lspconfig.zls.setup({
     on_attach = on_attach,
+    capabilities = capabilities,
+})
+lspconfig.dockerls.setup({
+    on_attach = on_attach_no_format,
     capabilities = capabilities,
 })
 

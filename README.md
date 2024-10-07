@@ -8,7 +8,7 @@ These are Arch packages. Adapt them if your using something else.
 
 ### Hyprland
 
--   hyprland-git
+-   hyprland
 -   hyprcursor-git
 -   wlogout
 -   xdg-desktop-portal-hyprland-git
@@ -24,9 +24,13 @@ These are Arch packages. Adapt them if your using something else.
 -   wallust-git
 -   python-pywalfox
 
+#### Theming
+
+-   qt5-styleplugins
+-   qt6gtk2
+
 #### Screenshot
 
--   grim
 -   grimblast
 -   satty
 

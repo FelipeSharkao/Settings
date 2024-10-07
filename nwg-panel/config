@@ -28,10 +28,9 @@
     ],
     "controls-settings": {
       "components": [
-        "brightness",
         "volume",
-        "battery",
-        "per-app-volume"
+        "per-app-volume",
+        "processes"
       ],
       "commands": {
         "battery": ""
