@@ -1,3 +1,5 @@
+# vi: ft=sh
+
 export SETTINGS="$(cat $HOME/.local/share/settings_path)"
 
 export PATH=$PATH:$HOME/.local/bin
@@ -6,14 +8,7 @@ export BROWSER=zen-browser
 
 # Aliases
 
-NVIM_REMOTE="nvr --remote-tab-wait +'setl bufhidden=wipe'"
-
-if [ -n "$NVIM" ]; then
-    alias nvim="$NVIM_REMOTE"
-    alias vim="$NVIM_REMOTE"
-else
-    alias vim=nvim
-fi
+export NVIM_REMOTE="nvr --remote-tab-wait +'setl bufhidden=wipe'"
 
 if [ -n "$NVIM" ]; then
     export VISUAL="$NVIM_REMOTE"
@@ -24,13 +19,6 @@ else
     export EDITOR="nvim"
     export GIT_EDITOR="nvim"
 fi
-
-alias git-purge="git gc; \
-git fetch --prune --all; \
-git branch --merged | grep -v '*' > /tmp/merged-branches; \
-nano /tmp/merged-branches; \
-xargs git branch -d < /tmp/merged-branches; \
-rm /tmp/merged-branches"
 
 alias gmc="git merge --continue"
 alias glon="git log --no-merges --pretty=\"%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset\""
@@ -51,5 +39,3 @@ export _JAVA_OPTIONS="-Xms4000m -Xmx8000m"
 
 # Rust
 export PATH=$PATH:$HOME/.cargo/bin
-
-alias asm="objdump -ldSwrt --visualize-jumps=extended-color --no-addresses --no-show-raw-insn -Mintel"

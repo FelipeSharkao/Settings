@@ -44,3 +44,8 @@ function y() {
 	fi
 	rm -f -- "$tmp"
 }
+
+# Interactive shell's aliases
+alias rg="rg --no-heading"
+alias asm="objdump -ldSwrt --visualize-jumps=extended-color --no-addresses --no-show-raw-insn -Mintel"
+alias nvr="nvr --remote-tab-wait +'setl bufhidden=wipe'"
