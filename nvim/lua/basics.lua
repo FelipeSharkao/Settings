@@ -70,7 +70,7 @@ vim.api.nvim_create_autocmd({ "VimResized", "BufEnter", "WinEnter" }, {
     callback = function()
         -- Windows' width are always a little wider than textwidth + numberwidth due to signcolumn,
         -- border, etc. I didn't find a way to calculate this, so I'm using a fixed value.
-        local min_width = vim.o.textwidth + vim.o.numberwidth + 10
+        local min_width = vim.o.textwidth + vim.o.numberwidth + 4
         local width = vim.api.nvim_win_get_width(0)
         if width < min_width then
             vim.api.nvim_win_set_width(0, min_width)
