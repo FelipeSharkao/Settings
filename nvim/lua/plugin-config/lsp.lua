@@ -24,6 +24,7 @@ require("mason-lspconfig").setup({
         "astro",
         "zls",
         "dockerls",
+        "svelte",
     },
 })
 null_ls.setup({
