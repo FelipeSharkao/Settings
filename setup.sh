@@ -29,5 +29,7 @@ link wallust "$HOME/.config/wallust"
 link hypr "$HOME/.config/hypr"
 link wlogout "$HOME/.config/wlogout"
 link nwg-panel "$HOME/.config/nwg-panel"
+link yazi "$HOME/.config/yazi"
+link .editorconfig "$HOME/.editorconfig"
 
 themezip https://files04.pling.com/api/files/download/j/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjE2NjEzNjE4NjkiLCJ1IjpudWxsLCJsdCI6ImZpbGVwcmV2aWV3IiwicyI6IjZjMDVhYTNhNzliYjhhNmMyNmIyNzYwZWYwZWI3ZWRiMmIwZWVjMTZmOTNlOGJhNWMyN2YxMWJjN2E5Mjg2OGVlY2E2NDQ5YTM2YzZiNjc5M2ViYTMzMWRhYmM2NzEzMThmZGJhYjI2NzkxZTVkMTQ2YTdjODFmNWYwM2Y5NDJhIiwidCI6MTcyODE0NTE1OSwic3RmcCI6IiIsInN0aXAiOiIyODA0OjMzY2M6MTY1YTo5MzAwOmU4MTE6ZGFhYzpmNWNjOjQzODgifQ.-Q6fdfUL5Obpu6Zncf2n6zqfX97b2gsVqQcZNGEH2_k/Dark.zip

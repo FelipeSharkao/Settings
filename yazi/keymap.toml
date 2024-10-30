@@ -1,0 +1,9 @@
+[[manager.prepend_keymap]]
+on = "<Enter>"
+run = "plugin --sync smart-enter"
+desc = "Enter the child directory, or open the file"
+
+[[manager.append_keymap]]
+on = "<Backspace>"
+run = "leave"
+desc = "Go back to the parent directory"

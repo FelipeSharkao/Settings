@@ -1,0 +1,6 @@
+[opener]
+edit = [{ run = '$EDITOR "$@"', block = true }]
+open = [{ run = 'xdg-open "$@"', desc = "Open" }]
+
+[open]
+prepend_rules = [{ name = "*.html", use = ["open", "edit"] }]
