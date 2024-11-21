@@ -25,6 +25,7 @@ require("mason-lspconfig").setup({
         "zls",
         "dockerls",
         "svelte",
+        "graphql",
     },
 })
 null_ls.setup({
@@ -170,6 +171,10 @@ lspconfig.zls.setup({
     capabilities = capabilities,
 })
 lspconfig.dockerls.setup({
+    on_attach = on_attach_no_format,
+    capabilities = capabilities,
+})
+lspconfig.graphql.setup({
     on_attach = on_attach_no_format,
     capabilities = capabilities,
 })
