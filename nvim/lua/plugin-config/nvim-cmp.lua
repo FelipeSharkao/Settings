@@ -1,6 +1,8 @@
 local cmp = require("cmp")
 local lspkind = require("lspkind")
 
+vim.o.pumheight = 5
+
 cmp.setup({
     snippet = {
         expand = function(args)
@@ -16,17 +18,29 @@ cmp.setup({
         ["<C-C>"] = cmp.mapping.abort(),
         ["<Tab>"] = cmp.mapping.confirm({ select = true }),
     },
-    sources = cmp.config.sources(
-        { { name = "nvim_lsp" }, { name = "vsnip" } },
-        { { name = "buffer" } }
-    ),
+    sources = cmp.config.sources({
+        { name = "vsnip", max_item_count = 1 },
+        { name = "nvim_lsp", max_item_count = 5 },
+        { name = "buffer", max_item_count = 5 },
+    }),
     formatting = {
-        fields = { "kind", "abbr" },
-        format = lspkind.cmp_format({
-            mode = "symbol",
-            maxwidth = 50,
-            ellipsis_char = "...",
-        }),
+        fields = { "kind", "abbr", "menu" },
+        format = function(entry, vim_item)
+            vim_item = lspkind.cmp_format({
+                mode = "symbol",
+                maxwidth = 50,
+                ellipsis_char = "...",
+            })(entry, vim_item)
+
+            if
+                entry.completion_item.detail ~= nil
+                and entry.completion_item.detail ~= ""
+            then
+                vim_item.menu = vim_item.menu .. entry.completion_item.detail
+            end
+
+            return vim_item
+        end,
     },
 })
 
