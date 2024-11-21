@@ -1,7 +1,7 @@
 require("gui")
 require("basics")
 require("plugins")
-require("utils")
+require("plugin-utils")
 require("globals")
 
 require("plugin-config/telescope")

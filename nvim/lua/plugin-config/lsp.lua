@@ -85,6 +85,11 @@ local on_attach = function(client, bufnr)
     -- Use internal formatting for bindings like gq
     vim.api.nvim_set_option_value("formatexpr", "", { buf = bufnr })
 
+    if client.server_capabilities.documentSymbolProvider then
+        require("nvim-navic").attach(client, bufnr)
+        require("nvim-navbuddy").attach(client, bufnr)
+    end
+
     inlay_hints.on_attach(client, bufnr)
 end
 

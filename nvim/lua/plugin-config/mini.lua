@@ -27,9 +27,6 @@ require("mini.pick").setup({
 -- Opinated statusline
 require("mini.statusline").setup()
 
--- Toggle and textobject for comments
-require("mini.comment")
-
 -- Surround actions
 require("mini.surround").setup({
     mappings = {
@@ -59,7 +56,7 @@ local prefixes = "zx"
 local labels = "fgdsatrewquiopnmvcyb"
 starter.setup({
     evaluate_single = true,
-    header = require("utils").quotes.cowsay(),
+    header = require("plugin-utils").quotes.cowsay(),
     footer = "",
     items = {
         { section = "", name = "New File", action = "enew" },

@@ -1,3 +1,5 @@
+local utils = require("plugin-utils")
+
 -- install lazy.nvim if it's not installed already
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -71,6 +73,34 @@ require("lazy").setup({
     "nvimtools/none-ls.nvim", -- replaces jose-elias-alvarez/null-ls.nvim
     "lvimuser/lsp-inlayhints.nvim",
 
+    -- Breadcrumbs and navigation
+    {
+        "SmiteshP/nvim-navic",
+        dependencies = { "neovim/nvim-lspconfig" },
+        opts = { icons = utils.lsp_icons },
+        init = function()
+            vim.o.winbar = " %{%v:lua.require('plugin-utils').winbar_get_icon()%}"
+                .. " %t"
+                .. " > %{%v:lua.require('nvim-navic').get_location()%}"
+        end,
+    },
+    {
+        "SmiteshP/nvim-navbuddy",
+        dependencies = {
+            "neovim/nvim-lspconfig",
+            "SmiteshP/nvim-navic",
+            "MunifTanjim/nui.nvim",
+        },
+        opts = { icons = utils.lsp_icons },
+        keys = {
+            {
+                "<Leader>c",
+                "<Cmd>Navbuddy<CR>",
+                mode = "n",
+            },
+        },
+    },
+
     -- Debugging
     "mfussenegger/nvim-dap",
     { "rcarriga/nvim-dap-ui", dependencies = { "nvim-neotest/nvim-nio" } },
@@ -89,30 +119,6 @@ require("lazy").setup({
     },
     "hrsh7th/vim-vsnip",
     "hrsh7th/vim-vsnip-integ",
-
-    -- Breadcrumbs winbar
-    {
-        "Bekaboo/dropbar.nvim",
-        dependencies = { "nvim-telescope/telescope-fzf-native.nvim" },
-        opts = {},
-        event = { "BufEnter" },
-        keys = {
-            {
-                mode = "n",
-                "<Leader>c",
-                function()
-                    require("dropbar.api").pick()
-                end,
-            },
-            {
-                mode = "n",
-                "[c",
-                function()
-                    require("dropbar.api").goto_context_start()
-                end,
-            },
-        },
-    },
 
     -- Auto-detect identation
     "tpope/vim-sleuth",
@@ -154,9 +160,23 @@ require("lazy").setup({
         "stevearc/oil.nvim",
         dependencies = { "nvim-tree/nvim-web-devicons" },
         opts = {
+            default_file_explorer = true,
             delete_to_trash = true,
             skip_confirm_for_simple_edits = true,
-            experimental_watch_for_changes = true,
+            watch_for_changes = true,
+            float = {
+                padding = 3,
+                -- override = function(conf)
+                --     local screen_w = vim.opt.columns:get()
+                --     local screen_h = vim.opt.lines:get() - vim.opt.cmdheight:get()
+                --     conf.width = math.floor(screen_w * 0.8)
+                --     conf.height = math.floor(screen_h * 0.9)
+                --     return conf
+                -- end,
+            },
+            win_options = {
+                winblend = 15,
+            },
             keymaps = {
                 ["<C-q>"] = "actions.close",
                 ["q"] = "actions.close",
@@ -174,7 +194,10 @@ require("lazy").setup({
         keys = {
             {
                 "<Leader>e",
-                "<Cmd>Oil<CR>",
+                function()
+                    local oil = require("oil")
+                    oil.open_float()
+                end,
                 mode = { "n" },
             },
         },
@@ -194,29 +217,42 @@ require("lazy").setup({
             { "g#", "<Plug>(asterisk-gz#)", mode = { "n", "v" } },
         },
     },
+    -- Change case
     {
-        "tpope/vim-abolish",
+        "johmsalas/text-case.nvim",
+        dependencies = { "nvim-telescope/telescope.nvim" },
         lazy = true,
-        cmd = { "Subvert", "S", "Abolish" },
+        config = function()
+            require("textcase").setup({ prefix = "gt" })
+            require("telescope").load_extension("textcase")
+        end,
+        cmd = { "Subs", "TextCaseOpenTelescope" },
+        keys = {
+            "gt",
+            {
+                "<Leader>t",
+                "<Cmd>TextCaseOpenTelescope<CR>",
+                mode = { "n", "x" },
+                desc = "text-case Telescope",
+            },
+        },
+    },
+    -- commenstring in jsx
+    {
+        "JoosepAlviste/nvim-ts-context-commentstring",
+        opts = { enable_autocmd = false },
+        init = function()
+            local get_option = vim.filetype.get_option
+            vim.filetype.get_option = function(filetype, option)
+                if option == "commentstring" then
+                    return require("ts_context_commentstring.internal").calculate_commentstring()
+                end
+                return get_option(filetype, option)
+            end
+        end,
     },
 
     -- ====== Integration ======
-    -- -- Github Copilot
-    -- {
-    --     "zbirenbaum/copilot.lua",
-    --     lazy = true,
-    --     cmd = "Copilot",
-    --     event = "InsertEnter",
-    --     opts = {
-    --         suggestion = {
-    --             auto_trigger = true,
-    --             keymap = {
-    --                 accept_line = "<Right>",
-    --             },
-    --         },
-    --     },
-    -- },
-
     -- Connect to Discord's RPC
     "andweeb/presence.nvim",
 
