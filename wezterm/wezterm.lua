@@ -2,10 +2,12 @@ local wezterm = require("wezterm")
 
 local config = wezterm.config_builder()
 
--- looks like hyprland updated their wlroots protocol and broke the compatibility with wezterm.
--- Disabling wayland makes it use xwaland and not wlroots, so it works. How nice is rolling
--- releases?
--- https://github.com/wez/wezterm/issues/5067
+-- > looks like hyprland updated their wlroots protocol and broke the compatibility with
+-- > wezterm. Disabling wayland makes it use xwaland and not wlroots, so it works. How
+-- > nice is rolling releases?
+-- > https://github.com/wez/wezterm/issues/5067
+-- This should be fixed, but now it hangs, no error. Another bug?
+-- https://github.com/wez/wezterm/issues/5197
 config.enable_wayland = false
 
 config.keys = {
