@@ -12,17 +12,21 @@ cmp.setup({
     mapping = {
         ["<C-N>"] = cmp.mapping.select_next_item(),
         ["<C-P>"] = cmp.mapping.select_prev_item(),
-        ["<C-D>"] = cmp.mapping.scroll_docs(-4),
-        ["<C-U>"] = cmp.mapping.scroll_docs(4),
-        ["<C-Space>"] = cmp.mapping.complete({}),
+        ["<C-h>"] = cmp.mapping.scroll_docs(-4),
+        ["<C-l>"] = cmp.mapping.scroll_docs(4),
+        ["<C-y>"] = cmp.mapping.complete({}),
         ["<C-C>"] = cmp.mapping.abort(),
-        ["<Tab>"] = cmp.mapping.confirm({ select = true }),
+        ["<C-i>"] = cmp.mapping.confirm({ select = true }),
     },
     sources = cmp.config.sources({
         { name = "vsnip", max_item_count = 1 },
         { name = "nvim_lsp", max_item_count = 5 },
         { name = "buffer", max_item_count = 5 },
     }),
+    performance = {
+        debounce = 0,
+        throttle = 0,
+    },
     formatting = {
         fields = { "kind", "abbr", "menu" },
         format = function(entry, vim_item)
@@ -36,7 +40,7 @@ cmp.setup({
                 entry.completion_item.detail ~= nil
                 and entry.completion_item.detail ~= ""
             then
-                vim_item.menu = vim_item.menu .. entry.completion_item.detail
+                vim_item.menu = entry.completion_item.detail
             end
 
             return vim_item
