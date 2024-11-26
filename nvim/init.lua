@@ -15,3 +15,10 @@ require("plugin-config/indent-blankline")
 require("plugin-config/discord")
 
 require("keymappings")
+
+vim.api.nvim_create_autocmd({ "BufEnter", "BufNewFile" }, {
+    pattern = "*.porth",
+    callback = function()
+        vim.bo.filetype = "c"
+    end,
+})
