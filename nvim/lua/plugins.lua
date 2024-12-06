@@ -72,6 +72,10 @@ require("lazy").setup({
     "jay-babu/mason-nvim-dap.nvim",
     "nvimtools/none-ls.nvim", -- replaces jose-elias-alvarez/null-ls.nvim
     "lvimuser/lsp-inlayhints.nvim",
+    {
+        "joechrisellis/lsp-format-modifications.nvim",
+        dependencies = { "nvim-lua/plenary.nvim" },
+    },
 
     -- Breadcrumbs and navigation
     {
