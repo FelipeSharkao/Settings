@@ -35,9 +35,6 @@ null_ls.setup({
         }),
         null_ls.builtins.formatting.stylua,
     },
-    on_attach = function(client, bufnr)
-        on_attach_formatter(client, bufnr)
-    end,
 })
 require("mason-null-ls").setup({
     ensure_installed = nil,
@@ -93,18 +90,6 @@ end, opts)
 
 local lspconfig = require("lspconfig")
 
-local auto_format_augroup =
-    vim.api.nvim_create_augroup("Format on save", { clear = true })
-local function on_attach_formatter(_, bufnr)
-    vim.api.nvim_create_autocmd({ "BufWritePre" }, {
-        buffer = bufnr,
-        group = auto_format_augroup,
-        callback = function()
-            vim.lsp.buf.format({ async = false })
-        end,
-    })
-end
-
 local on_attach = function(client, bufnr)
     vim.api.nvim_set_option_value("omnifunc", "v:lua.vim.lsp.omnifunc", { buf = bufnr })
     -- Use internal formatting for bindings like gq
@@ -116,16 +101,21 @@ local on_attach = function(client, bufnr)
     end
 
     inlay_hints.on_attach(client, bufnr)
-
-    if client.server_capabilities.documentFormattingProvider then
-        on_attach_formatter(client, bufnr)
-    end
 end
 
 local on_attach_no_format = function(client, bufnr)
     client.server_capabilities.documentFormattingProvider = false
     on_attach(client, bufnr)
 end
+
+local auto_format_augroup =
+    vim.api.nvim_create_augroup("Format on save", { clear = true })
+vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+    group = auto_format_augroup,
+    callback = function()
+        vim.lsp.buf.format({ async = false })
+    end,
+})
 
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 

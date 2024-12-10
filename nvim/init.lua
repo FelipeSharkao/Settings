@@ -1,6 +1,8 @@
+vim.opt.rtp:prepend(vim.env.SETTINGS .. "/nvim")
+
 require("gui")
 require("basics")
-require("plugins")
+require("lazy-config")
 require("plugin-utils")
 require("globals")
 
