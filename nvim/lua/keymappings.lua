@@ -48,6 +48,9 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- Util commands
-vim.api.nvim_create_user_command("Lua", function(params)
-    vim.cmd("lua print(vim.inspect(" .. params.args .. "))")
-end, { nargs = "+", complete = "lua" })
+vim.api.nvim_create_user_command("Settings", function()
+    vim.cmd("tabe | tcd ~/Settings")
+    require("oil").open()
+end, {
+    desc = "Open Settings directory",
+})

@@ -21,6 +21,7 @@ require("keymappings")
 vim.api.nvim_create_autocmd({ "BufEnter", "BufNewFile" }, {
     pattern = "*.porth",
     callback = function()
-        vim.bo.filetype = "c"
+        vim.bo.filetype = "porth"
+        vim.bo.spellcapcheck = ""
     end,
 })

@@ -21,11 +21,11 @@ require("mason-lspconfig").setup({
         "lua_ls",
         "rust_analyzer",
         "taplo",
-        "astro",
         "zls",
         "dockerls",
         "svelte",
         "graphql",
+        "hls",
     },
 })
 null_ls.setup({
@@ -180,10 +180,6 @@ lspconfig.svelte.setup({
     on_attach = on_attach,
     capabilities = capabilities,
 })
-lspconfig.astro.setup({
-    on_attach = on_attach,
-    capabilities = capabilities,
-})
 lspconfig.zls.setup({
     on_attach = on_attach,
     capabilities = capabilities,
@@ -194,6 +190,10 @@ lspconfig.dockerls.setup({
 })
 lspconfig.graphql.setup({
     on_attach = on_attach_no_format,
+    capabilities = capabilities,
+})
+lspconfig.hls.setup({
+    on_attach = on_attach,
     capabilities = capabilities,
 })
 
