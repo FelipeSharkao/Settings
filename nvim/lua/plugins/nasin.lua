@@ -1,6 +1,6 @@
 return {
     {
-        dir = "~/Projects/lang/editor-plugins/nvim",
+        dir = "~/Projects/nasin/nasin-nvim",
         name = "nasin",
         opts = {},
         build = function()

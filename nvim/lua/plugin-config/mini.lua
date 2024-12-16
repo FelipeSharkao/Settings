@@ -5,7 +5,18 @@ local extra = require("mini.extra")
 extra.setup()
 
 -- Extends a/i textobjects
-require("mini.ai").setup()
+require("mini.ai").setup({
+    custom_textobjects = {
+        g = function()
+            local from = { line = 1, col = 1 }
+            local to = {
+                line = vim.fn.line("$"),
+                col = math.max(vim.fn.getline("$"):len(), 1),
+            }
+            return { from = from, to = to }
+        end,
+    },
+})
 
 -- Align text
 require("mini.align").setup()
@@ -53,7 +64,7 @@ require("mini.surround").setup({
 -- Startup screen
 local starter = require("mini.starter")
 local prefixes = "zx"
-local labels = "fgdsatrewquiopnmvcyb"
+local labels = "nqfdsajklrewzxcvuiom"
 starter.setup({
     evaluate_single = true,
     header = require("plugin-utils").quotes.cowsay(),
@@ -79,7 +90,9 @@ starter.setup({
             local function use_label(label, prefix)
                 local with_prefix = prefix .. label
 
-                if not labels:find(label) or vim.tbl_contains(used_labels, with_prefix) then
+                if
+                    not labels:find(label) or vim.tbl_contains(used_labels, with_prefix)
+                then
                     return nil
                 end
 

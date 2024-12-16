@@ -85,9 +85,10 @@ telescope.load_extension("dap")
 local keymap = vim.keymap.set
 local opts = { silent = true, noremap = true }
 
-keymap("n", "<Leader>f", builtin.find_files, opts)
-keymap("n", "<Leader>g", builtin.live_grep, opts)
-keymap("n", "<Leader>b", builtin.buffers, opts)
-keymap("n", "<Leader>l", builtin.resume, opts)
+keymap("n", "gf", '<Nop>', opts)
+keymap("n", "gff", builtin.find_files, opts)
+keymap("n", "gfg", builtin.live_grep, opts)
+keymap("n", "gfb", builtin.buffers, opts)
+keymap("n", "gfl", builtin.resume, opts)
 
 keymap("n", "z=", builtin.spell_suggest, opts)

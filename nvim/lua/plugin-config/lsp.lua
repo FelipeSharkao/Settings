@@ -47,38 +47,22 @@ require("mason-nvim-dap").setup({
 
 inlay_hints.setup()
 
-keymap("i", "<Tab>", "pumvisible() ? '<C-n>' : '<Tab>'", xopts)
-keymap("n", "<Leader>q", vim.diagnostic.setloclist, opts)
-keymap("n", "[d", vim.diagnostic.goto_prev, opts)
-keymap("n", "]d", vim.diagnostic.goto_next, opts)
 keymap("n", "[e", function()
     vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.ERROR })
 end, opts)
 keymap("n", "]e", function()
     vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR })
 end, opts)
-keymap("n", "[w", function()
-    vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.WARN })
-end, opts)
-keymap("n", "]w", function()
-    vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.WARN })
-end, opts)
-keymap("n", "gD", function()
-    vim.diagnostic.open_float({ scope = "line" })
-end, opts)
-keymap("n", "gd", vim.lsp.buf.definition, opts)
-keymap("n", "gi", vim.lsp.buf.references, opts)
-keymap("n", "gI", vim.lsp.buf.implementation, opts)
-keymap("n", "gt", vim.lsp.buf.type_definition, opts)
-keymap("n", "gh", vim.lsp.buf.hover, opts)
-keymap("n", "gH", vim.lsp.buf.signature_help, opts)
-keymap("i", "<C-h>", vim.lsp.buf.signature_help, opts)
-keymap("n", "gr", vim.lsp.buf.rename, opts)
-keymap("n", "ga", vim.lsp.buf.code_action, opts)
-keymap("n", "gf", function()
+keymap("n", "grr", vim.lsp.buf.references, opts)
+keymap("n", "gri", vim.lsp.buf.implementation, opts)
+keymap("n", "grt", vim.lsp.buf.type_definition, opts)
+keymap("n", "grn", vim.lsp.buf.rename, opts)
+keymap("n", "gra", vim.lsp.buf.code_action, opts)
+keymap("v", "gra", vim.lsp.buf.code_action, opts)
+keymap("n", "grf", function()
     vim.lsp.buf.format({ async = true })
 end, opts)
-keymap("v", "gf", function()
+keymap("v", "grf", function()
     vim.lsp.buf.format({
         async = true,
         range = {
@@ -87,13 +71,12 @@ keymap("v", "gf", function()
         },
     })
 end, opts)
+keymap("i", "<C-S>", vim.lsp.buf.signature_help, opts)
 
 local lspconfig = require("lspconfig")
 
 local on_attach = function(client, bufnr)
     vim.api.nvim_set_option_value("omnifunc", "v:lua.vim.lsp.omnifunc", { buf = bufnr })
-    -- Use internal formatting for bindings like gq
-    vim.api.nvim_set_option_value("formatexpr", "", { buf = bufnr })
 
     if client.server_capabilities.documentSymbolProvider then
         require("nvim-navic").attach(client, bufnr)
