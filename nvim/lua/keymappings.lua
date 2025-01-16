@@ -2,10 +2,6 @@
 local keymap = vim.keymap.set
 local opts = { noremap = true, silent = true }
 
--- clipboard
-keymap("n", "+", '"+', opts)
-keymap("v", "+", '"+', opts)
-
 -- Disable arrow keys (git gut)
 local arrow_keys = { "<Up>", "<Down>", "<Left>", "<Right>", "<PageUp>", "<PageDown>" }
 for _, key in ipairs(arrow_keys) do
@@ -16,19 +12,6 @@ for _, key in ipairs(arrow_keys) do
         opts
     )
 end
-
--- use Esc in terminal mode
-keymap("t", "<Esc><Esc>", "<C-\\><C-n>", opts)
--- use Esc to cancel search
-keymap("n", "<Esc>", "<Cmd>noh<CR>", opts)
-
--- create a new line without breaking the current one
-keymap("i", "<C-CR>", "<C-O>o", opts)
-keymap("i", "<C-S-CR>", "<C-O>O", opts)
-
--- tabs
-keymap("n", "[t", "<Cmd>tabp<CR>", opts)
-keymap("n", "]t", "<Cmd>tabn<CR>", opts)
 
 -- loclist and quickfix
 keymap("n", "]l", "<Cmd>lnext<CR>", opts)
@@ -48,9 +31,14 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- Util commands
-vim.api.nvim_create_user_command("Settings", function()
-    vim.cmd("tabe | tcd ~/Settings")
+vim.api.nvim_create_user_command("Open", function(o)
+    vim.cmd("tabe | tcd " .. o.fargs[1])
     require("oil").open()
 end, {
+    desc = "Open directory in new tab",
+    complete = "dir",
+    nargs = 1,
+})
+vim.api.nvim_create_user_command("Settings", "Open ~/Settings", {
     desc = "Open Settings directory",
 })

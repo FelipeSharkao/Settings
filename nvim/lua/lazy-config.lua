@@ -203,7 +203,7 @@ require("lazy").setup({
             },
             keys = {
                 {
-                    "<Leader>e",
+                    "gfe",
                     function()
                         local oil = require("oil")
                         oil.open_float()
@@ -233,7 +233,7 @@ require("lazy").setup({
             dependencies = { "nvim-telescope/telescope.nvim" },
             lazy = true,
             config = function()
-                require("textcase").setup({ prefix = "gt" })
+                require("textcase").setup({ prefix = "gc" })
                 require("telescope").load_extension("textcase")
             end,
             cmd = { "Subs", "TextCaseOpenTelescope" },
