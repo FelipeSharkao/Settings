@@ -2,7 +2,7 @@
 
 export SETTINGS="$(cat $HOME/.local/share/settings_path)"
 
-export PATH=$PATH:$HOME/.local/bin
+export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$HOME/.local/bin:$PATH"
 
 export BROWSER=zen-browser
 
