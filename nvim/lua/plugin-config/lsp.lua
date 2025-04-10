@@ -1,10 +1,13 @@
 local null_ls = require("null-ls")
-local inlay_hints = require("lsp-inlayhints")
 
 local opts = { noremap = true, silent = true }
-local xopts = { noremap = true, silent = true, expr = true }
 
 local keymap = vim.keymap.set
+
+vim.diagnostic.config({
+    virtual_text = { source = true },
+    update_in_insert = true,
+})
 
 require("lsp-colors").setup({
     Error = "#F44747",
@@ -45,21 +48,23 @@ require("mason-nvim-dap").setup({
     ensure_installed = { "node2" },
 })
 
-inlay_hints.setup()
+require("lsp-endhints").setup({
+    icons = {
+        type = "󰠱 ",
+        parameter = "󰀫 ",
+        offspec = "󰉿 ",
+        unknown = "",
+    },
+    autoEnableHints = true,
+})
 
 keymap("n", "[e", function()
-    vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.ERROR })
+    vim.diagnostic.jump({ count = -1, severity = vim.diagnostic.severity.ERROR })
 end, opts)
 keymap("n", "]e", function()
-    vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR })
+    vim.diagnostic.jump({ count = 1, severity = vim.diagnostic.severity.ERROR })
 end, opts)
-keymap("n", "gd", "<Nop>", opts)
-keymap("n", "grr", vim.lsp.buf.references, opts)
-keymap("n", "gri", vim.lsp.buf.implementation, opts)
 keymap("n", "grt", vim.lsp.buf.type_definition, opts)
-keymap("n", "grn", vim.lsp.buf.rename, opts)
-keymap("n", "gra", vim.lsp.buf.code_action, opts)
-keymap("v", "gra", vim.lsp.buf.code_action, opts)
 keymap("n", "grf", function()
     vim.lsp.buf.format({ async = true })
 end, opts)
@@ -72,7 +77,6 @@ keymap("v", "grf", function()
         },
     })
 end, opts)
-keymap("i", "<C-S>", vim.lsp.buf.signature_help, opts)
 
 local lspconfig = require("lspconfig")
 
@@ -83,8 +87,6 @@ local on_attach = function(client, bufnr)
         require("nvim-navic").attach(client, bufnr)
         require("nvim-navbuddy").attach(client, bufnr)
     end
-
-    inlay_hints.on_attach(client, bufnr)
 end
 
 local on_attach_no_format = function(client, bufnr)
