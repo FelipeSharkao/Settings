@@ -37,6 +37,7 @@ null_ls.setup({
             extra_filetypes = { "astro" },
         }),
         null_ls.builtins.formatting.stylua,
+        null_ls.builtins.formatting.gdformat,
     },
 })
 require("mason-null-ls").setup({
@@ -180,6 +181,10 @@ lspconfig.graphql.setup({
 })
 lspconfig.hls.setup({
     on_attach = on_attach,
+    capabilities = capabilities,
+})
+lspconfig.gdscript.setup({
+    on_attach = on_attach_no_format,
     capabilities = capabilities,
 })
 
