@@ -1,4 +1,21 @@
-WALLPAPER=$(find "$1" -type f | shuf -n 1)
+case "$1" in
+light)
+    PALETTE="light16"
+    ;;
+dark)
+    PALETTE="dark16"
+    ;;
+*)
+    echo "Usage: $0 {light|dark} [folder]"
+    exit 1
+    ;;
+esac
+
+if [ -z "$2" ]; then
+    WALLPAPER="$(cat ~/.cache/wal/wal)"
+else
+    WALLPAPER="$(find "$2" -type f | shuf -n 1)"
+fi
 
 echo "Setting swaybg..."
 killall swaybg &> /dev/null
@@ -9,7 +26,7 @@ gsettings set org.gnome.desktop.background picture-uri "file://$WALLPAPER" 2> /d
 gsettings set org.gnome.desktop.background picture-uri-dark "file://$WALLPAPER" 2> /dev/null
 
 echo "Running wallust..."
-wallust run "$WALLPAPER"
+wallust run -p "$PALETTE" "$WALLPAPER"
 
 echo "Resetting nwg-panel..."
 killall nwg-panel &> /dev/null

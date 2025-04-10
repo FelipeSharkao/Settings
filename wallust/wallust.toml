@@ -1,7 +1,7 @@
 backend = "resized"
 color_space = "lab"
-palette = "dark16"
 check_contrast = true
+saturation = 50
 
 [templates]
 rofi-dark.template = "colors-rofi-dark.rasi"
@@ -13,6 +13,10 @@ gtk.target = "~/.cache/wal/colors-gtk.css"
 # mako config can't import a file, so we'll use the whole config there
 mako.template = "colors-mako"
 mako.target = "~/.config/mako/config"
+
+# lazygit config can't import a file, so we'll use the whole config there
+lazygit.template = "lazygit.yml"
+lazygit.target = "~/.config/lazygit/config.yml"
 
 # Compatibility with pywal
 wal.template = "wal"
