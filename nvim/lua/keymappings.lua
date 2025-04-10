@@ -5,19 +5,10 @@ local opts = { noremap = true, silent = true }
 -- Disable arrow keys (git gut)
 local arrow_keys = { "<Up>", "<Down>", "<Left>", "<Right>", "<PageUp>", "<PageDown>" }
 for _, key in ipairs(arrow_keys) do
-    keymap(
-        { "n", "i", "v" },
-        key,
-        "<Cmd>echo 'Use k, l, f, t, s, <C-U> or <C-D>'<CR>",
-        opts
-    )
+    keymap({ "n", "i", "v" }, key, "<Cmd>echo 'Use k, l, f, t, <C-U> or <C-D>'<CR>", opts)
 end
 
 -- loclist and quickfix
-keymap("n", "]l", "<Cmd>lnext<CR>", opts)
-keymap("n", "[l", "<Cmd>lprev<CR>", opts)
-keymap("n", "]q", "<Cmd>cnext<CR>", opts)
-keymap("n", "[q", "<Cmd>cprev<CR>", opts)
 vim.api.nvim_create_autocmd("FileType", {
     pattern = "qf",
     callback = function()

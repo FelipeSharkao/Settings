@@ -29,3 +29,6 @@ for _, fg in ipairs(fg_colors) do
 end
 
 vim.cmd("hi WinBar guibg=NONE")
+vim.cmd("hi WinBarNC guibg=NONE")
+
+vim.api.nvim_set_hl(0, "LspInlayHint", { link = "ColorColumn" })
