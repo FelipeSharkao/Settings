@@ -1,7 +1,8 @@
 vim.o.termguicolors = true
-vim.o.background = "dark"
 
 vim.cmd("source $HOME/.cache/wal/colors-wal.vim")
+
+vim.o.background = (vim.g.colors_light == 1 and "light") or "dark"
 
 -- using colors.foreground leads to somewhat boring results
 local fg_colors = {

@@ -1,0 +1,11 @@
+os:
+    editPreset: nvim-remote
+
+git:
+    paging:
+        colorArg: always
+        pager: delta {{"--light" if palette[:5] == "light" else "--dark"}} --paging=never --line-numbers
+
+gui:
+    mouseEvents: false
+    language: en

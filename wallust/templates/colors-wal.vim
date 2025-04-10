@@ -4,6 +4,8 @@ let background = "{{background}}"
 let foreground = "{{foreground}}"
 let cursor     = "{{cursor}}"
 
+let colors_light = {{"1" if palette[:5] == "light" else "0"}}
+
 " Colors
 let color0  = "{{color0}}"
 let color1  = "{{color1}}"
