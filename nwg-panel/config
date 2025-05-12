@@ -17,8 +17,7 @@
     "icons": "dark",
     "css-name": "panel-top",
     "modules-left": [
-      "hyprland-workspaces",
-      "playerctl"
+      "hyprland-workspaces"
     ],
     "modules-center": [
       "clock"
@@ -30,11 +29,10 @@
       "components": [
         "volume",
         "per-app-volume",
-        "processes"
+        "processes",
+        "battery",
+        "brightness"
       ],
-      "commands": {
-        "battery": ""
-      },
       "show-values": false,
       "interval": 1,
       "icon-size": 16,
@@ -90,7 +88,10 @@
       "battery-low-interval": 3,
       "processes-label": "Processes",
       "readme-label": "README",
-      "angle": 0.0
+      "angle": 0.0,
+      "commands": {
+        "battery": ""
+      }
     },
     "tray": {
       "root-css-name": "tray",
@@ -195,6 +196,13 @@
       "angle": 0.0
     },
     "start-hidden": false,
-    "keyboard-layout": {}
+    "keyboard-layout": {},
+    "run-if-output-exist": [],
+    "run-if-output-absent": [],
+    "monitor": "",
+    "width-as-percentage": false,
+    "hyprland-submap": {},
+    "niri-taskbar": {},
+    "random-wallpaper": {}
   }
 ]

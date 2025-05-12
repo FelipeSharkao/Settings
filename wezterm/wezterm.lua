@@ -42,6 +42,16 @@ config.keys = {
         mods = "CTRL|SHIFT",
         action = wezterm.action.ClearScrollback("ScrollbackAndViewport"),
     },
+    {
+        key = "PageUp",
+        mods = "SHIFT",
+        action = wezterm.action.ScrollByPage(-0.5),
+    },
+    {
+        key = "PageDown",
+        mods = "SHIFT",
+        action = wezterm.action.ScrollByPage(0.5),
+    },
 }
 
 config.window_padding = {
