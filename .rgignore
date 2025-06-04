@@ -1,5 +1,6 @@
-zsh/oh-my-zsh
-zsh/custom/plugins/fast-syntax-highlighting
-zsh/custom/plugins/zsh-autosuggestions
-zsh/custom/plugins/zsh-syntax-highlighting
-zsh/custom/themes/powerlevel10k
+shell/p10k.zsh
+shell/oh-my-zsh
+shell/custom/plugins/fast-syntax-highlighting
+shell/custom/plugins/zsh-autosuggestions
+shell/custom/plugins/zsh-syntax-highlighting
+shell/custom/themes/powerlevel10k

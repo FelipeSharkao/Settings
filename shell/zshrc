@@ -47,10 +47,11 @@ function y() {
 
 # Interactive shell's aliases
 alias rg="rg --no-heading"
-alias asm="objdump -ldSwrt --visualize-jumps=extended-color --no-addresses --no-show-raw-insn -Mintel"
 alias nvr="nvr --remote-tab-wait +'setl bufhidden=wipe'"
 
-# vi-mode
-bindkey -v
-export KEYTIMEOUT=1 # 10ms
-bindkey "^R" history-incremental-search-backward
+function asm() {
+    local tmp="$(mktemp -t "objconv-disassemble.XXXXXX.asm")"
+    objconv -fnasm $@ "$tmp"
+    bat "$tmp"
+}
+
