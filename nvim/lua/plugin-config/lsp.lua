@@ -6,7 +6,7 @@ local keymap = vim.keymap.set
 
 vim.diagnostic.config({
     virtual_text = { source = true },
-    update_in_insert = true,
+    -- update_in_insert = true,
 })
 
 require("lsp-colors").setup({
@@ -45,9 +45,6 @@ require("mason-null-ls").setup({
     automatic_installation = true,
     automatic_setup = true,
 })
-require("mason-nvim-dap").setup({
-    ensure_installed = { "node2" },
-})
 
 require("lsp-endhints").setup({
     icons = {
@@ -59,25 +56,38 @@ require("lsp-endhints").setup({
     autoEnableHints = true,
 })
 
-keymap("n", "[e", function()
-    vim.diagnostic.jump({ count = -1, severity = vim.diagnostic.severity.ERROR })
-end, opts)
-keymap("n", "]e", function()
-    vim.diagnostic.jump({ count = 1, severity = vim.diagnostic.severity.ERROR })
-end, opts)
+keymap(
+    "n",
+    "[e",
+    function()
+        vim.diagnostic.jump({ count = -1, severity = vim.diagnostic.severity.ERROR })
+    end,
+    opts
+)
+keymap(
+    "n",
+    "]e",
+    function()
+        vim.diagnostic.jump({ count = 1, severity = vim.diagnostic.severity.ERROR })
+    end,
+    opts
+)
 keymap("n", "grt", vim.lsp.buf.type_definition, opts)
-keymap("n", "grf", function()
-    vim.lsp.buf.format({ async = true })
-end, opts)
-keymap("v", "grf", function()
-    vim.lsp.buf.format({
-        async = true,
-        range = {
-            ["start"] = vim.api.nvim_buf_get_mark(0, "<"),
-            ["end"] = vim.api.nvim_buf_get_mark(0, ">"),
-        },
-    })
-end, opts)
+keymap("n", "grf", function() vim.lsp.buf.format({ async = true }) end, opts)
+keymap(
+    "v",
+    "grf",
+    function()
+        vim.lsp.buf.format({
+            async = true,
+            range = {
+                ["start"] = vim.api.nvim_buf_get_mark(0, "<"),
+                ["end"] = vim.api.nvim_buf_get_mark(0, ">"),
+            },
+        })
+    end,
+    opts
+)
 
 local lspconfig = require("lspconfig")
 
@@ -99,9 +109,7 @@ local auto_format_augroup =
     vim.api.nvim_create_augroup("Format on save", { clear = true })
 vim.api.nvim_create_autocmd({ "BufWritePre" }, {
     group = auto_format_augroup,
-    callback = function()
-        vim.lsp.buf.format({ async = false })
-    end,
+    callback = function() vim.lsp.buf.format({ async = false }) end,
 })
 
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
@@ -189,7 +197,5 @@ lspconfig.gdscript.setup({
 })
 
 vim.api.nvim_create_autocmd("VimLeavePre", {
-    callback = function()
-        vim.lsp.stop_client(vim.lsp.get_active_clients())
-    end,
+    callback = function() vim.lsp.stop_client(vim.lsp.get_active_clients()) end,
 })

@@ -72,7 +72,6 @@ require("lazy").setup({
         "williamboman/mason-lspconfig.nvim",
         "neovim/nvim-lspconfig",
         "jay-babu/mason-null-ls.nvim",
-        "jay-babu/mason-nvim-dap.nvim",
         "nvimtools/none-ls.nvim", -- replaces jose-elias-alvarez/null-ls.nvim
         "chrisgrieser/nvim-lsp-endhints",
         {
@@ -108,10 +107,6 @@ require("lazy").setup({
             },
         },
 
-        -- Debugging
-        "mfussenegger/nvim-dap",
-        { "rcarriga/nvim-dap-ui", dependencies = { "nvim-neotest/nvim-nio" } },
-
         -- Suggestions and completion
         {
             "hrsh7th/nvim-cmp",
@@ -136,9 +131,7 @@ require("lazy").setup({
         "preservim/vim-markdown",
         {
             "wuelnerdotexe/vim-astro",
-            init = function()
-                vim.g.astro_typescript = "enable"
-            end,
+            init = function() vim.g.astro_typescript = "enable" end,
         },
 
         -- Preview CSS colors
@@ -217,9 +210,7 @@ require("lazy").setup({
         {
             "haya14busa/vim-asterisk",
             lazy = true,
-            config = function()
-                vim.g["asterisk#keeppos"] = true
-            end,
+            config = function() vim.g["asterisk#keeppos"] = true end,
             keys = {
                 { "*", "<Plug>(asterisk-z*)", mode = { "n", "v" } },
                 { "#", "<Plug>(asterisk-z#)", mode = { "n", "v" } },
