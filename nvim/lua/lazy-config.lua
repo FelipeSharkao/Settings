@@ -24,11 +24,7 @@ require("lazy").setup({
         "lukas-reineke/indent-blankline.nvim",
 
         -- Notifications
-        {
-            "j-hui/fidget.nvim",
-            opts = { progress = { lsp = { progress_ringbuf_size = 1024 } } },
-            event = "BufEnter",
-        },
+        { "j-hui/fidget.nvim", opts = {}, event = "BufEnter" },
 
         -- vim.ui.select
         {
@@ -66,24 +62,13 @@ require("lazy").setup({
         },
 
         -- ====== Language features ======
-        -- LSP and linters
-        "folke/lsp-colors.nvim",
-        "williamboman/mason.nvim",
-        "williamboman/mason-lspconfig.nvim",
-        "neovim/nvim-lspconfig",
-        "jay-babu/mason-null-ls.nvim",
-        "nvimtools/none-ls.nvim", -- replaces jose-elias-alvarez/null-ls.nvim
-        "chrisgrieser/nvim-lsp-endhints",
-        {
-            "joechrisellis/lsp-format-modifications.nvim",
-            dependencies = { "nvim-lua/plenary.nvim" },
-        },
-
         -- Breadcrumbs and navigation
         {
             "SmiteshP/nvim-navic",
-            dependencies = { "neovim/nvim-lspconfig" },
-            opts = { icons = utils.lsp_icons },
+            opts = {
+                icons = utils.lsp_icons,
+                lsp = { auto_attach = true },
+            },
             init = function()
                 vim.o.winbar = " %{%v:lua.require('plugin-utils').winbar_get_icon()%}"
                     .. " %{%v:lua.require('nvim-navic').get_location()%}"

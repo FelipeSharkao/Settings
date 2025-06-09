@@ -155,9 +155,7 @@ local quotes = {
     "What one programmer can do in one month, two programmers can do in two months.\n\n- Frederick P. Brooks",
 }
 
-M.get_quote = function()
-    return quotes[math.random(#quotes)]
-end
+M.get_quote = function() return quotes[math.random(#quotes)] end
 
 M.word_wrap = function(text, len)
     len = len or 80
@@ -191,9 +189,7 @@ M.boxed = function(text, len)
     local max_length = 0
 
     for _, line in ipairs(lines) do
-        if #line > max_length then
-            max_length = #line
-        end
+        if #line > max_length then max_length = #line end
     end
 
     local result = "╭─" .. string.rep("─", max_length) .. "─╮\n"
