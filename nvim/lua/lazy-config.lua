@@ -86,25 +86,8 @@ require("lazy").setup({
             opts = { icons = utils.lsp_icons },
             init = function()
                 vim.o.winbar = " %{%v:lua.require('plugin-utils').winbar_get_icon()%}"
-                    .. " %t"
-                    .. " > %{%v:lua.require('nvim-navic').get_location()%}"
+                    .. " %{%v:lua.require('nvim-navic').get_location()%}"
             end,
-        },
-        {
-            "SmiteshP/nvim-navbuddy",
-            dependencies = {
-                "neovim/nvim-lspconfig",
-                "SmiteshP/nvim-navic",
-                "MunifTanjim/nui.nvim",
-            },
-            opts = { icons = utils.lsp_icons },
-            keys = {
-                {
-                    "<Leader>c",
-                    "<Cmd>Navbuddy<CR>",
-                    mode = "n",
-                },
-            },
         },
 
         -- Suggestions and completion
