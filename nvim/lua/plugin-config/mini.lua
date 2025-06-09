@@ -38,6 +38,9 @@ require("mini.pick").setup({
 -- Opinated statusline
 require("mini.statusline").setup()
 
+-- Opinated tabline
+require("mini.tabline").setup()
+
 -- Surround actions
 require("mini.surround").setup({
     mappings = {
