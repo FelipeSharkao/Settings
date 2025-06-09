@@ -126,54 +126,6 @@ require("lazy").setup({
             },
         },
 
-        -- File explorer as a buffer
-        {
-            "stevearc/oil.nvim",
-            dependencies = { "nvim-tree/nvim-web-devicons" },
-            opts = {
-                default_file_explorer = true,
-                delete_to_trash = true,
-                skip_confirm_for_simple_edits = true,
-                watch_for_changes = true,
-                float = {
-                    padding = 3,
-                    -- override = function(conf)
-                    --     local screen_w = vim.opt.columns:get()
-                    --     local screen_h = vim.opt.lines:get() - vim.opt.cmdheight:get()
-                    --     conf.width = math.floor(screen_w * 0.8)
-                    --     conf.height = math.floor(screen_h * 0.9)
-                    --     return conf
-                    -- end,
-                },
-                win_options = {
-                    winblend = 15,
-                },
-                keymaps = {
-                    ["<C-q>"] = "actions.close",
-                    ["q"] = "actions.close",
-                    ["<BS>"] = "actions.parent",
-                    ["<C-h>"] = "actions.toggle_hidden",
-                    ["<C-l>"] = "action.send_to_qflist",
-                    ["="] = {
-                        mode = "n",
-                        callback = function()
-                            require("oil").save()
-                        end,
-                    },
-                },
-            },
-            keys = {
-                {
-                    "gfe",
-                    function()
-                        local oil = require("oil")
-                        oil.open_float()
-                    end,
-                    mode = { "n" },
-                },
-            },
-        },
-
         -- ====== Movement and editing ======
         {
             "haya14busa/vim-asterisk",
