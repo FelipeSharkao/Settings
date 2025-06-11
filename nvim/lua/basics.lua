@@ -32,9 +32,12 @@ vim.o.tabstop = 4      -- maximum width of tab character (measured in spaces)
 vim.o.shiftwidth = 4   -- size of indent (measured in spaces), should equal tabstop
 vim.o.softtabstop = 4  -- should be the same as the other two above
 vim.o.expandtab = true -- expand tabs to spaces
-vim.o.smartindent = true -- smart indenting on new line for C-like programs
-vim.o.autoindent = true -- copy the indentation from previous line
+vim.o.smartindent = true
+vim.o.autoindent = true
+vim.o.cindent = false
 vim.o.smarttab = true -- tab infront of a line inserts blanks based on shiftwidth
+
+vim.api.nvim_create_autocmd("BufEnter", { command = "set indentexpr=" })
 
 -- ================= Number column ================= --
 

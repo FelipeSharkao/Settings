@@ -132,8 +132,8 @@ require("lazy").setup({
             lazy = true,
             config = function() vim.g["asterisk#keeppos"] = true end,
             keys = {
-                { "*", "<Plug>(asterisk-z*)", mode = { "n", "v" } },
-                { "#", "<Plug>(asterisk-z#)", mode = { "n", "v" } },
+                { "*",  "<Plug>(asterisk-z*)",  mode = { "n", "v" } },
+                { "#",  "<Plug>(asterisk-z#)",  mode = { "n", "v" } },
                 { "g*", "<Plug>(asterisk-gz*)", mode = { "n", "v" } },
                 { "g#", "<Plug>(asterisk-gz#)", mode = { "n", "v" } },
             },
@@ -183,7 +183,10 @@ require("lazy").setup({
         -- Git
         "lewis6991/gitsigns.nvim",
         "sindrets/diffview.nvim",
-        { "APZelos/blamer.nvim", dependencies = { "nvim-tree/nvim-web-devicons" } },
+        {
+            "APZelos/blamer.nvim",
+            dependencies = { "nvim-tree/nvim-web-devicons" },
+        },
 
         -- ====== Misc ======
         -- many, many features

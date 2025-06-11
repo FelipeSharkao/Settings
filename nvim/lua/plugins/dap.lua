@@ -2,10 +2,10 @@ return {
     {
         "mfussenegger/nvim-dap",
         keys = {
-            { "<Leader>dc", function() require("dap").continue() end, mode = { "n" } },
+            { "<Leader>dc", function() require("dap").continue() end,  mode = { "n" } },
             { "<Leader>dn", function() require("dap").step_over() end, mode = { "n" } },
             { "<Leader>di", function() require("dap").step_into() end, mode = { "n" } },
-            { "<Leader>do", function() require("dap").step_out() end, mode = { "n" } },
+            { "<Leader>do", function() require("dap").step_out() end,  mode = { "n" } },
             {
                 "<Leader>dt",
                 function() require("dap").toggle_breakpoint() end,
@@ -101,6 +101,25 @@ return {
                         },
                         processId = dap_utils.pick_process,
                         cwd = "${workspaceFolder}",
+                        autoAttachChildProcesses = true,
+                    },
+                    {
+                        type = "pwa-node",
+                        request = "launch",
+                        name = "Launch file",
+                        sourceMaps = true,
+                        resolveSourceMapLocations = {
+                            "${workspaceFolder}/**",
+                            "!**/node_modules/**",
+                        },
+                        program = function()
+                            return dap_utils.pick_file({
+                                path = vim.fn.getcwd(),
+                                executables = false,
+                                filter = ".*%.[mc]?jsx?",
+                            })
+                        end,
+                        autoAttachChildProcesses = true,
                     },
                 }
             end

@@ -4,3 +4,4 @@ shell/custom/plugins/fast-syntax-highlighting
 shell/custom/plugins/zsh-autosuggestions
 shell/custom/plugins/zsh-syntax-highlighting
 shell/custom/themes/powerlevel10k
+*.svg

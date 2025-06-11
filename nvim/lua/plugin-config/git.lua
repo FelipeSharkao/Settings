@@ -2,6 +2,6 @@ require("gitsigns").setup()
 
 require("diffview").setup({
     view = {
-        mergetool = { layout = "diff4_mixed" },
+        merge_tool = { layout = "diff4_mixed" },
     },
 })
