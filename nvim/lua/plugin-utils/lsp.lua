@@ -7,7 +7,7 @@ M.extend_config = function(config, opts)
     config = vim.tbl_deep_extend(
         "keep",
         config or {},
-        { capabilities = require("cmp_nvim_lsp").default_capabilities() },
+        { capabilities = require("cmp_nvim_lsp").default_capabilities() }
     )
     opts = vim.tbl_extend("keep", opts or {}, { no_format = false })
 

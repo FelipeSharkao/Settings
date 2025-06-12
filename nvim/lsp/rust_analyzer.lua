@@ -1,6 +1,6 @@
-local common = require("lsp.common")
+local utils = require("plugin-utils")
 
-return common.extend_config({
+return utils.lsp.extend_config({
     settings = {
         ["rust-analyzer"] = {
             imports = {

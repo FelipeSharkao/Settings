@@ -1,4 +1,4 @@
-local common = require("lsp.common")
+local utils = require("plugin-utils")
 
 local lang_settings = {
     inlayHints = {
@@ -12,7 +12,7 @@ local lang_settings = {
     },
 }
 
-return common.extend_config({
+return utils.lsp.extend_config({
     settings = {
         publish_diagnostic_on = "insert_leave",
         typescript = lang_settings,
