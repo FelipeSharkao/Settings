@@ -1,0 +1,17 @@
+snippet mod "Module definition"
+	local M = {}
+
+	$1
+
+	return M
+
+snippet funl "Local function"
+	local function ${1:fname}fname($2)
+		$3
+	end
+
+snippet plugin "Configuration for a plugin"
+	---@type LazySpec[]
+	return {
+		$1
+	}

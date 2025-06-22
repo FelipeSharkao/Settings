@@ -75,22 +75,7 @@ require("lazy").setup({
             end,
         },
 
-        -- Suggestions and completion
-        {
-            "hrsh7th/nvim-cmp",
-            dependencies = {
-                "hrsh7th/cmp-nvim-lsp",
-                "hrsh7th/cmp-buffer",
-                "hrsh7th/cmp-path",
-                "hrsh7th/cmp-cmdline",
-                "hrsh7th/cmp-vsnip",
-                "onsails/lspkind.nvim",
-            },
-        },
-        "hrsh7th/vim-vsnip",
-        "hrsh7th/vim-vsnip-integ",
-
-        -- Auto-detect identation
+        -- Auto-detect indentation
         "tpope/vim-sleuth",
 
         -- better highlighting
@@ -132,8 +117,8 @@ require("lazy").setup({
             lazy = true,
             config = function() vim.g["asterisk#keeppos"] = true end,
             keys = {
-                { "*",  "<Plug>(asterisk-z*)",  mode = { "n", "v" } },
-                { "#",  "<Plug>(asterisk-z#)",  mode = { "n", "v" } },
+                { "*", "<Plug>(asterisk-z*)", mode = { "n", "v" } },
+                { "#", "<Plug>(asterisk-z#)", mode = { "n", "v" } },
                 { "g*", "<Plug>(asterisk-gz*)", mode = { "n", "v" } },
                 { "g#", "<Plug>(asterisk-gz#)", mode = { "n", "v" } },
             },
