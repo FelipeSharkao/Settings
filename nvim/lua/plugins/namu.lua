@@ -1,21 +1,20 @@
-local namu_options = {
-    movement = {
-        next = { "<C-n>", "<C-j>" },
-        previous = { "<C-p>", "<C-k>" },
-        close = { "<Esc>" },
-        select = { "<CR>", "<C-i>" },
-    },
-}
-
 ---@type LazySpec[]
 return {
     {
         "bassamsdata/namu.nvim",
         lazy = false,
         opts = {
-            namu_symbols = { enable = true, options = namu_options },
-            workspace = { enable = true, options = namu_options },
-            ui_select = { enable = true, options = namu_options },
+            global = {
+                movement = {
+                    next = { "<C-n>", "<C-j>" },
+                    previous = { "<C-p>", "<C-k>" },
+                    close = { "<Esc>" },
+                    select = { "<CR>", "<C-i>" },
+                },
+            },
+            namu_symbols = { enable = true },
+            workspace = { enable = true },
+            ui_select = { enable = true, display = { show_numbers = true } },
         },
         keys = {
             {

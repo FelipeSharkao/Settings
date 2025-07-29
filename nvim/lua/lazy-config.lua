@@ -37,27 +37,7 @@ require("lazy").setup({
                         },
                     },
                 },
-                select = {
-                    backend = "builtin",
-                    builtin = {
-                        max_height = 0.8,
-                        mappings = {
-                            ["q"] = "Close",
-                        },
-                    },
-                    get_config = function(opts)
-                        if opts.kind == "codeaction" then
-                            return {
-                                builtin = {
-                                    show_numbers = true,
-                                    relative = "cursor",
-                                    border = "solid",
-                                    max_width = 40,
-                                },
-                            }
-                        end
-                    end,
-                },
+                select = { enabled = false },
             },
         },
 
