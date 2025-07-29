@@ -1,18 +1,16 @@
-local telescope = require("telescope")
 local actions = require("telescope.actions")
+local builtin = require("telescope.builtin")
 local previewers = require("telescope.previewers")
 local sorters = require("telescope.sorters")
-local builtin = require("telescope.builtin")
+local telescope = require("telescope")
 
 local function buf_delete_action(prompt_bufnr)
     local action_state = require("telescope.actions.state")
     local current_picker = action_state.get_current_picker(prompt_bufnr)
 
     current_picker:delete_selection(function(selection)
-        if vim.api.nvim_buf_get_option(selection.bufnr, "modified") then
-            return false
-        end
-        vim.cmd.Bdelete({ selection.bufnr })
+        if vim.api.nvim_buf_get_option(selection.bufnr, "modified") then return false end
+        require("mini.bufremove").delete(selection.bufnr)
     end)
 end
 
@@ -85,7 +83,7 @@ telescope.load_extension("dap")
 local keymap = vim.keymap.set
 local opts = { silent = true, noremap = true }
 
-keymap("n", "gf", '<Nop>', opts)
+keymap("n", "gf", "<Nop>", opts)
 keymap("n", "gff", builtin.find_files, opts)
 keymap("n", "gfg", builtin.live_grep, opts)
 keymap("n", "gfb", builtin.buffers, opts)

@@ -56,13 +56,34 @@ require("mini.surround").setup({
             input = { "%f[%w_][%w_]+%b<>", "^.-<().*()>$" },
             output = function()
                 local type_name = MiniSurround.user_input("Type name")
-                if type_name then
-                    return { left = type_name .. "<", right = ">" }
-                end
+                if type_name then return { left = type_name .. "<", right = ">" } end
             end,
         },
     },
 })
+
+-- Remove buffers (like vim-bbye)
+require("mini.bufremove").setup()
+vim.api.nvim_create_user_command("Bdelete", function(opts)
+    local bufnr = 0
+    if opts.args ~= "" then bufnr = tonumber(opts.args) or vim.fn.bufnr(opts.args) end
+    require("mini.bufremove").delete(bufnr, opts.bang)
+end, { bang = true, nargs = "?", complete = "buffer" })
+vim.api.nvim_create_user_command("Bwipeout", function(opts)
+    local bufnr = 0
+    if opts.args ~= "" then bufnr = tonumber(opts.args) or vim.fn.bufnr(opts.args) end
+    require("mini.bufremove").wipeout(bufnr, opts.bang)
+end, { bang = true, nargs = "?", complete = "buffer" })
+vim.api.nvim_create_user_command(
+    "Bd",
+    "Bdelete",
+    { bang = true, nargs = "?", complete = "buffer" }
+)
+vim.api.nvim_create_user_command(
+    "Bw",
+    "Bwipeout",
+    { bang = true, nargs = "?", complete = "buffer" }
+)
 
 -- Startup screen
 local starter = require("mini.starter")
@@ -135,9 +156,7 @@ starter.setup({
 
                 label = label or get_label()
 
-                if label then
-                    unit.string = label .. "  " .. unit.string
-                end
+                if label then unit.string = label .. "  " .. unit.string end
             end
 
             return content
