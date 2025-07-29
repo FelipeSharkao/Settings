@@ -3,12 +3,26 @@ MESSAGE="Bem vindo de volta, $FULL_NAME!"
 
 case "$1" in
     suspend)
-        systemctl suspend
-        physlock -d -p "$MESSAGE"
+        if systemctl suspend; then
+            physlock -d -p "$MESSAGE"
+        else
+            notify-send              \
+                -i system-suspend    \
+                -a lock              \
+                "Falha ao suspender" \
+                "Não foi possível suspender."
+        fi
         ;;
     hibernate)
-        systemctl hibernate
-        physlock -d -p "$MESSAGE"
+        if systemctl hibernate; then
+            physlock -d -p "$MESSAGE"
+        else
+            notify-send             \
+                -i system-suspend   \
+                -a lock             \
+                "Falha ao hibernar" \
+                "Não foi possível hibernar. Verifique se há memória suficiente."
+        fi
         ;;
     "")
         physlock -p "$MESSAGE"
@@ -18,3 +32,4 @@ case "$1" in
         exit 2
         ;;
 esac
+
