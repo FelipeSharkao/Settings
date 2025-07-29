@@ -28,9 +28,9 @@ vim.o.scrolloff = 8 -- start scrolling when 8 lines away from margins
 
 -- ================= Indentation ================= --
 
-vim.o.tabstop = 4      -- maximum width of tab character (measured in spaces)
-vim.o.shiftwidth = 4   -- size of indent (measured in spaces), should equal tabstop
-vim.o.softtabstop = 4  -- should be the same as the other two above
+vim.o.tabstop = 4 -- maximum width of tab character (measured in spaces)
+vim.o.shiftwidth = 4 -- size of indent (measured in spaces), should equal tabstop
+vim.o.softtabstop = 4 -- should be the same as the other two above
 vim.o.expandtab = true -- expand tabs to spaces
 vim.o.smartindent = true
 vim.o.autoindent = true
@@ -49,9 +49,9 @@ vim.o.numberwidth = 3 -- width of number column, 3 for 999 lines
 -- ================= Search ================= --
 
 vim.o.ignorecase = true -- Ignorecase when searching
-vim.o.incsearch = true  -- start searching on each keystroke
-vim.o.smartcase = true  -- ignore case when lowercase, match case when capital case is used
-vim.o.hlsearch = true   -- highlight the search results
+vim.o.incsearch = true -- start searching on each keystroke
+vim.o.smartcase = true -- ignore case when lowercase, match case when capital case is used
+vim.o.hlsearch = true -- highlight the search results
 
 -- ================= Performance ================= --
 
@@ -112,9 +112,9 @@ vim.diagnostic.config({
 
 -- ================= Misc ================= --
 
-vim.o.history = 10000       -- numbers of entries in history for ':' commands and search patterns (10000 = max)
-vim.o.updatetime = 100      -- used for CursorHold event (for document highlighting detection)
-vim.o.mouse = "h"           -- allow mouse only in help files
+vim.o.history = 10000 -- numbers of entries in history for ':' commands and search patterns (10000 = max)
+vim.o.updatetime = 100 -- used for CursorHold event (for document highlighting detection)
+vim.o.mouse = "a" -- allow mouse only in help files
 vim.o.mousemodel = "extend" -- right click extends selection
 
 -- allows hidden buffers
