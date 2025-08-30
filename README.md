@@ -8,53 +8,53 @@ These are Arch packages. Adapt them if your using something else.
 
 ### Hyprland
 
--   hyprland
--   hyprcursor-git
--   wlogout
--   xdg-desktop-portal-hyprland-git
--   mako
--   rofi-wayland
--   cliphist
--   wl-clipboard
--   swaybg
--   nwg-displays
--   nwg-panel
--   nwg-look
--   physlock
--   wallust-git
--   python-pywalfox
+- hyprland
+- hyprcursor-git
+- wlogout
+- xdg-desktop-portal-hyprland-git
+- mako
+- rofi-wayland
+- cliphist
+- wl-clipboard
+- swaybg
+- nwg-displays
+- nwg-panel
+- nwg-look
+- physlock
+- wallust-git
+- python-pywalfox
 
 #### Theming
 
--   qt5-styleplugins
--   qt6gtk2
+- qt5-styleplugins
+- qt6gtk2
 
 #### Screenshot
 
--   grimblast
--   satty
+- grimblast
+- satty
 
 ### Neovim
 
--   neovim
--   neovide
--   bun
--   rustup
--   git-delta
--   ripgrep
--   lazygit
--   wl-clipboard
+- neovim
+- neovide
+- bun
+- rustup
+- git-delta
+- ripgrep
+- lazygit
+- wl-clipboard
 
 ### Zsh
 
--   zsh
--   neovim-remote
--   fastfetch
+- zsh
+- neovim-remote
+- fastfetch
 
-### Wezterm
+### Kitty
 
--   wezterm
+- kitty
 
 Other things
 
--   ly
+- ly

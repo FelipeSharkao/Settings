@@ -21,7 +21,7 @@ link("shell/profile", ".zprofile");
 link("shell/profile", ".zlogin");
 link("shell/profile", ".zshenv");
 link("nvim", ".config/nvim");
-link("wezterm/wezterm.lua", ".wezterm.lua");
+link("kitty", ".config/kitty");
 link("wallust", ".config/wallust");
 link("hypr", ".config/hypr");
 link("wlogout", ".config/wlogout");
