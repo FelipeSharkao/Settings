@@ -19,6 +19,7 @@ return {
                 "svelte",
                 "graphql",
                 "hls",
+                "ocamllsp",
             },
         },
         keys = {
@@ -42,7 +43,7 @@ return {
                 end,
                 mode = "n",
             },
-            { "grt", vim.lsp.buf.type_definition,                         mode = "n" },
+            { "grt", vim.lsp.buf.type_definition, mode = "n" },
             { "grf", function() vim.lsp.buf.format({ async = true }) end, mode = "n" },
         },
     },
@@ -68,6 +69,7 @@ return {
                     }),
                     null_ls.builtins.formatting.stylua,
                     null_ls.builtins.formatting.gdformat,
+                    null_ls.builtins.formatting.ocamlformat,
                 },
             })
 
