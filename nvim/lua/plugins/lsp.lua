@@ -7,21 +7,24 @@ return {
             { "williamboman/mason.nvim", opts = {} },
             "neovim/nvim-lspconfig",
         },
-        opts = {
-            ensure_installed = {
-                "vtsls",
-                "eslint",
-                "lua_ls",
-                "rust_analyzer",
-                "taplo",
-                "zls",
-                "dockerls",
-                "svelte",
-                "graphql",
-                "hls",
-                "ocamllsp",
-            },
-        },
+        config = function()
+            require("mason-lspconfig").setup({
+                ensure_installed = {
+                    "vtsls",
+                    "eslint",
+                    "lua_ls",
+                    "rust_analyzer",
+                    "taplo",
+                    "zls",
+                    "dockerls",
+                    "svelte",
+                    "graphql",
+                    "hls",
+                },
+            })
+
+            vim.lsp.enable("ocamllsp", true)
+        end,
         keys = {
             {
                 "[e",
