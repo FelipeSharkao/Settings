@@ -4,10 +4,10 @@ local utils = require("plugin-utils")
 local ocamllsp_augroup = vim.api.nvim_create_augroup("ocamllsp", { clear = true })
 
 -- ocamllsp only checks the built files, so I'll just build them on save
-local find_dune_root = lspconfig_util.root_pattern("dune", "dune-project")
+local find_dune_root = lspconfig_util.root_pattern("dune-project")
 
 ---@type { [string]: "building" | "queued" | nil }
-local jobs = {}
+local dune_jobs = {}
 
 -- since it doesn't do automatically, I'll send a didSave notification to the server for
 -- each buffer so it syncs the diagnostics with the built files
@@ -30,31 +30,36 @@ local function sync_bufs()
     end
 end
 
-local function build_on_save(file)
-    local root = find_dune_root(file)
+local function index_project(root)
+    root = root
     if not root then return end
 
-    if jobs[root] == "building" then
-        jobs[root] = "queued"
+    if dune_jobs[root] ~= nil then
+        dune_jobs[root] = "queued"
         return
     end
 
-    jobs[root] = "building"
+    dune_jobs[root] = "building"
 
-    vim.system({ "dune", "build" }, { cwd = root }, function()
-        if jobs[root] == "queued" then
-            build_on_save(file)
+    vim.system({ "dune", "build", "@ocaml-index" }, { cwd = root }, function()
+        if dune_jobs[root] == "queued" then
+            vim.schedule(function()
+                dune_jobs[root] = nil
+                index_project(root)
+            end)
         else
-            jobs[root] = nil
+            dune_jobs[root] = nil
             vim.schedule(sync_bufs)
         end
     end)
 end
 
-vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+vim.api.nvim_create_autocmd({ "BufWritePost", "BufEnter" }, {
     pattern = { "*.ml", "*.mli", "dune", "dune-project" },
     group = ocamllsp_augroup,
-    callback = function(ev) build_on_save(ev.file or vim.api.nvim_buf_get_name(0)) end,
+    callback = function(ev)
+        index_project(find_dune_root(ev.file or vim.api.nvim_buf_get_name(0)))
+    end,
 })
 
 return utils.lsp.extend_config({}, { no_format = true })
