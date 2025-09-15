@@ -39,3 +39,6 @@ export _JAVA_OPTIONS="-Xms4000m -Xmx8000m"
 
 # Rust
 export PATH=$PATH:$HOME/.cargo/bin
+
+# OCaml
+[[ ! -r "$HOME/.opam/opam-init/init.zsh" ]] || source "$HOME/.opam/opam-init/init.zsh" > /dev/null 2> /dev/null
