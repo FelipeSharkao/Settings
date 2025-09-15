@@ -50,8 +50,5 @@ alias rg="rg --no-heading"
 alias nvr="nvr --remote-tab-wait +'setl bufhidden=wipe'"
 
 function asm() {
-    local tmp="$(mktemp -t "objconv-disassemble.XXXXXX.asm")"
-    objconv -fnasm $@ "$tmp"
-    bat "$tmp"
+    objconv -v0 -fnasm $@ /dev/stdout | bat -l asm
 }
-
