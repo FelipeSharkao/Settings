@@ -40,9 +40,7 @@ These are Arch packages. Adapt them if your using something else.
 - neovide
 - bun
 - rustup
-- git-delta
 - ripgrep
-- lazygit
 - wl-clipboard
 
 ### Zsh
@@ -54,7 +52,12 @@ These are Arch packages. Adapt them if your using something else.
 ### Kitty
 
 - kitty
+- git-delta
 
-Other things
+### Lazygit
+
+- lazygit
+
+### Other things
 
 - ly
