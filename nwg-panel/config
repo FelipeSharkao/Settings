@@ -14,7 +14,7 @@
     "padding-vertical": 0,
     "spacing": 0,
     "items-padding": 0,
-    "icons": "dark",
+    "icons": "",
     "css-name": "panel-top",
     "modules-left": [
       "hyprland-workspaces"
@@ -203,6 +203,7 @@
     "width-as-percentage": false,
     "hyprland-submap": {},
     "niri-taskbar": {},
-    "random-wallpaper": {}
+    "random-wallpaper": {},
+    "pinned": {}
   }
 ]

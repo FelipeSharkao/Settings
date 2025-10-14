@@ -36,6 +36,10 @@ button {
     padding-left: 0.75em;
 }
 
+#right-box > #tray > #inner-tray {
+    background-color: mix(@background, @foreground, 0.25);
+}
+
 #hyprland-workspaces {
     margin-left: -0.4rem;
 }
@@ -52,24 +56,24 @@ button {
 }
 
 #task-box-focused #hyprland-workspaces-item {
-    background-color: rgba (255, 255, 255, 0.12);
+    background-color: alpha(@foreground, 0.12);
 }
 
 /* Controls window in sample config uses this name */
 #controls-window {
     border-radius: 15px;
-    background: #36364f;
-    color: #eeeeee;
+    background: @background;
+    color: @foreground;
 }
 #controls-window scale value {
-    color: #eeeeee;
+    color: @foreground;
 }
 
 /* Brightness slider popup window in sample config uses this name */
 #brightness-popup {
     border-radius: 15px;
-    background: #36364f;
-    color: #eeeeee;
+    background: @background;
+    color: @foreground;
 }
 #brightness-popup box {
     padding: 15px;
