@@ -103,26 +103,19 @@ require("mini.surround").setup({
 
 -- Remove buffers (like vim-bbye)
 require("mini.bufremove").setup()
-vim.api.nvim_create_user_command("Bdelete", function(opts)
-    local bufnr = 0
-    if opts.args ~= "" then bufnr = tonumber(opts.args) or vim.fn.bufnr(opts.args) end
-    require("mini.bufremove").delete(bufnr, opts.bang)
-end, { bang = true, nargs = "?", complete = "buffer" })
-vim.api.nvim_create_user_command("Bwipeout", function(opts)
-    local bufnr = 0
-    if opts.args ~= "" then bufnr = tonumber(opts.args) or vim.fn.bufnr(opts.args) end
-    require("mini.bufremove").wipeout(bufnr, opts.bang)
-end, { bang = true, nargs = "?", complete = "buffer" })
-vim.api.nvim_create_user_command(
-    "Bd",
-    "Bdelete",
-    { bang = true, nargs = "?", complete = "buffer" }
-)
-vim.api.nvim_create_user_command(
-    "Bw",
-    "Bwipeout",
-    { bang = true, nargs = "?", complete = "buffer" }
-)
+
+local function create_delete_command(name, func_name)
+    vim.api.nvim_create_user_command(name, function(opts)
+        local bufnr = 0
+        if opts.args ~= "" then bufnr = tonumber(opts.args) or vim.fn.bufnr(opts.args) end
+        require("mini.bufremove")[func_name](bufnr, opts.bang)
+    end, { bang = true, nargs = "?", complete = "buffer" })
+end
+
+create_delete_command("Bdelete", "delete")
+create_delete_command("Bwipeout", "wipeout")
+create_delete_command("Bd", "delete")
+create_delete_command("Bw", "wipeout")
 
 -- Startup screen
 local starter = require("mini.starter")
