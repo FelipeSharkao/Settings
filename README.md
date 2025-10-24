@@ -1,6 +1,6 @@
 Just a bunch of config files of my home system. Copy everything you like. Expect things to be broken.
 
-`setup.sh` will create symlinks to the home folder.
+`setup.js` will create symlinks to the home folder.
 
 ## Dependencies
 
