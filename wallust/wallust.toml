@@ -33,3 +33,6 @@ colors-sh.target = "~/.cache/wal/colors.sh"
 
 vim.template = "colors-wal.vim"
 vim.target = "~/.cache/wal/colors-wal.vim"
+
+kitty.template = "colors-kitty.conf"
+kitty.target = "~/.cache/wal/colors-kitty.conf"

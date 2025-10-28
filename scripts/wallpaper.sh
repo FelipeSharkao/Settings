@@ -36,6 +36,9 @@ gsettings set org.gnome.desktop.interface color-scheme "$GTK_COLOR_SCHEME"
 echo "Running wallust..."
 wallust run -p "$PALETTE" "$WALLPAPER"
 
+echo "Updating kitty..."
+kitten @ set-colors --all "~/.cache/wal/colors-kitty.conf" &> /dev/null
+
 echo "Resetting nwg-panel..."
 killall nwg-panel &> /dev/null
 nwg-panel &> /dev/null & disown
