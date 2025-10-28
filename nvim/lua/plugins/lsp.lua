@@ -20,6 +20,7 @@ return {
                     "svelte",
                     "graphql",
                     "hls",
+                    "clangd",
                 },
             })
 
@@ -73,6 +74,7 @@ return {
                     null_ls.builtins.formatting.stylua,
                     null_ls.builtins.formatting.gdformat,
                     null_ls.builtins.formatting.ocamlformat,
+                    null_ls.builtins.formatting.tidy,
                 },
             })
 
