@@ -59,7 +59,6 @@ require("lazy").setup({
         "tpope/vim-sleuth",
 
         -- better highlighting
-        { "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" },
         "evanleck/vim-svelte",
         "preservim/vim-markdown",
         {
