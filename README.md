@@ -9,9 +9,10 @@ These are Arch packages. Adapt them if your using something else.
 ### Hyprland
 
 - hyprland
-- hyprcursor-git
+- hyprcursor
 - wlogout
-- xdg-desktop-portal-hyprland-git
+- xdg-desktop-portal-hyprland
+- hyprpolkitagent
 - mako
 - rofi-wayland
 - cliphist
@@ -21,8 +22,14 @@ These are Arch packages. Adapt them if your using something else.
 - nwg-panel
 - nwg-look
 - physlock
-- wallust-git
+- wallust
 - python-pywalfox
+- bun-bin
+- kdeconnect
+- cmake
+- sddm
+- sddm-silent-theme
+- xorg-xhost
 
 #### Theming
 
@@ -37,17 +44,22 @@ These are Arch packages. Adapt them if your using something else.
 ### Neovim
 
 - neovim
-- neovide
-- bun
+- bun-bin
+- nodejs
+- npm
 - rustup
 - ripgrep
 - wl-clipboard
+- ghcup-hs-bin
+- arrpc
 
 ### Zsh
 
 - zsh
 - neovim-remote
 - fastfetch
+- asdf-vm
+- yazi
 
 ### Kitty
 
@@ -57,7 +69,3 @@ These are Arch packages. Adapt them if your using something else.
 ### Lazygit
 
 - lazygit
-
-### Other things
-
-- ly
