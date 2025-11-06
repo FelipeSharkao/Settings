@@ -50,3 +50,17 @@ end, {
 vim.api.nvim_create_user_command("Settings", "Open ~/Settings", {
     desc = "Open Settings directory",
 })
+
+for _, cmd in ipairs({ "WriteSudo", "Wsu" }) do
+    vim.api.nvim_create_user_command(cmd, function(o)
+        local file = o.fargs[1] or vim.fn.expand("%")
+        vim.cmd("w !pkexec tee " .. file .. " > /dev/null")
+        print('"' .. file .. '" written as root')
+        vim.cmd("e! " .. file)
+        vim.bo.readonly = false
+    end, {
+        desc = "Write file as root",
+        nargs = "?",
+        complete = "file",
+    })
+end
