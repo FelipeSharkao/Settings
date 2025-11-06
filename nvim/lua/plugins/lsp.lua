@@ -58,9 +58,14 @@ return {
             {
                 "jay-babu/mason-null-ls.nvim",
                 opts = {
-                    ensure_installed = nil,
-                    automatic_installation = true,
-                    automatic_setup = true,
+                    ensure_installed = {
+                        "stylua",
+                        "prettierd",
+                        "gdformat",
+                        "tidy",
+                    },
+                    automatic_installation = false,
+                    handlers = {},
                 },
             },
         },
@@ -71,10 +76,6 @@ return {
                     null_ls.builtins.formatting.prettierd.with({
                         extra_filetypes = { "astro" },
                     }),
-                    null_ls.builtins.formatting.stylua,
-                    null_ls.builtins.formatting.gdformat,
-                    null_ls.builtins.formatting.ocamlformat,
-                    null_ls.builtins.formatting.tidy,
                 },
             })
 

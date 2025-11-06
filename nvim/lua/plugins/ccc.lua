@@ -31,7 +31,6 @@ return {
                     ccc.picker.hex,
                     ccc.picker.css_rgb,
                     ccc.picker.css_hsl,
-                    ccc.picker.css_names,
                 },
                 recognize = { input = true, output = true },
             }
