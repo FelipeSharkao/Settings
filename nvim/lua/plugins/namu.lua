@@ -11,10 +11,11 @@ return {
                     close = { "<Esc>" },
                     select = { "<CR>", "<C-i>" },
                 },
+                display = { format = "tree_guides" },
             },
             namu_symbols = { enable = true },
             workspace = { enable = true },
-            ui_select = { enable = true, display = { show_numbers = true } },
+            ui_select = { enable = true },
         },
         keys = {
             {

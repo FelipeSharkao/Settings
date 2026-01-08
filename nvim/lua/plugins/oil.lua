@@ -24,7 +24,12 @@ return {
             },
             skip_confirm_for_simple_edits = true,
             watch_for_changes = true,
-            win_options = { winblend = 15 },
+            win_options = {
+                winblend = 15,
+                signcolumn = "yes:2",
+                number = false,
+                relativenumber = false,
+            },
         },
         keys = {
             {
@@ -38,5 +43,10 @@ return {
                 mode = { "n" },
             },
         },
+    },
+    {
+        "refractalize/oil-git-status.nvim",
+        dependencies = { "stevearc/oil.nvim" },
+        opts = {},
     },
 }
