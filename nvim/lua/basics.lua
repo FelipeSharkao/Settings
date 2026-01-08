@@ -90,9 +90,26 @@ vim.o.pumblend = 15
 
 -- ================= Fold ================= --
 
-vim.wo.foldmethod = "indent"
-vim.wo.foldlevel = 0
 vim.o.foldopen = "block,mark,percent,quickfix,search,tag,undo,jump,insert"
+
+-- Set folding only for modifiable buffers
+local fold_group = vim.api.nvim_create_augroup("DisableFolding", { clear = true })
+vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
+    pattern = "*",
+    group = fold_group,
+    callback = function()
+        local name = vim.api.nvim_buf_get_name(0)
+        if vim.bo.modifiable and name and vim.bo.buftype ~= "nofile" then
+            if vim.wo.foldmethod ~= "indent" and vim.wo.foldmethod ~= "diff" then
+                vim.o.foldmethod = "indent"
+            end
+            vim.wo.foldlevel = 0
+        else
+            if vim.wo.foldmethod == "indent" then vim.o.foldmethod = "manual" end
+            vim.wo.foldlevel = 999
+        end
+    end,
+})
 
 -- ================= Themes ================= --
 

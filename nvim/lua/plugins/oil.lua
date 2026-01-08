@@ -16,7 +16,11 @@ return {
                 ["q"] = "actions.close",
             },
             preview_win = {
-                win_options = { foldenable = false },
+                win_options = {
+                    foldenable = false,
+                    foldmethod = "manual",
+                    foldlevel = 999,
+                },
             },
             skip_confirm_for_simple_edits = true,
             watch_for_changes = true,
