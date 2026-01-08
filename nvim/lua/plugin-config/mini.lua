@@ -112,10 +112,28 @@ local function create_delete_command(name, func_name)
     end, { bang = true, nargs = "?", complete = "buffer" })
 end
 
+local function create_delete_tab_command(name, func_name)
+    vim.api.nvim_create_user_command(name, function(opts)
+        local bufremove = require("mini.bufremove")
+        local dir = vim.fn.getcwd(-1, 0) .. "/"
+        local success = true
+        for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
+            if vim.api.nvim_buf_get_name(bufnr):sub(1, #dir) == dir then
+                success = bufremove[func_name](bufnr, opts.bang) and success
+            end
+        end
+        if success then vim.cmd("tabclose") end
+    end, { bang = true })
+end
+
 create_delete_command("Bdelete", "delete")
 create_delete_command("Bwipeout", "wipeout")
 create_delete_command("Bd", "delete")
 create_delete_command("Bw", "wipeout")
+create_delete_tab_command("Tabdelete", "delete")
+create_delete_tab_command("Tabwipeout", "wipeout")
+create_delete_tab_command("Tabd", "delete")
+create_delete_tab_command("Tabw", "wipeout")
 
 -- Startup screen
 local starter = require("mini.starter")
