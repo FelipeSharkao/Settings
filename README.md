@@ -65,6 +65,7 @@ These are Arch packages. Adapt them if your using something else.
 
 - kitty
 - git-delta
+- ttf-jetbrains-mono-nerd
 
 ### Lazygit
 
