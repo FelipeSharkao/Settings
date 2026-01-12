@@ -102,11 +102,13 @@ vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
         if vim.bo.modifiable and name and vim.bo.buftype ~= "nofile" then
             if vim.wo.foldmethod ~= "indent" and vim.wo.foldmethod ~= "diff" then
                 vim.o.foldmethod = "indent"
+                vim.wo.foldlevel = 0
             end
-            vim.wo.foldlevel = 0
         else
-            if vim.wo.foldmethod == "indent" then vim.o.foldmethod = "manual" end
-            vim.wo.foldlevel = 999
+            if vim.wo.foldmethod == "indent" then
+                vim.o.foldmethod = "manual"
+                vim.wo.foldlevel = 999
+            end
         end
     end,
 })
