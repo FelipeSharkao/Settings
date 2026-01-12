@@ -52,3 +52,6 @@ alias nvr="nvr --remote-tab-wait +'setl bufhidden=wipe'"
 function asm() {
     objconv -v0 -fnasm $@ /dev/stdout | bat -l asm
 }
+
+# bun completions
+[ -s "/home/felipe/.bun/_bun" ] && source "/home/felipe/.bun/_bun"
