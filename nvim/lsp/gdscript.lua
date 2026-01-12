@@ -1,3 +1,16 @@
+---@brief
+---
+--- https://github.com/godotengine/godot
+---
+--- Language server for GDScript, used by Godot Engine.
+
 local utils = require("plugin-utils")
 
-return utils.lsp.extend_config({}, { no_format = true })
+local port = os.getenv("GDScript_Port") or "6005"
+local cmd = vim.lsp.rpc.connect("127.0.0.1", tonumber(port))
+
+return utils.lsp.extend_config({
+    cmd = cmd,
+    filetypes = { "gd", "gdscript", "gdscript3" },
+    root_markers = { "project.godot", ".git" },
+}, { no_format = true })

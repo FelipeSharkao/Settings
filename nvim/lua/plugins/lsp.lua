@@ -25,6 +25,7 @@ return {
             })
 
             vim.lsp.enable("ocamllsp", true)
+            vim.lsp.enable("gdscript", true)
         end,
         keys = {
             {
@@ -61,8 +62,8 @@ return {
                     ensure_installed = {
                         "stylua",
                         "prettierd",
-                        "gdformat",
                         "tidy",
+                        "gdtoolkit",
                     },
                     automatic_installation = false,
                     handlers = {},
@@ -76,6 +77,8 @@ return {
                     null_ls.builtins.formatting.prettierd.with({
                         extra_filetypes = { "astro" },
                     }),
+                    null_ls.builtins.formatting.gdformat,
+                    null_ls.builtins.diagnostics.gdlint,
                 },
             })
 
