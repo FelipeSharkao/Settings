@@ -5,11 +5,18 @@ import fs from "node:fs";
 import path from "node:path";
 import childProcess from "node:child_process";
 
+import { set } from "date-fns";
+import dbus from "dbus-next";
+
+const SCHEDULE_INTERVAL = 5 * 60_000; // 5 minutes
+
 const { values } = parseArgs({
     options: {
         theme: { type: "string", short: "t", default: "auto" },
+        file: { type: "string", short: "f" },
         dir: { type: "string", short: "d", default: "~/Pictures/Wallpapers" },
         "keep-wallpaper": { type: "boolean", short: "k" },
+        schedule: { type: "boolean" },
         help: { type: "boolean", short: "h" },
     },
 });
@@ -18,110 +25,186 @@ if (values.help) {
     showHelp(0);
 }
 
-/** @type {"light" | "dark"} */
-let theme;
-switch (values.theme) {
-    case "light":
-        theme = "light";
-        break;
-    case "dark":
-        theme = "dark";
-        break;
-    case "auto": {
-        const hour = new Date().getHours();
-        theme = 6 <= hour && hour < 18 ? "light" : "dark";
-        break;
-    }
-    default:
-        showHelp(1);
+await run();
+if (values.schedule) {
+    await schedule();
 }
 
-let palette, gtkTheme, gtkColorScheme;
-switch (theme) {
-    case "light":
-        palette = "light16";
-        gtkTheme = "MarshmallowLight";
-        gtkColorScheme = "prefer-light";
-        break;
-    case "dark":
-        palette = "dark16";
-        gtkTheme = "MarshmallowDark";
-        gtkColorScheme = "prefer-dark";
-        break;
-}
-
-let wallpaper;
-if (values["keep-wallpaper"]) {
-    wallpaper = trimNewLine(await Bun.file(`${process.env.HOME}/.cache/wal/wal`).text());
-} else {
-    const dir = resolvePath(values.dir);
-    const dirStat = await fs.promises.stat(dir);
-    if (!dirStat.isDirectory()) {
-        showHelp(1);
+async function run() {
+    /** @type {"light" | "dark"} */
+    let theme;
+    switch (values.theme) {
+        case "light":
+            theme = "light";
+            break;
+        case "dark":
+            theme = "dark";
+            break;
+        case "auto": {
+            const hour = new Date().getHours();
+            theme = 6 <= hour && hour < 18 ? "light" : "dark";
+            break;
+        }
+        default:
+            showHelp(1);
     }
 
-    const files = await fs.promises.readdir(dir);
-    wallpaper = path.join(dir, files[Math.floor(Math.random() * files.length)]);
+    let palette, gtkTheme, gtkColorScheme;
+    switch (theme) {
+        case "light":
+            palette = "light16";
+            gtkTheme = "MarshmallowLight";
+            gtkColorScheme = "prefer-light";
+            break;
+        case "dark":
+            palette = "dark16";
+            gtkTheme = "MarshmallowDark";
+            gtkColorScheme = "prefer-dark";
+            break;
+    }
+
+    let wallpaper;
+    if (values["keep-wallpaper"]) {
+        wallpaper = trimNewLine(
+            await Bun.file(`${process.env.HOME}/.cache/wal/wal`).text(),
+        );
+    } else if (values.file) {
+        wallpaper = resolvePath(values.file);
+    } else {
+        const dir = resolvePath(values.dir);
+        const dirStat = await fs.promises.stat(dir);
+        if (!dirStat.isDirectory()) {
+            showHelp(1);
+        }
+
+        const files = await fs.promises.readdir(dir);
+        wallpaper = path.join(dir, files[Math.floor(Math.random() * files.length)]);
+    }
+
+    console.log(`Setting wallpaper to ${wallpaper}`);
+
+    console.log("Setting swaybg...");
+    await cmd("killall", "swaybg");
+    await cmd("swaybg", "--image", wallpaper, "--mode", "fill").disown();
+
+    console.log("Setting gnome background...");
+    await cmd(
+        "gsettings",
+        "set",
+        "org.gnome.desktop.background",
+        "picture-uri",
+        `file://${wallpaper}`,
+    );
+    await cmd(
+        "gsettings",
+        "set",
+        "org.gnome.desktop.background",
+        "picture-uri-dark",
+        `file://${wallpaper}`,
+    );
+
+    console.log("Setting GTK theme...");
+    await cmd("gsettings", "set", "org.gnome.desktop.interface", "gtk-theme", gtkTheme);
+    await cmd(
+        "gsettings",
+        "set",
+        "org.gnome.desktop.interface",
+        "color-scheme",
+        gtkColorScheme,
+    );
+
+    console.log("Running wallust...");
+    await cmd("wallust", "run", "-p", palette, wallpaper);
+
+    console.log("Updating kitty...");
+    await cmd(
+        "kitten",
+        "@",
+        "set-colors",
+        "--all",
+        "~/.cache/wal/colors-kitty.conf",
+    ).disown();
+    await cmd(
+        "kitty",
+        "@",
+        "set-background-opacity",
+        "--all",
+        theme === "light" ? "0.95" : "0.85",
+    ).disown();
+
+    console.log("Resetting nwg-panel...");
+    await cmd("killall", "nwg-panel");
+    await cmd("nwg-panel").disown();
+
+    console.log("Resetting mako...");
+    await cmd("killall", "mako");
+    await cmd("mako").disown();
+
+    console.log("Uptating pywalfox...");
+    await cmd("pywalfox", "update").disown();
+
+    console.log("Notifying neovim...");
+    for (const server of await cmd("nvr", "--serverlist").lines()) {
+        await cmd(
+            "nvr",
+            "--nostart",
+            "--servername",
+            server,
+            "+colorscheme wal",
+        ).disown();
+    }
+
+    await storeTimestamp();
 }
 
-console.log(`Setting wallpaper to ${wallpaper}`);
+async function schedule() {
+    if (!values.schedule) return;
 
-console.log("Setting swaybg...");
-await cmd("killall", "swaybg");
-await cmd("swaybg", "--image", wallpaper, "--mode", "fill").disown();
+    const bus = dbus.systemBus();
+    const proxy = await bus.getProxyObject(
+        "org.freedesktop.login1",
+        "/org/freedesktop/login1",
+    );
 
-console.log("Setting gnome background...");
-await cmd(
-    "gsettings",
-    "set",
-    "org.gnome.desktop.background",
-    "picture-uri",
-    `file://${wallpaper}`,
-);
-await cmd(
-    "gsettings",
-    "set",
-    "org.gnome.desktop.background",
-    "picture-uri-dark",
-    `file://${wallpaper}`,
-);
+    const manager = proxy.getInterface("org.freedesktop.login1.Manager");
+    manager.on("PrepareForSleep", (active) => {
+        if (!active) {
+            run();
+        }
+    });
 
-console.log("Setting GTK theme...");
-await cmd("gsettings", "set", "org.gnome.desktop.interface", "gtk-theme", gtkTheme);
-await cmd(
-    "gsettings",
-    "set",
-    "org.gnome.desktop.interface",
-    "color-scheme",
-    gtkColorScheme,
-);
+    while (true) {
+        await Bun.sleep(SCHEDULE_INTERVAL);
 
-console.log("Running wallust...");
-await cmd("wallust", "run", "-p", palette, wallpaper);
+        const lastRun = await loadTimestamp();
 
-console.log("Updating kitty...");
-await cmd(
-    "kitten",
-    "@",
-    "set-colors",
-    "--all",
-    "~/.cache/wal/colors-kitty.conf",
-).disown();
+        const now = new Date();
+        const dawn = setTime(now, 6, 0);
+        const midday = setTime(now, 12, 0);
+        const dusk = setTime(now, 18, 0);
 
-console.log("Resetting nwg-panel...");
-await cmd("killall", "nwg-panel");
-await cmd("nwg-panel").disown();
+        if (
+            (lastRun < dusk && dusk <= now) ||
+            (lastRun < midday && midday <= now) ||
+            (lastRun < dawn && dawn <= now)
+        ) {
+            await run();
+        }
+    }
+}
 
-console.log("Resetting mako...");
-await cmd("killall", "mako");
-await cmd("mako").disown();
+async function storeTimestamp() {
+    await Bun.write(
+        `${process.env.HOME}/.cache/wallpaper.timestamp`,
+        new Date().toISOString(),
+    );
+}
 
-console.log("Uptating pywalfox...");
-await cmd("pywalfox", "update").disown();
-
-console.log("Notifying neovim...");
-for (const server of await cmd("nvr", "--serverlist").lines()) {
-    await cmd("nvr", "--nostart", "--servername", server, "+colorscheme wal").disown();
+async function loadTimestamp() {
+    const timestamp = await Bun.file(
+        `${process.env.HOME}/.cache/wallpaper.timestamp`,
+    ).text();
+    return new Date(timestamp);
 }
 
 /**
@@ -134,8 +217,10 @@ function showHelp(status) {
         `\n` +
         `Options:\n` +
         `  -t, --theme <theme>  Set the theme (auto, light, dark)\n` +
+        `  -f, --file <file>    Set the wallpaper file\n` +
         `  -d, --dir <dir>      Set the directory to look for wallpapers (default: ~/Pictures/Wallpapers)\n` +
         `  -k, --keep-wallpaper Keep the current wallpaper\n` +
+        `      --schedule       Schedule the wallpaper/theme change. This keeps the service alive\n` +
         `  -h, --help           Show this help`;
 
     if (status === 0) {
@@ -302,4 +387,8 @@ class Process {
     /** @type {string[]} */
     _command;
     _quiet = false;
+}
+
+function setTime(date, hours, minutes, seconds = 0, milliseconds = 0) {
+    return set(date, { hours, minutes, seconds, milliseconds });
 }
