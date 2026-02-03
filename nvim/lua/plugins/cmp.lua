@@ -39,23 +39,12 @@ return {
                     throttle = 0,
                 },
                 formatting = {
-                    fields = { "kind", "abbr", "menu" },
-                    format = function(entry, vim_item)
-                        vim_item = lspkind.cmp_format({
-                            mode = "symbol",
-                            maxwidth = 50,
-                            ellipsis_char = "...",
-                        })(entry, vim_item)
-
-                        if
-                            entry.completion_item.detail ~= nil
-                            and entry.completion_item.detail ~= ""
-                        then
-                            vim_item.menu = entry.completion_item.detail
-                        end
-
-                        return vim_item
-                    end,
+                    fields = { "icon", "abbr", "menu" },
+                    format = lspkind.cmp_format({
+                        mode = "symbol",
+                        maxwidth = 50,
+                        ellipsis_char = "...",
+                    }),
                 },
             })
 
@@ -64,6 +53,7 @@ return {
                 sources = {
                     { name = "buffer" },
                 },
+                formatting = { fields = { "abbr", "menu" } },
             })
 
             cmp.setup.cmdline(":", {
@@ -72,6 +62,7 @@ return {
                     { { name = "path" } },
                     { { name = "cmdline" } }
                 ),
+                formatting = { fields = { "abbr", "menu" } },
             })
         end,
     },

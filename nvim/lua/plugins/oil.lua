@@ -7,7 +7,7 @@ return {
             constrain_cursor = "name",
             default_file_explorer = true,
             delete_to_trash = true,
-            float = { padding = 3 },
+            float = { padding = 3, border = "rounded" },
             keymaps = {
                 ["<BS>"] = "actions.parent",
                 ["<C-h>"] = "actions.toggle_hidden",

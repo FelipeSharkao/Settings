@@ -25,12 +25,12 @@ return {
                 },
                 inputs = {
                     ccc.input.rgb,
-                    ccc.input.hsl,
+                    ccc.input.hsv,
                 },
                 pickers = {
                     ccc.picker.hex,
                     ccc.picker.css_rgb,
-                    ccc.picker.css_hsl,
+                    ccc.picker.css_hsv,
                 },
                 recognize = { input = true, output = true },
             }
