@@ -28,6 +28,7 @@ link("wlogout", ".config/wlogout");
 link("nwg-panel", ".config/nwg-panel");
 link("yazi", ".config/yazi");
 link(".editorconfig", ".editorconfig");
+link("scripts/proton.sh", ".local/bin/proton");
 
 themeZip("https://www.gnome-look.org/p/1876396", {
     "Dark.zip": ["MarshmallowDark"],
