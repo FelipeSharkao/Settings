@@ -81,6 +81,9 @@ async function run() {
         wallpaper = path.join(dir, files[Math.floor(Math.random() * files.length)]);
     }
 
+    console.log("Running wallust...");
+    await cmd("wallust", "run", "-p", palette, wallpaper);
+
     console.log(`Setting wallpaper to ${wallpaper}`);
 
     console.log("Setting swaybg...");
@@ -112,9 +115,6 @@ async function run() {
         "color-scheme",
         gtkColorScheme,
     );
-
-    console.log("Running wallust...");
-    await cmd("wallust", "run", "-p", palette, wallpaper);
 
     console.log("Updating kitty...");
     await cmd(
@@ -180,12 +180,12 @@ async function schedule() {
 
         const now = new Date();
         const dawn = setTime(now, 6, 0);
-        const midday = setTime(now, 12, 0);
+        // const midday = setTime(now, 12, 0);
         const dusk = setTime(now, 18, 0);
 
         if (
             (lastRun < dusk && dusk <= now) ||
-            (lastRun < midday && midday <= now) ||
+            // (lastRun < midday && midday <= now) ||
             (lastRun < dawn && dawn <= now)
         ) {
             await run();
