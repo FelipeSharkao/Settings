@@ -58,14 +58,6 @@ alternative_env_dirs=( "$HOME/proton"  "$HOME/.proton" )
 # export PROTON_LOG_DIR="/dev/shm/proton"
 
 
-
-# Proton modes to run
-#   run = start target app
-#   waitforexitandrun = wait for wineserver to shut down
-#   getcompatpath = linux -> windows path
-#   getnativepath = windows -> linux path
-mode=run
-
 echoerr() { echo "$@" 1>&2; }
 
 discover_proton_version () {
@@ -160,13 +152,13 @@ fi
 # EXECUTE
 export STEAM_COMPAT_CLIENT_INSTALL_PATH=$client_dir
 export STEAM_COMPAT_DATA_PATH=$env_dir
+export WINEPREFIX="$env_dir/pfx"
 
 
-[[ ! -z "$PROTON_LOG" ]] && echo "$client_dir/steamapps/common/$proton_version/proton" $mode $*
+[[ ! -z "$PROTON_LOG" ]] && echo "$client_dir/steamapps/common/$proton_version/proton" run $*
 [[ ! -z "$PROTON_LOG_DIR" ]] && mkdir -p "$PROTON_LOG_DIR"
 
 # Make sure the directory exists
-[ -d "$env_dir" ] || (mkdir -p "$env_dir" && echoerr "Proton directory created: $env_dir")
+[ -d "$env_dir" ] || (mkdir -p "$env_dir" && ln -s "$env_dir/pfx" "$env_dir" && echoerr "Proton directory created: $env_dir")
 
 "$client_dir/steamapps/common/$proton_version/proton" run "$@"
-
