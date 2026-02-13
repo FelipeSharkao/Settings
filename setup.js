@@ -27,6 +27,7 @@ link("hypr", ".config/hypr");
 link("wlogout", ".config/wlogout");
 link("nwg-panel", ".config/nwg-panel");
 link("yazi", ".config/yazi");
+link("sourcekit-lsp", ".config/sourcekit-lsp");
 link(".editorconfig", ".editorconfig");
 link("scripts/proton.sh", ".local/bin/proton");
 

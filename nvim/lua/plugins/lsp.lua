@@ -26,6 +26,7 @@ return {
 
             vim.lsp.enable("ocamllsp", true)
             vim.lsp.enable("gdscript", true)
+            vim.lsp.enable("sourcekit", true)
         end,
         keys = {
             {
@@ -64,6 +65,7 @@ return {
                         "prettierd",
                         "tidy",
                         "gdtoolkit",
+                        "swiftformat",
                     },
                     automatic_installation = false,
                     handlers = {},
@@ -108,7 +110,7 @@ return {
                 offspec = "󰉿 ",
                 unknown = "",
             },
-            autoEnableHints = true,
+            autoEnableHints = false,
         },
     },
 }
