@@ -63,7 +63,6 @@ return {
                     ensure_installed = {
                         "stylua",
                         "prettierd",
-                        "tidy",
                         "gdtoolkit",
                         "swiftformat",
                     },
@@ -81,6 +80,19 @@ return {
                     }),
                     null_ls.builtins.formatting.gdformat,
                     null_ls.builtins.diagnostics.gdlint,
+                    null_ls.builtins.diagnostics.tidy,
+                    null_ls.builtins.formatting.tidy.with({
+                        args = function(params)
+                            local args = { "-indent", "-wrap", "-quiet" }
+                            local ft = vim.api.nvim_get_option_value(
+                                "filetype",
+                                { buf = params.bufnr }
+                            )
+                            if ft == "xml" then table.insert(args, "-xml") end
+                            table.insert(args, "-")
+                            return args
+                        end,
+                    }),
                 },
             })
 
