@@ -113,4 +113,5 @@ return {
             autoEnableHints = false,
         },
     },
+    { "folke/lazydev.nvim", opts = {} },
 }
