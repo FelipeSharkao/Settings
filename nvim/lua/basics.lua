@@ -94,22 +94,39 @@ vim.o.foldopen = "block,mark,percent,quickfix,search,tag,undo,jump,insert"
 
 -- Set folding only for modifiable buffers
 local fold_group = vim.api.nvim_create_augroup("DisableFolding", { clear = true })
-vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
+
+local function toggle_folding(value)
+    if value then
+        if vim.wo.foldmethod ~= "indent" and vim.wo.foldmethod ~= "diff" then
+            vim.o.foldmethod = "indent"
+            vim.wo.foldlevel = 0
+        end
+    else
+        if vim.wo.foldmethod == "indent" then
+            vim.o.foldmethod = "manual"
+            vim.wo.foldlevel = 999
+        end
+    end
+end
+
+vim.api.nvim_create_autocmd("BufWinEnter", {
     pattern = "*",
     group = fold_group,
     callback = function()
-        local name = vim.api.nvim_buf_get_name(0)
-        if vim.bo.modifiable and name and vim.bo.buftype ~= "nofile" then
-            if vim.wo.foldmethod ~= "indent" and vim.wo.foldmethod ~= "diff" then
-                vim.o.foldmethod = "indent"
-                vim.wo.foldlevel = 0
-            end
-        else
-            if vim.wo.foldmethod == "indent" then
-                vim.o.foldmethod = "manual"
-                vim.wo.foldlevel = 999
-            end
-        end
+        toggle_folding(
+            vim.api.nvim_buf_get_name(0)
+                and vim.bo.modifiable
+                and vim.bo.buftype ~= "nofile"
+        )
+    end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = { "dap-view", "dap-repl" },
+    group = fold_group,
+    callback = function()
+        print("FileType dap-view")
+        toggle_folding(false)
     end,
 })
 

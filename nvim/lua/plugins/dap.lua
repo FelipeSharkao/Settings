@@ -2,10 +2,10 @@ return {
     {
         "mfussenegger/nvim-dap",
         keys = {
-            { "<Leader>dc", function() require("dap").continue() end,  mode = { "n" } },
+            { "<Leader>dc", function() require("dap").continue() end, mode = { "n" } },
             { "<Leader>dn", function() require("dap").step_over() end, mode = { "n" } },
             { "<Leader>di", function() require("dap").step_into() end, mode = { "n" } },
-            { "<Leader>do", function() require("dap").step_out() end,  mode = { "n" } },
+            { "<Leader>do", function() require("dap").step_out() end, mode = { "n" } },
             {
                 "<Leader>dt",
                 function() require("dap").toggle_breakpoint() end,
@@ -77,6 +77,7 @@ return {
 
             local dap = require("dap")
             local dap_utils = require("dap.utils")
+            local utils = require("plugin-utils")
 
             require("dap-vscode-js").setup({
                 debugger_path = vim.fn.stdpath("data") .. "/lazy/vscode-js-debug",
@@ -142,6 +143,9 @@ return {
                     end,
                     args = function()
                         return dap_utils.splitstr(vim.fn.input("Args: ", "", "arglist"))
+                    end,
+                    env = function()
+                        return utils.parse_env(vim.fn.input("Env: ", "", "environment"))
                     end,
                     cwd = "${workspaceFolder}",
                     stopOnEntry = false,

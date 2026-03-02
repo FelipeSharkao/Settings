@@ -1,6 +1,7 @@
 require("plugin-utils.string")
 local icons = require("plugin-utils.icons")
 local lsp = require("plugin-utils.lsp")
+local parse = require("plugin-utils.parse")
 local quotes = require("plugin-utils.quotes")
 
 return {
@@ -9,4 +10,5 @@ return {
     winbar_get_icon = icons.winbar_get_icon,
     quotes = quotes,
     lsp = lsp,
+    parse_env = parse.parse_env,
 }
