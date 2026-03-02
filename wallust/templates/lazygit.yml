@@ -8,7 +8,11 @@ git:
     autoForwardBranches: none
     pagers:
         - colorArg: always
-          pager: delta {{"--light" if palette[:5] == "light" else "--dark"}} --paging=never --line-numbers
+          {% if palette[:5] == "light" or palette[:5] == "light16" %}
+          pager: delta --light --paging=never --line-numbers
+          {% else %}
+          pager: delta --dark --paging=never --line-numbers
+          {% endif %}
 
 gui:
     language: en
