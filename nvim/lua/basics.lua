@@ -130,6 +130,13 @@ vim.api.nvim_create_autocmd("FileType", {
     end,
 })
 
+-- Disable foldignore
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = { "javascript", "typescript", "javascriptreact", "typescriptreact", "rust" },
+    group = fold_group,
+    callback = function() vim.wo.foldignore = "" end,
+})
+
 -- ================= Themes ================= --
 
 vim.o.termguicolors = true
