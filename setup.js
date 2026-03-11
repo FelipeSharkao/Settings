@@ -29,6 +29,7 @@ link("nwg-panel", ".config/nwg-panel");
 link("yazi", ".config/yazi");
 link("sourcekit-lsp", ".config/sourcekit-lsp");
 link(".editorconfig", ".editorconfig");
+link("_clang-format", ".clang-format");
 link("scripts/proton.sh", ".local/bin/proton");
 
 themeZip("https://www.gnome-look.org/p/1876396", {
