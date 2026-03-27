@@ -9,9 +9,9 @@ git:
     pagers:
         - colorArg: always
           {% if palette[:5] == "light" or palette[:5] == "light16" %}
-          pager: delta --light --paging=never --line-numbers
+          pager: delta --light --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"
           {% else %}
-          pager: delta --dark --paging=never --line-numbers
+          pager: delta --dark --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"
           {% endif %}
 
 gui:
