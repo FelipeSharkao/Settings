@@ -28,6 +28,7 @@ link("wlogout", ".config/wlogout");
 link("nwg-panel", ".config/nwg-panel");
 link("yazi", ".config/yazi");
 link("sourcekit-lsp", ".config/sourcekit-lsp");
+link("opencode", ".config/opencode");
 link(".editorconfig", ".editorconfig");
 link("_clang-format", ".clang-format");
 link("scripts/proton.sh", ".local/bin/proton");

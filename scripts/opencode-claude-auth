@@ -1,0 +1,44 @@
+#!/bin/env bun
+// vim: set ft=javascript:
+
+import { $ } from "bun"
+
+/**
+ * @typedef {object} ClaudeCredentials
+ * @property {object} claudeAiOauth
+ * @property {string} claudeAiOauth.accessToken
+ * @property {string} claudeAiOauth.refreshToken
+ * @property {number} claudeAiOauth.expiresAt
+ */
+
+/**
+ * @typedef {object} OpenCodeCredentials
+ * @property {object} [anthropic]
+ * @property {string} anthropic.type
+ * @property {string} anthropic.refresh
+ * @property {string} anthropic.access
+ * @property {number} anthropic.expires
+ */
+
+const CLAUDE_CREDENTIALS_FILE = `${process.env.HOME}/.claude/.credentials.json`
+const OPENCODE_CREDENTIALS_FILE = `${process.env.HOME}/.local/share/opencode/auth.json`
+
+await $`claude auth login`
+
+/** @type {OpenCodeCredentials} */
+const claudeCredentials = await Bun.file(CLAUDE_CREDENTIALS_FILE).json()
+
+/** @type {OpenCodeCredentials} */
+const ocCredentials = await Bun.file(OPENCODE_CREDENTIALS_FILE)
+    .json()
+    .catch(() => ({}))
+
+ocCredentials.anthropic = {
+    ...ocCredentials.anthropic,
+    type: "oauth",
+    refresh: claudeCredentials.claudeAiOauth.refreshToken,
+    access: claudeCredentials.claudeAiOauth.accessToken,
+    expires: claudeCredentials.claudeAiOauth.expiresAt,
+}
+
+await Bun.file(OPENCODE_CREDENTIALS_FILE).write(JSON.stringify(ocCredentials, null, 4))
