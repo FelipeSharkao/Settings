@@ -77,6 +77,16 @@ vim.api.nvim_create_autocmd({ "VimResized", "BufEnter", "WinEnter" }, {
     end,
 })
 
+vim.o.formatoptions = "jcroql"
+
+vim.api.nvim_create_autocmd("filetype", {
+    pattern = { "markdown", "text" },
+    callback = function()
+        vim.opt_local.formatoptions:append("t")
+        vim.opt_local.formatoptions:remove("l")
+    end,
+})
+
 -- ================= Spell checking ================= --
 
 vim.o.spell = true
@@ -95,11 +105,40 @@ vim.o.foldopen = "block,mark,percent,quickfix,search,tag,undo,jump,insert"
 -- Set folding only for modifiable buffers
 local fold_group = vim.api.nvim_create_augroup("DisableFolding", { clear = true })
 
+local function open_conflict_folds()
+    local cursor = vim.api.nvim_win_get_cursor(0)
+
+    local bufnr = vim.api.nvim_get_current_buf()
+    local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
+    local n = #lines
+    for i, line in ipairs(lines) do
+        if line:match("^<<<<<<<") or line:match("^=======") or line:match("^>>>>>>>") then
+            -- first non-empty line above
+            for above = i - 1, 1, -1 do
+                if lines[above]:match("%S") then
+                    vim.cmd(above .. "normal! zv")
+                    break
+                end
+            end
+            -- first non-empty line below
+            for below = i + 1, n do
+                if lines[below]:match("%S") then
+                    vim.cmd(below .. "normal! zv")
+                    break
+                end
+            end
+        end
+    end
+
+    vim.api.nvim_win_set_cursor(0, cursor)
+end
+
 local function toggle_folding(value)
     if value then
         if vim.wo.foldmethod ~= "indent" and vim.wo.foldmethod ~= "diff" then
             vim.o.foldmethod = "indent"
             vim.wo.foldlevel = 0
+            open_conflict_folds()
         end
     else
         if vim.wo.foldmethod == "indent" then

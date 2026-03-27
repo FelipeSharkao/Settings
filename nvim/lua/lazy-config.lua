@@ -142,8 +142,6 @@ require("lazy").setup({
         "gpanders/editorconfig.nvim",
 
         -- Git
-        "lewis6991/gitsigns.nvim",
-        "sindrets/diffview.nvim",
         {
             "APZelos/blamer.nvim",
             dependencies = { "nvim-tree/nvim-web-devicons" },
