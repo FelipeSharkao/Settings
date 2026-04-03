@@ -1,3 +1,100 @@
+local function setup_servers()
+    local utils = require("plugin-utils")
+
+    vim.lsp.config("*", {
+        capabilities = require("cmp_nvim_lsp").default_capabilities(),
+        on_attach = function(client, bufnr) utils.lsp.enable_inlay_hints(client, bufnr) end,
+    })
+
+    local no_format = {
+        "gdscript",
+        "vtsls",
+        "dockerls",
+        "ocamllsp",
+        "sourcekit",
+        "lua_ls",
+        "eslint",
+        "graphql",
+    }
+    for _, server in ipairs(no_format) do
+        vim.lsp.config(server, {
+            on_attach = utils.lsp.extend_on_attach(server, function(client)
+                client.server_capabilities.documentFormattingProvider = false
+                client.server_capabilities.documentRangeFormattingProvider = false
+            end),
+        })
+    end
+
+    vim.lsp.config("lua_ls", {
+        settings = {
+            Lua = {
+                runtime = { version = "LuaJIT", pathStrict = false },
+            },
+        },
+    })
+
+    local js_lang_settings = {
+        inlayHints = {
+            variableTypes = { enabled = true },
+            propertyDeclarationTypes = { enabled = true },
+            functionLikeReturnTypes = { enabled = true },
+            enumMemberValues = { enabled = true },
+        },
+        preferences = {
+            preferTypeOnlyAutoImports = true,
+        },
+    }
+
+    vim.lsp.config("vtsls", {
+        settings = {
+            publish_diagnostic_on = "insert_leave",
+            typescript = js_lang_settings,
+            javascript = js_lang_settings,
+            vtsls = { experimental = { entriesLimit = 30 } },
+        },
+    })
+
+    vim.lsp.config("rust_analyzer", {
+        settings = {
+            ["rust-analyzer"] = {
+                imports = {
+                    granularity = {
+                        group = "module",
+                    },
+                    prefix = "self",
+                },
+                cargo = {
+                    buildScripts = { enable = true },
+                },
+                procMacro = {
+                    enable = true,
+                },
+                rustfmt = {
+                    extraArgs = { "+nightly" },
+                },
+            },
+        },
+    })
+
+    vim.lsp.config("sourcekit", {
+        capabilities = {
+            workspace = {
+                didChangeWatchedFiles = {
+                    dynamicRegistration = true,
+                },
+            },
+        },
+    })
+
+    local gdscript_port = os.getenv("GDScript_Port") or "6005"
+
+    vim.lsp.config("gdscript", {
+        cmd = vim.lsp.rpc.connect("127.0.0.1", tonumber(gdscript_port)),
+        filetypes = { "gd", "gdscript", "gdscript3" },
+        root_markers = { "project.godot", ".git" },
+    })
+end
+
 ---@type LazySpec[]
 return {
     {
@@ -8,6 +105,8 @@ return {
             "neovim/nvim-lspconfig",
         },
         config = function()
+            setup_servers()
+
             require("mason-lspconfig").setup({
                 ensure_installed = {
                     "vtsls",
@@ -21,6 +120,7 @@ return {
                     "graphql",
                     "hls",
                     "clangd",
+                    "elp", -- erlang
                 },
             })
 
