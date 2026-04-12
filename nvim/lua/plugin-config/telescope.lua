@@ -90,3 +90,6 @@ keymap("n", "gfb", builtin.buffers, opts)
 keymap("n", "gfl", builtin.resume, opts)
 
 keymap("n", "z=", builtin.spell_suggest, opts)
+
+vim.api.nvim_set_hl(0, "TelescopeNormal", { link = "NormalFloat" })
+vim.api.nvim_set_hl(0, "TelescopeBorder", { link = "FloatBorder" })
