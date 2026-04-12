@@ -2,6 +2,10 @@
 
 export SETTINGS="$(cat $HOME/.local/share/settings_path)"
 
+# this is the default, but some applications like sourcekit-lsp require it to be set or
+# else they will trash $HOME
+export XDG_CONFIG_HOME="$HOME/.config"
+
 export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$HOME/.local/bin:$PATH"
 
 export BROWSER=zen-browser
