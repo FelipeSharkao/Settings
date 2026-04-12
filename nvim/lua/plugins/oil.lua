@@ -27,8 +27,6 @@ return {
             win_options = {
                 winblend = 15,
                 signcolumn = "yes:2",
-                number = false,
-                relativenumber = false,
             },
         },
         keys = {
