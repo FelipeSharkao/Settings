@@ -15,14 +15,13 @@ end
 --- @param bufnr integer
 M.enable_inlay_hints = function(client, bufnr)
     local tries = 0
-    local delays = { 30, 60, 120, 250, 500, 1000, 2000 }
 
     local function try_enable()
         tries = tries + 1
 
         if
             client.server_capabilities.inlayHintProvider
-            or client.supports_method("textDocument/inlayHint", bufnr)
+            or client:supports_method("textDocument/inlayHint", bufnr)
         then
             -- idk why, but some for servers (sourcekit, lua-ls), inlayHintProvider is nil
             -- even though it's supposed to be filled. lsp-endhints expects it to be set

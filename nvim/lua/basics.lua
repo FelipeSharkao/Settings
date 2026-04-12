@@ -189,7 +189,6 @@ vim.o.guicursor = "n-v-c-sm:block-Cursor/lCursor,"
 
 vim.diagnostic.config({
     virtual_text = { source = true },
-    jump = { float = true },
 })
 
 -- ================= Misc ================= --
