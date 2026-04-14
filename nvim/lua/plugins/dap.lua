@@ -22,9 +22,6 @@ return {
             },
         },
         config = function()
-            local dap_vscode = require("dap.ext.vscode")
-            dap_vscode.load_launchjs(nil, {})
-
             vim.fn.sign_define(
                 "DapBreakpoint",
                 { text = "", texthl = "DapBreakpoint" }
