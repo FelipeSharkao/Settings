@@ -1,4 +1,10 @@
 {
     "$schema": "https://opencode.ai/config.json",
-    "plugin": ["opencode-claude-bridge", "@mohak34/opencode-notifier"]
+    "plugin": ["opencode-claude-auth", "@mohak34/opencode-notifier"],
+
+    "agent": {
+        "build": {
+            "enable1mContext": true
+        }
+    }
 }
