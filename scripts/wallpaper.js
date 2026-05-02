@@ -1,14 +1,14 @@
 #!/usr/bin/env bun
 
-import { parseArgs } from "node:util";
-import fs from "node:fs";
-import path from "node:path";
-import childProcess from "node:child_process";
+import { parseArgs } from "node:util"
+import fs from "node:fs"
+import path from "node:path"
+import childProcess from "node:child_process"
 
-import { set } from "date-fns";
-import dbus from "dbus-next";
+import { set } from "date-fns"
+import dbus from "dbus-next"
 
-const SCHEDULE_INTERVAL = 5 * 60_000; // 5 minutes
+const SCHEDULE_INTERVAL = 5 * 60_000 // 5 minutes
 
 const { values } = parseArgs({
     options: {
@@ -19,176 +19,171 @@ const { values } = parseArgs({
         schedule: { type: "boolean" },
         help: { type: "boolean", short: "h" },
     },
-});
+})
 
 if (values.help) {
-    showHelp(0);
+    showHelp(0)
 }
 
-await run();
+await run()
 if (values.schedule) {
-    await schedule();
+    await schedule()
 }
 
 async function run() {
     /** @type {"light" | "dark"} */
-    let theme;
+    let theme
     switch (values.theme) {
         case "light":
-            theme = "light";
-            break;
+            theme = "light"
+            break
         case "dark":
-            theme = "dark";
-            break;
+            theme = "dark"
+            break
         case "auto": {
-            const hour = new Date().getHours();
-            theme = 6 <= hour && hour < 18 ? "light" : "dark";
-            break;
+            const hour = new Date().getHours()
+            theme = 6 <= hour && hour < 18 ? "light" : "dark"
+            break
         }
         default:
-            showHelp(1);
+            showHelp(1)
     }
 
-    let palette, gtkTheme, gtkColorScheme;
+    let palette, gtkTheme, gtkColorScheme
     switch (theme) {
         case "light":
-            palette = "light16";
-            gtkTheme = "MarshmallowLight";
-            gtkColorScheme = "prefer-light";
-            break;
+            palette = "light16"
+            gtkTheme = "MarshmallowLight"
+            gtkColorScheme = "prefer-light"
+            break
         case "dark":
-            palette = "dark16";
-            gtkTheme = "MarshmallowDark";
-            gtkColorScheme = "prefer-dark";
-            break;
+            palette = "dark16"
+            gtkTheme = "MarshmallowDark"
+            gtkColorScheme = "prefer-dark"
+            break
     }
 
-    let wallpaper;
+    let wallpaper
     if (values["keep-wallpaper"]) {
         wallpaper = trimNewLine(
             await Bun.file(`${process.env.HOME}/.cache/wal/wal`).text(),
-        );
+        )
     } else if (values.file) {
-        wallpaper = resolvePath(values.file);
+        wallpaper = resolvePath(values.file)
     } else {
-        const dir = resolvePath(values.dir);
-        const dirStat = await fs.promises.stat(dir);
+        const dir = resolvePath(values.dir)
+        const dirStat = await fs.promises.stat(dir)
         if (!dirStat.isDirectory()) {
-            showHelp(1);
+            showHelp(1)
         }
 
-        const files = await fs.promises.readdir(dir);
-        wallpaper = path.join(dir, files[Math.floor(Math.random() * files.length)]);
+        const files = await fs.promises.readdir(dir)
+        wallpaper = path.join(dir, files[Math.floor(Math.random() * files.length)])
     }
 
-    console.log("Running wallust...");
-    await cmd("wallust", "run", "-p", palette, wallpaper);
+    console.log("Running wallust...")
+    await cmd("wallust", "run", "-p", palette, wallpaper)
 
-    console.log(`Setting wallpaper to ${wallpaper}`);
+    console.log(`Setting wallpaper to ${wallpaper}`)
 
-    console.log("Setting swaybg...");
-    await cmd("killall", "swaybg");
-    await cmd("swaybg", "--image", wallpaper, "--mode", "fill").disown();
+    console.log("Setting swaybg...")
+    await cmd("killall", "swaybg")
+    await cmd("swaybg", "--image", wallpaper, "--mode", "fill").disown()
 
-    console.log("Setting gnome background...");
+    console.log("Setting gnome background...")
     await cmd(
         "gsettings",
         "set",
         "org.gnome.desktop.background",
         "picture-uri",
         `file://${wallpaper}`,
-    );
+    )
     await cmd(
         "gsettings",
         "set",
         "org.gnome.desktop.background",
         "picture-uri-dark",
         `file://${wallpaper}`,
-    );
+    )
 
-    console.log("Setting GTK theme...");
-    await cmd("gsettings", "set", "org.gnome.desktop.interface", "gtk-theme", gtkTheme);
+    console.log("Setting GTK theme...")
+    await cmd("gsettings", "set", "org.gnome.desktop.interface", "gtk-theme", gtkTheme)
     await cmd(
         "gsettings",
         "set",
         "org.gnome.desktop.interface",
         "color-scheme",
         gtkColorScheme,
-    );
+    )
 
-    console.log("Updating kitty...");
+    console.log("Updating kitty...")
     await cmd(
         "kitten",
         "@",
+        "--to",
+        "unix:@kitty-control",
         "set-colors",
         "--all",
         "~/.cache/wal/colors-kitty.conf",
-    ).disown();
+    )
     await cmd(
         "kitty",
         "@",
+        "--to",
+        "unix:@kitty-control",
         "set-background-opacity",
         "--all",
         theme === "light" ? "0.95" : "0.85",
-    ).disown();
+    )
 
-    console.log("Resetting nwg-panel...");
-    await cmd("killall", "nwg-panel");
-    await cmd("nwg-panel").disown();
+    console.log("Resetting nwg-panel...")
+    await cmd("killall", "nwg-panel")
+    await cmd("nwg-panel").disown()
 
-    console.log("Resetting mako...");
-    await cmd("killall", "mako");
-    await cmd("mako").disown();
+    console.log("Resetting mako...")
+    await cmd("killall", "mako")
+    await cmd("mako").disown()
 
-    console.log("Uptating pywalfox...");
-    await cmd("pywalfox", "update").disown();
-
-    console.log("Notifying neovim...");
+    console.log("Notifying neovim...")
     for (const server of await cmd("nvr", "--serverlist").lines()) {
-        await cmd(
-            "nvr",
-            "--nostart",
-            "--servername",
-            server,
-            "+colorscheme wal",
-        ).disown();
+        await cmd("nvr", "--nostart", "--servername", server, "+colorscheme wal")
     }
 
-    await storeTimestamp();
+    await storeTimestamp()
 }
 
 async function schedule() {
-    if (!values.schedule) return;
+    if (!values.schedule) return
 
-    const bus = dbus.systemBus();
+    const bus = dbus.systemBus()
     const proxy = await bus.getProxyObject(
         "org.freedesktop.login1",
         "/org/freedesktop/login1",
-    );
+    )
 
-    const manager = proxy.getInterface("org.freedesktop.login1.Manager");
+    const manager = proxy.getInterface("org.freedesktop.login1.Manager")
     manager.on("PrepareForSleep", (active) => {
         if (!active) {
-            run();
+            run()
         }
-    });
+    })
 
     while (true) {
-        await Bun.sleep(SCHEDULE_INTERVAL);
+        await Bun.sleep(SCHEDULE_INTERVAL)
 
-        const lastRun = await loadTimestamp();
+        const lastRun = await loadTimestamp()
 
-        const now = new Date();
-        const dawn = setTime(now, 6, 0);
+        const now = new Date()
+        const dawn = setTime(now, 6, 0)
         // const midday = setTime(now, 12, 0);
-        const dusk = setTime(now, 18, 0);
+        const dusk = setTime(now, 18, 0)
 
         if (
-            (lastRun < dusk && dusk <= now) ||
+            (lastRun < dusk && dusk <= now)
             // (lastRun < midday && midday <= now) ||
-            (lastRun < dawn && dawn <= now)
+            || (lastRun < dawn && dawn <= now)
         ) {
-            await run();
+            await run()
         }
     }
 }
@@ -197,14 +192,14 @@ async function storeTimestamp() {
     await Bun.write(
         `${process.env.HOME}/.cache/wallpaper.timestamp`,
         new Date().toISOString(),
-    );
+    )
 }
 
 async function loadTimestamp() {
     const timestamp = await Bun.file(
         `${process.env.HOME}/.cache/wallpaper.timestamp`,
-    ).text();
-    return new Date(timestamp);
+    ).text()
+    return new Date(timestamp)
 }
 
 /**
@@ -213,23 +208,23 @@ async function loadTimestamp() {
  */
 function showHelp(status) {
     const m =
-        `Usage: ${process.argv[1]} [options]\n` +
-        `\n` +
-        `Options:\n` +
-        `  -t, --theme <theme>  Set the theme (auto, light, dark)\n` +
-        `  -f, --file <file>    Set the wallpaper file\n` +
-        `  -d, --dir <dir>      Set the directory to look for wallpapers (default: ~/Pictures/Wallpapers)\n` +
-        `  -k, --keep-wallpaper Keep the current wallpaper\n` +
-        `      --schedule       Schedule the wallpaper/theme change. This keeps the service alive\n` +
-        `  -h, --help           Show this help`;
+        `Usage: ${process.argv[1]} [options]\n`
+        + `\n`
+        + `Options:\n`
+        + `  -t, --theme <theme>  Set the theme (auto, light, dark)\n`
+        + `  -f, --file <file>    Set the wallpaper file\n`
+        + `  -d, --dir <dir>      Set the directory to look for wallpapers (default: ~/Pictures/Wallpapers)\n`
+        + `  -k, --keep-wallpaper Keep the current wallpaper\n`
+        + `      --schedule       Schedule the wallpaper/theme change. This keeps the service alive\n`
+        + `  -h, --help           Show this help`
 
     if (status === 0) {
-        console.log(m);
+        console.log(m)
     } else {
-        console.error(m);
+        console.error(m)
     }
 
-    process.exit(status);
+    process.exit(status)
 }
 
 /**
@@ -238,24 +233,24 @@ function showHelp(status) {
  */
 function resolvePath(path_) {
     if (path_.startsWith("~" + path.sep)) {
-        path_ = `${process.env.HOME}${path_.slice(1)}`;
+        path_ = `${process.env.HOME}${path_.slice(1)}`
     }
-    return path.resolve(path_);
+    return path.resolve(path_)
 }
 
 /** @param {string} str */
 function trimNewLine(str) {
     if (str.endsWith("\n")) {
-        return str.slice(0, -1);
+        return str.slice(0, -1)
     }
-    return str;
+    return str
 }
 
 /**
  * @param {...string} command
  */
 function cmd(...command) {
-    return new Process(command);
+    return new Process(command)
 }
 
 /**
@@ -275,7 +270,7 @@ class Process {
      * @param {string[]} command
      */
     constructor(command) {
-        this._command = command;
+        this._command = command
     }
 
     /**
@@ -284,77 +279,77 @@ class Process {
     exec() {
         const child = childProcess.spawn(this._command[0], this._command.slice(1), {
             stdio: "pipe",
-        });
+        })
 
-        let stdout = "";
-        let stderr = "";
-        let stdoutPending = "";
-        let stderrPending = "";
+        let stdout = ""
+        let stderr = ""
+        let stdoutPending = ""
+        let stderrPending = ""
 
         child.stdout.on("data", (data) => {
-            data = String(data);
-            stdout += data;
+            data = String(data)
+            stdout += data
 
             if (!this._quiet) {
-                const lines = (stdoutPending + data).split("\n");
-                stdoutPending = lines.pop() || "";
+                const lines = (stdoutPending + data).split("\n")
+                stdoutPending = lines.pop() || ""
                 for (const line of lines) {
-                    console.log(line);
+                    console.log(line)
                 }
             }
-        });
+        })
 
         child.stderr.on("data", (data) => {
-            data = String(data);
-            stderr += data;
+            data = String(data)
+            stderr += data
 
             if (!this._quiet) {
-                const lines = (stderrPending + data).split("\n");
-                stderrPending = lines.pop() || "";
+                const lines = (stderrPending + data).split("\n")
+                stderrPending = lines.pop() || ""
                 for (const line of lines) {
-                    console.error(line);
+                    console.error(line)
                 }
             }
-        });
+        })
 
         return new Promise((resolve, reject) => {
-            child.on("error", reject);
+            child.on("error", reject)
             child.on("exit", (code) => {
                 if (this._quiet) {
                     if (code !== 0) {
-                        console.error(trimNewLine(stderr));
+                        console.error(trimNewLine(stderr))
                     }
                 } else {
                     if (stdoutPending) {
-                        console.log(stdoutPending);
+                        console.log(stdoutPending)
                     }
                     if (stderrPending) {
-                        console.error(stderrPending);
+                        console.error(stderrPending)
                     }
                 }
-                resolve({ code, stdout, stderr });
-            });
-        });
+                resolve({ code, stdout, stderr })
+            })
+        })
     }
 
     async text() {
-        this._quiet = true;
-        const { stdout } = await this.exec();
-        return stdout;
+        this._quiet = true
+        const { stdout } = await this.exec()
+        return stdout
     }
 
     async lines() {
-        const text = await this.text();
-        const lines = text.split("\n");
+        const text = await this.text()
+        const lines = text.split("\n")
         if (lines.at(-1) === "") {
-            lines.pop();
+            lines.pop()
         }
-        return lines;
+        return lines
     }
 
     async quiet() {
-        this._quiet = true;
-        return this;
+        this._quiet = true
+        return this
     }
 
     /**
@@ -364,14 +359,14 @@ class Process {
         const child = childProcess.spawn(this._command[0], this._command.slice(1), {
             stdio: "ignore",
             detached: true,
-        });
+        })
 
-        child.unref();
+        child.unref()
 
         return new Promise((resolve, reject) => {
-            child.on("error", reject);
-            child.on("spawn", () => resolve());
-        });
+            child.on("error", reject)
+            child.on("spawn", () => resolve())
+        })
     }
 
     /**
@@ -381,14 +376,14 @@ class Process {
      * @returns {Promise<T>}
      */
     then(onResolve, onReject) {
-        return this.exec().then(onResolve, onReject);
+        return this.exec().then(onResolve, onReject)
     }
 
     /** @type {string[]} */
-    _command;
-    _quiet = false;
+    _command
+    _quiet = false
 }
 
 function setTime(date, hours, minutes, seconds = 0, milliseconds = 0) {
-    return set(date, { hours, minutes, seconds, milliseconds });
+    return set(date, { hours, minutes, seconds, milliseconds })
 }
