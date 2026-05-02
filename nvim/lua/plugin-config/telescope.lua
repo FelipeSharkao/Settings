@@ -1,5 +1,9 @@
 local actions = require("telescope.actions")
 local builtin = require("telescope.builtin")
+local conf = require("telescope.config").values
+local finders = require("telescope.finders")
+local make_entry = require("telescope.make_entry")
+local pickers = require("telescope.pickers")
 local previewers = require("telescope.previewers")
 local sorters = require("telescope.sorters")
 local telescope = require("telescope")
@@ -80,12 +84,61 @@ telescope.setup({
 
 telescope.load_extension("dap")
 
+--- This use use a slightly modified version usual globs that I'm calling "partial globs".
+--- A pattern is allowed in the middle of the path, as if it was surrounded by a wildcard.
+--- So `foo/bar` will match `src/foo/bar.txt` and `prefixfoo/barsuffix`. A pattern that
+--- starts with "/" will match the whole path, but still be relative to the CWD, not
+--- absolute. Same for patterns that end with "$".
+local function normalize_glob(glob)
+    local s = glob:sub(1, 1)
+    if s == "/" then
+        glob = glob:sub(2)
+    elseif s ~= "*" then
+        glob = "**/*" .. glob
+    end
+
+    local e = glob:sub(-1)
+    if e == "$" then
+        glob = glob:sub(1, -2)
+    elseif s == "/" then
+        glob = glob .. "**"
+    elseif s ~= "*" then
+        glob = glob .. "*/**"
+    end
+
+    return glob
+end
+
+local function live_grep_with_filter()
+    local vimgrep_arguments = conf.vimgrep_arguments
+    local cwd = vim.uv.cwd()
+    local picker_opts = {
+        prompt_title = "Live Grep (query  *.glob)",
+        finder = finders.new_job(function(prompt)
+            if not prompt or prompt == "" then return nil end
+            local query, glob = prompt:match("^(.+)  (.*)$")
+            local args = vim.deepcopy(vimgrep_arguments)
+            if glob then
+                glob = normalize_glob(glob)
+                vim.list_extend(args, { "--glob=" .. glob, "--", query })
+            else
+                vim.list_extend(args, { "--", query or prompt })
+            end
+            return args
+        end, make_entry.gen_from_vimgrep(), nil, cwd),
+        previewer = conf.grep_previewer({}),
+        sorter = sorters.highlighter_only(),
+    }
+
+    pickers.new({}, picker_opts):find()
+end
+
 local keymap = vim.keymap.set
 local opts = { silent = true, noremap = true }
 
 keymap("n", "gf", "<Nop>", opts)
 keymap("n", "gff", builtin.find_files, opts)
-keymap("n", "gfg", builtin.live_grep, opts)
+keymap("n", "gfg", live_grep_with_filter, opts)
 keymap("n", "gfb", builtin.buffers, opts)
 keymap("n", "gfl", builtin.resume, opts)
 
