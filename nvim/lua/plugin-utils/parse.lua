@@ -1,13 +1,15 @@
 local M = {}
 
 ---@param str string
----@return table<string, string>
+---@return table<string, string> | nil
 function M.parse_env(str)
     local env = {}
+    local vars = 0
     local key = ""
     local value = ""
     local state = "key"
     local escape = false
+
     for i = 1, #str do
         local c = str:sub(i, i)
         if state == "key" and c:match("%s") then
@@ -24,6 +26,7 @@ function M.parse_env(str)
             ) and not escape
         then
             env[key] = value
+            vars = vars + 1
             key = ""
             value = ""
             state = "key"
@@ -49,6 +52,20 @@ function M.parse_env(str)
             escape = false
         end
     end
+
+    if state == "value" and value ~= "" then
+        env[key] = value
+        vars = vars + 1
+    elseif
+        state == "value"
+        or state == "qvalue"
+        or state == "dqvalue"
+        or (state == "key" and key ~= "")
+    then
+        error("Invalid environment variable: " .. key)
+    end
+
+    if vars == 0 then return nil end
     return env
 end
 

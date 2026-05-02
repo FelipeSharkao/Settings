@@ -23,12 +23,13 @@ for _, fg in ipairs(fg_colors) do
         accent = "fg",
     })
 
-    if success then
-        break
-    end
+    if success then break end
 end
 
 vim.cmd("hi WinBar guibg=NONE")
 vim.cmd("hi WinBarNC guibg=NONE")
 
 vim.api.nvim_set_hl(0, "LspInlayHint", { link = "ColorColumn" })
+
+vim.api.nvim_set_hl(0, "TelescopeNormal", { link = "NormalFloat" })
+vim.api.nvim_set_hl(0, "TelescopeBorder", { link = "FloatBorder" })

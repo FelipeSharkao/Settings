@@ -8,7 +8,7 @@ local function setup_servers()
 
     local no_format = {
         "gdscript",
-        "vtsls",
+        "tsgo",
         "dockerls",
         "ocamllsp",
         "sourcekit",
@@ -46,12 +46,26 @@ local function setup_servers()
     }
 
     vim.lsp.config("vtsls", {
+        on_attach = utils.lsp.extend_on_attach("vtsls", function(client)
+            for key, _ in pairs(client.server_capabilities) do
+                if key ~= "textDocumentSync" and key ~= "codeActionProvider" then
+                    client.server_capabilities[key] = false
+                end
+            end
+        end),
+    })
+
+    vim.lsp.config("tsgo", {
         settings = {
-            publish_diagnostic_on = "insert_leave",
+            -- publish_diagnostic_on = "insert_leave",
             typescript = js_lang_settings,
             javascript = js_lang_settings,
-            vtsls = { experimental = { entriesLimit = 30 } },
+            --vtsls = { experimental = { entriesLimit = 30 } },
         },
+        -- tsgo has poor debouncing so we have to do it on our side
+        flags = { debounce_text_changes = 500 },
+        -- limit memory to 2GB because it is spiking
+        cmd_env = { GOMEMLIMIT = tostring(2 * 1024 * 1024) },
     })
 
     vim.lsp.config("rust_analyzer", {
@@ -127,6 +141,7 @@ return {
             vim.lsp.enable("ocamllsp", true)
             vim.lsp.enable("gdscript", true)
             vim.lsp.enable("sourcekit", true)
+            vim.lsp.enable("tsgo", true)
         end,
         keys = {
             {
@@ -192,6 +207,10 @@ return {
                             table.insert(args, "-")
                             return args
                         end,
+                    }),
+                    null_ls.builtins.formatting.erlfmt.with({
+                        command = "rebar3",
+                        args = { "fmt", "-" },
                     }),
                 },
             })

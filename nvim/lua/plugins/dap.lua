@@ -59,27 +59,30 @@ return {
         dependencies = {
             "mfussenegger/nvim-dap",
             "williamboman/mason.nvim",
-            "mxsdev/nvim-dap-vscode-js",
-            -- lazy spec to build "microsoft/vscode-js-debug" from source
-            {
-                "microsoft/vscode-js-debug",
-                version = "1.x",
-                build = "npm i && npm run compile vsDebugServerBundle && mv dist out",
-            },
         },
         config = function()
             require("mason-nvim-dap").setup({
-                ensure_installed = {},
+                ensure_installed = { "js" },
+                automatic_installation = true,
             })
 
             local dap = require("dap")
             local dap_utils = require("dap.utils")
             local utils = require("plugin-utils")
 
-            require("dap-vscode-js").setup({
-                debugger_path = vim.fn.stdpath("data") .. "/lazy/vscode-js-debug",
-                adapters = { "pwa-node", "node-terminal" },
-            })
+            dap.adapters["pwa-node"] = {
+                type = "server",
+                host = "localhost",
+                port = "${port}",
+                executable = {
+                    command = "node",
+                    args = {
+                        vim.fn.stdpath("data")
+                            .. "/mason/packages/js-debug-adapter/js-debug/src/dapDebugServer.js",
+                        "${port}",
+                    },
+                },
+            }
 
             for _, language in ipairs({
                 "typescript",
@@ -87,29 +90,21 @@ return {
                 "javascriptreact",
                 "typescriptreact",
             }) do
-                dap.configurations[language] = {
-                    {
-                        type = "pwa-node",
-                        request = "attach",
-                        name = "Attach debugger to existing `node --inspect` process",
-                        sourceMaps = true,
-                        resolveSourceMapLocations = {
-                            "${workspaceFolder}/**",
-                            "!**/node_modules/**",
-                        },
-                        processId = dap_utils.pick_process,
-                        cwd = "${workspaceFolder}",
-                        autoAttachChildProcesses = true,
+                local pwa_common_config = {
+                    type = "pwa-node",
+                    name = "Launch file",
+                    sourceMaps = true,
+                    resolveSourceMapLocations = {
+                        "${workspaceFolder}/**",
+                        "!**/node_modules/**",
                     },
-                    {
-                        type = "pwa-node",
+                    autoAttachChildProcesses = true,
+                    cwd = "${workspaceFolder}",
+                }
+                dap.configurations[language] = {
+                    vim.tbl_deep_extend("force", pwa_common_config, {
                         request = "launch",
                         name = "Launch file",
-                        sourceMaps = true,
-                        resolveSourceMapLocations = {
-                            "${workspaceFolder}/**",
-                            "!**/node_modules/**",
-                        },
                         program = function()
                             return dap_utils.pick_file({
                                 path = vim.fn.getcwd(),
@@ -117,8 +112,18 @@ return {
                                 filter = ".*%.[mc]?jsx?",
                             })
                         end,
-                        autoAttachChildProcesses = true,
-                    },
+                    }),
+                    vim.tbl_deep_extend("force", pwa_common_config, {
+                        request = "attach",
+                        name = "Attach debugger to --inspect (port 9229)",
+                        port = 9229,
+                        stopOnEntry = false,
+                    }),
+                    vim.tbl_deep_extend("force", pwa_common_config, {
+                        request = "attach",
+                        name = "Attach debugger to existing node process",
+                        processId = dap_utils.pick_process,
+                    }),
                 }
             end
 
@@ -142,7 +147,9 @@ return {
                         return dap_utils.splitstr(vim.fn.input("Args: ", "", "arglist"))
                     end,
                     env = function()
-                        return utils.parse_env(vim.fn.input("Env: ", "", "environment"))
+                        local env =
+                            utils.parse_env(vim.fn.input("Env: ", "", "environment"))
+                        return env
                     end,
                     cwd = "${workspaceFolder}",
                     stopOnEntry = false,
