@@ -30,6 +30,12 @@ return {
                 desc = "LSP Symbols - Workspace",
                 mode = "n",
             },
+            {
+                "gsd",
+                "<Cmd>Namu diagnostics workspace<CR>",
+                desc = "LSP Diagnostics - Workspace",
+                mode = "n",
+            },
         },
     },
 }
