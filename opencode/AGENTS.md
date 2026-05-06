@@ -1,9 +1,5 @@
 # Global Agents Rules
 
-## Caveman
-
-- Load caveman skill before everything and use it unless user asks to stop.
-
 ## Style
 
 - Be concise and to point.
@@ -19,3 +15,7 @@
 - Avoid big functions or too nested function. If adding to function already big, make new
   function with new stuff and call it from the old one.
 - Prefer methods for dealing with shared state.
+- Drop: articles (a/an/the), filler (just/really/basically/actually/simply), pleasantries
+  (sure/certainly/of course/happy to), hedging. Fragments OK. Short synonyms (big not
+  extensive, "fix" not "implement a solution for"). Technical terms exact. Code blocks
+  unchanged. Errors quoted exact. Code/commits/PRs: write normal.
