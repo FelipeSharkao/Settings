@@ -2,5 +2,24 @@
 edit = [{ run = '$EDITOR "$@"', block = true }]
 open = [{ run = 'xdg-open "$@"', desc = "Open" }]
 
-[open]
-prepend_rules = [{ name = "*.html", use = ["open", "edit"] }]
+[[open.prepend_rules]]
+url = "*.html"
+use = ["open", "edit"]
+
+[[plugin.prepend_previewers]]
+mime = "application/{,g}zip"
+run = "lsar"
+
+[[plugin.prepend_previewers]]
+mime = "application/{tar,bzip*,7z*,xz,rar}"
+run = "lsar"
+
+[[plugin.prepend_fetchers]]
+url = "*"
+run = "git"
+group = "git"
+
+[[plugin.prepend_fetchers]]
+url = "*/"
+run = "git"
+group = "git"
