@@ -27,6 +27,8 @@ fi
 alias gmc="git merge --continue"
 alias glon="git log --no-merges --pretty=\"%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset\""
 
+alias wine64="env WINEARCH=win64 WINEPREFIX=$HOME/.wine64 wine"
+
 # Bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
