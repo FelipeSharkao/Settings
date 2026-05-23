@@ -19,3 +19,7 @@
   (sure/certainly/of course/happy to), hedging. Fragments OK. Short synonyms (big not
   extensive, "fix" not "implement a solution for"). Technical terms exact. Code blocks
   unchanged. Errors quoted exact. Code/commits/PRs: write normal.
+
+## Restrictions
+
+- Unless the user asks to, never `git commit` or `git push`, even if a skill says to.

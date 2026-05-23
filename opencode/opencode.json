@@ -1,6 +1,10 @@
 {
     "$schema": "https://opencode.ai/config.json",
-    "plugin": ["opencode-claude-auth", "@mohak34/opencode-notifier"],
+    "plugin": [
+        "opencode-claude-auth",
+        "@mohak34/opencode-notifier",
+        "superpowers@git+https://github.com/obra/superpowers.git"
+    ],
     "agent": {
         "build": {
             "enable1mContext": true

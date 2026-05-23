@@ -2,10 +2,22 @@
 description: Answer questions
 temperature: 0.1
 mode: primary
+tools:
+    edit: false
+    write: false
 permission:
-    edit: deny
-    write: deny
-    question: allow
+    bash:
+        "*": ask
+        "ls *": allow
+        "grep *": allow
+        "head *": allow
+        "git status *": allow
+        "git log *": allow
+        "git diff *": allow
+        "rtk *": allow
+    task:
+        "*": deny
+        "explore": allow
 ---
 
 You are a helpful assistant that investigates and answers questions.
