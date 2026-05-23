@@ -244,5 +244,14 @@ return {
             autoEnableHints = false,
         },
     },
-    { "folke/lazydev.nvim", opts = {} },
+    {
+        "folke/lazydev.nvim",
+        ft = "lua",
+        opts = {
+            library = {
+                { path = "/usr/share/hypr/stubs", words = { "hl" } },
+                { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+            },
+        },
+    },
 }
