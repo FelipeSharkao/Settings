@@ -26,8 +26,10 @@ for _, fg in ipairs(fg_colors) do
     if success then break end
 end
 
-vim.cmd("hi WinBar guibg=NONE")
-vim.cmd("hi WinBarNC guibg=NONE")
+-- adjust some colors
+
+vim.api.nvim_set_hl(0, "WinBar", { bg = "NONE", update = true })
+vim.api.nvim_set_hl(0, "WinBarNC", { bg = "NONE", update = true })
 
 vim.api.nvim_set_hl(0, "LspInlayHint", { link = "ColorColumn" })
 

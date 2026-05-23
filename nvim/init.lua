@@ -6,7 +6,6 @@ require("lazy-config")
 require("plugin-utils")
 require("globals")
 
-require("plugin-config/telescope")
 require("plugin-config/mini")
 require("plugin-config/indent-blankline")
 require("plugin-config/discord")
