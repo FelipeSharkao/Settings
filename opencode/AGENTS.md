@@ -23,3 +23,14 @@
 ## Restrictions
 
 - Unless the user asks to, never `git commit` or `git push`, even if a skill says to.
+
+## RTK (Rust Token Killer)
+
+- rtk hooks the command tool to save tokens for common commands.
+  Example: `git diff` becomes `rtk git diff`, saving 75% of tokens.
+- rtk hooks are done automatically, so you don't need to add them to your commands.
+- If a rtk command is giving you trouble, you can disable it with `RTK_DISABLED=1` env var.
+  Example: `RTK_DISABLED=1 rtk git diff`.
+- Behaviors to node:
+    - `rtk git diff` shows only the stats for big diffs.
+    - `rtk ls` filters out some ignored files like `.git`, `node_modules`, etc.
