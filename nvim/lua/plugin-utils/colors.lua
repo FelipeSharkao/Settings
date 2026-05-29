@@ -78,20 +78,19 @@ function M.hl_soften_bg(name, factor)
     vim.api.nvim_set_hl(0, name, { bg = bg_hex, default = false, update = true })
 end
 
---- Blend the highlight group's background with its foreground
+--- Blend the highlight group's background with the Normal foreground
 ---@param name string highlight group name
 ---@param factor number 0 = background, 1 = foreground
 function M.hl_bolden_bg(name, factor)
     local hl = vim.api.nvim_get_hl(0, { name = name, link = false })
-    local normal_hl = vim.api.nvim_get_hl(0, { name = "Normal", link = false })
 
-    local fg = hl.fg or normal_hl.fg
-    if fg == nil or fg == "NONE" then return end
+    local normal_hl = vim.api.nvim_get_hl(0, { name = "Normal", link = false })
+    if normal_hl.fg == nil or normal_hl.fg == "NONE" then return end
 
     local bg = hl.bg or normal_hl.bg
     if bg == nil or bg == "NONE" then return end
 
-    local bg_rgb = M.blend(bg, fg, factor)
+    local bg_rgb = M.blend(bg, normal_hl.fg, factor)
     local bg_hex = M.format(bg_rgb, "hex")
     vim.api.nvim_set_hl(0, name, { bg = bg_hex, default = false, update = true })
 end

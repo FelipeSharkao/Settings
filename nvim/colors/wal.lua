@@ -43,6 +43,10 @@ for _, hl in ipairs({
     "FloatBorder",
     "FloatTitle",
     "FloatFooter",
+    "DiagnosticFloatingError",
+    "DiagnosticFloatingHint",
+    "DiagnosticFloatingInfo",
+    "DiagnosticFloatingWarn",
 }) do
     utils.hl_bolden_bg(hl, 0.1)
 end
