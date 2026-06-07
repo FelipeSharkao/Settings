@@ -94,12 +94,11 @@ require("lazy").setup({
             dependencies = { "nvim-telescope/telescope.nvim" },
             lazy = true,
             config = function()
-                require("textcase").setup({ prefix = "gc" })
+                require("textcase").setup({ default_keymappings_enabled = false })
                 require("telescope").load_extension("textcase")
             end,
             cmd = { "Subs", "TextCaseOpenTelescope" },
             keys = {
-                "gt",
                 {
                     "<Leader>t",
                     "<Cmd>TextCaseOpenTelescope<CR>",

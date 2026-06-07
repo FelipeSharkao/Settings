@@ -101,6 +101,11 @@ require("mini.surround").setup({
     },
 })
 
+-- Text operations (exchange, replace, multiply, evaluate, sort)
+require("mini.operators").setup({
+    replace = { prefix = "<leader>r" },
+})
+
 -- Remove buffers (like vim-bbye)
 require("mini.bufremove").setup()
 
