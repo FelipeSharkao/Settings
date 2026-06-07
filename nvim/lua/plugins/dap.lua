@@ -1,39 +1,42 @@
 return {
     {
         "mfussenegger/nvim-dap",
-        keys = {
-            { "<Leader>dc", function() require("dap").continue() end, mode = { "n" } },
-            { "<Leader>dn", function() require("dap").step_over() end, mode = { "n" } },
-            { "<Leader>di", function() require("dap").step_into() end, mode = { "n" } },
-            { "<Leader>do", function() require("dap").step_out() end, mode = { "n" } },
-            {
-                "<Leader>dt",
-                function() require("dap").toggle_breakpoint() end,
-                mode = { "n" },
-            },
-            { "<Leader>dr", function() require("dap").restart() end, mode = { "n" } },
-            {
-                "<Leader>dq",
-                function()
-                    require("dap").terminate()
-                    require("dap-view").close()
-                end,
-                mode = { "n" },
-            },
-        },
         config = function()
             vim.fn.sign_define(
                 "DapBreakpoint",
-                { text = "", texthl = "DapBreakpoint" }
+                { text = "󰑊", texthl = "DapBreakpoint" }
+            )
+            vim.fn.sign_define(
+                "DapBreakpointCondition",
+                { text = "󰻂", texthl = "DapBreakpoint" }
+            )
+            vim.fn.sign_define(
+                "DapBreakpointRejected",
+                { text = "󰻃", texthl = "DapBreakpoint" }
             )
             vim.fn.sign_define(
                 "DapStopped",
                 { text = "", texthl = "DapStopped", linehl = "DapStoppedLine" }
             )
+            vim.fn.sign_define("DapLogPoint", { text = "", texthl = "DapLogPoint" })
 
             vim.api.nvim_set_hl(0, "DapBreakpoint", { link = "ErrorMsg" })
             vim.api.nvim_set_hl(0, "DapStopped", { link = "Debug" })
             vim.api.nvim_set_hl(0, "DapStoppedLine", { link = "ColorColumn" })
+            vim.api.nvim_set_hl(0, "DapLogPoint", { link = "DiagnosticInfo" })
+
+            vim.keymap.set("n", "<Leader>dc", require("dap").continue)
+            vim.keymap.set("n", "<Leader>dd", require("dap").run_to_cursor)
+            vim.keymap.set("n", "<Leader>dn", require("dap").step_over)
+            vim.keymap.set("n", "<Leader>di", require("dap").step_into)
+            vim.keymap.set("n", "<Leader>do", require("dap").step_out)
+            vim.keymap.set("n", "<Leader>dt", require("dap").toggle_breakpoint)
+            vim.keymap.set("n", "<Leader>dr", require("dap").restart)
+            vim.keymap.set("n", "<Leader>dq", function()
+                require("dap").terminate()
+                require("dap-view").close()
+            end)
+            vim.keymap.set("n", "<Leader>dh", require("dap.ui.widgets").hover)
         end,
     },
     {
@@ -100,6 +103,7 @@ return {
                     },
                     autoAttachChildProcesses = true,
                     cwd = "${workspaceFolder}",
+                    skipFiles = { "<node_internals>/**", "node_modules/**" },
                 }
                 dap.configurations[language] = {
                     vim.tbl_deep_extend("force", pwa_common_config, {
