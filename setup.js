@@ -23,6 +23,7 @@ link("shell/profile", ".zshenv")
 link("nvim", ".config/nvim")
 link("kitty", ".config/kitty")
 link("wallust", ".config/wallust")
+link("vicinae", ".config/vicinae")
 link("hypr", ".config/hypr")
 link("wlogout", ".config/wlogout")
 link("nwg-panel", ".config/nwg-panel")
@@ -45,8 +46,8 @@ themeZip("https://www.gnome-look.org/p/1876396", {
  * @param {string} globalPath
  */
 async function link(localPath, globalPath) {
-    globalPath = path.resolve(HOME, globalPath)
     localPath = path.resolve(BASEDIR, localPath)
+    globalPath = path.resolve(HOME, globalPath)
     const stat = await fs.lstat(globalPath).catch(() => null)
     if (stat) {
         if (
@@ -57,6 +58,12 @@ async function link(localPath, globalPath) {
         }
         await $`rm -rf ${globalPath}`
     }
+
+    const globalDir = path.dirname(globalPath)
+    if (!(await fs.exists(globalDir))) {
+        await fs.mkdir(globalDir, { recursive: true })
+    }
+
     await $`ln -sf ${localPath} ${globalPath}`
     console.log(`Created symlink ${globalPath} -> ${localPath}`)
 }

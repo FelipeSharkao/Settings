@@ -3,16 +3,14 @@ hl.bind("SUPER + Q", hl.dsp.window.close())
 hl.bind("SUPER + F11", hl.dsp.window.fullscreen())
 hl.bind("SUPER + F", hl.dsp.window.float({ action = "toggle" }))
 
-local cmd_rofi = "pkill rofi || rofi -show drun -config $SETTINGS/rofi/config.rasa"
-local cmd_cliphist =
-    "cliphist list | (rofi -dmenu -config $SETTINGS/rofi/config.rasa -no-show-icons || cliphist list) | head -n 1 | cliphist decode | wl-copy"
+local cmd_cliphist = "vicinae deeplink vicinae://launch/clipboard/history"
 local cmd_satty =
     'grim - | satty --filename - --output-filename "$HOME/Pictures/screenshot-$(date -Iseconds).png" --copy-command wl-copy --early-exit --fullscreen'
 local cmd_grimblast =
     'grimblast --notify copysave screen "$HOME/Pictures/screenshot-$(date -Iseconds).png"'
 
-hl.bind("SUPER + SUPER_L", hl.dsp.exec_cmd(cmd_rofi), { release = true })
-hl.bind("SUPER + SPACE", hl.dsp.exec_cmd(cmd_rofi))
+hl.bind("SUPER + SUPER_L", hl.dsp.exec_cmd("vicinae toggle"), { release = true })
+hl.bind("SUPER + SPACE", hl.dsp.exec_cmd("vicinae toggle"))
 hl.bind("SUPER + L", hl.dsp.exec_cmd("wlogout -p layer-shell"))
 hl.bind("SUPER + T", hl.dsp.exec_cmd("kitty"))
 hl.bind("SUPER + E", hl.dsp.exec_cmd("nemo"))

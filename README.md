@@ -14,8 +14,7 @@ These are Arch packages. Adapt them if your using something else.
 - xdg-desktop-portal-hyprland
 - hyprpolkitagent
 - mako
-- rofi-wayland
-- cliphist
+- vicinae
 - wl-clipboard
 - swaybg
 - nwg-displays
