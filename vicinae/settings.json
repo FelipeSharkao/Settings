@@ -17,6 +17,7 @@
    },
    "theme": {
       "dark": {
+         "name": "aether",
          "icon_theme": "Qogir"
       }
    },

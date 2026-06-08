@@ -1,0 +1,4 @@
+{
+    "template": "theme.toml",
+    "destination": "~/.local/share/vicinae/themes/aether.toml"
+}

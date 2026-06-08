@@ -21,7 +21,7 @@ These are Arch packages. Adapt them if your using something else.
 - nwg-panel
 - nwg-look
 - physlock
-- wallust
+- aether
 - python-pywalfox
 - bun-bin
 - kdeconnect

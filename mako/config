@@ -1,0 +1,24 @@
+# vim: ft=ini
+
+include=~/.config/aether/theme/mako-colors.ini
+
+layer=overlay
+anchor=top-right
+default-timeout=5000
+font=Noto Sans 11
+
+border-size=1
+border-radius=8
+max-icon-size=32
+
+icons=1
+icon-path=/usr/share/icons/breeze-dark
+
+width=320
+height=110
+padding=8
+
+[urgency=high]
+border-size=2
+default-timeout=0
+

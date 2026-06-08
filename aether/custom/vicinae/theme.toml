@@ -1,0 +1,82 @@
+[meta]
+name = "Aether"
+description = "Aether generated theme"
+variant = "{theme_type}"
+inherits = "vicinae-{theme_type}"
+
+[colors.core]
+accent = "{bright_cyan}"
+accent_foreground = "{background}"
+background = "{background}"
+foreground = "{foreground}"
+secondary_background = "{blue}"
+border = "{bright_black}"
+
+[colors.main_window]
+border = "colors.core.border"
+footer = { background = "colors.core.secondary_background" }
+
+[colors.settings_window]
+border = "colors.core.border"
+
+[colors.accents]
+blue = "{bright_blue}"
+green = "{bright_green}"
+magenta = "{bright_magenta}"
+orange = "{bright_yellow}"
+red = "{bright_red}"
+yellow = "{bright_yellow}"
+cyan = "{bright_cyan}"
+purple = "{bright_magenta}"
+
+# For now, shortcuts cannot have their own dedicated background
+[colors.shortcut]
+border = "colors.core.border"
+
+[colors.text]
+default = "colors.core.foreground"
+muted = { name = "colors.core.foreground", opacity = 0.8 }
+danger = "{red}"
+success = "{green}"
+placeholder = { default = "colors.text.foreground", opacity = 0.6 }
+
+[colors.text.selection]
+background = "colors.core.accent"
+foreground = "colors.core.accent_foreground"
+
+[colors.text.links]
+default = "{yellow}"
+visited = "{magenta}"
+
+[colors.input]
+border = "colors.core.border"
+border_focus = "colors.core.accent"
+border_error = "colors.text.danger"
+
+[colors.button.primary]
+background = "colors.core.secondary_background"
+foreground = "colors.core.foreground"
+hover = { background = "{red}", opacity = 0.2 }
+focus = { outline = "colors.core.accent" }
+
+[colors.list.item.hover]
+foreground = "colors.core.foreground"
+secondary_foreground = "colors.core.foreground"
+
+[colors.list.item.selection]
+background = "colors.core.secondary_background"
+foreground = "colors.core.foreground"
+secondary_background = "colors.core.secondary_background"
+secondary_foreground = "colors.core.foreground"
+
+[colors.grid.item]
+background = "colors.core.secondary_background"
+hover = { outline = "colors.core.foreground" }
+selection = { outline = "colors.core.foreground" }
+
+[colors.scrollbars]
+background = "colors.core.border"
+
+[colors.loading]
+bar = "colors.core.accent"
+spinner = "colors.core.foreground"

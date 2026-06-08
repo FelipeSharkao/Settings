@@ -1,4 +1,4 @@
-@import "../../.cache/wal/colors-gtk.css";
+@import "../../.config/aether/theme/gtk-gtk.css";
 
 /* Recommended if panel "height" unset or smaller then your theme default button height */
 button {

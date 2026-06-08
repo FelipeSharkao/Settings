@@ -142,14 +142,5 @@ require("lazy").setup({
             "echasnovski/mini.nvim",
             dependencies = { "lewis6991/gitsigns.nvim" },
         },
-
-        -- Remember last colorscheme
-        {
-            "raddari/last-color.nvim",
-            init = function()
-                local theme = require("last-color").recall() or "wal"
-                vim.cmd("colorscheme " .. theme)
-            end,
-        },
     },
 })

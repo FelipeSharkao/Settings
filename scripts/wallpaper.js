@@ -4,11 +4,26 @@ import { parseArgs } from "node:util"
 import fs from "node:fs"
 import path from "node:path"
 import childProcess from "node:child_process"
+import { TOML, $ } from "bun"
 
 import { set } from "date-fns"
 import dbus from "dbus-next"
 
+const DIM = "\x1b[2m"
+const RESET = "\x1b[0m"
+
 const SCHEDULE_INTERVAL = 5 * 60_000 // 5 minutes
+
+const EXTRACT_MODES = [
+    "colorful",
+    "triadic",
+    "split-complementary",
+    "tetradic",
+    "ocean",
+    "sunset",
+    "vaporwave",
+    "aurora",
+]
 
 const { values } = parseArgs({
     options: {
@@ -72,84 +87,110 @@ async function run() {
         wallpaper = resolvePath(values.file)
     } else {
         const dir = resolvePath(values.dir)
-        const dirStat = await fs.promises.stat(dir)
-        if (!dirStat.isDirectory()) {
+        const dirStat = await fs.promises.stat(dir).catch(() => null)
+        if (!dirStat?.isDirectory()) {
+            console.error(`[ERR] ${JSON.stringify(dir)} is not a directory`)
             showHelp(1)
         }
 
         const files = await fs.promises.readdir(dir)
-        wallpaper = path.join(dir, files[Math.floor(Math.random() * files.length)])
+        const random = Math.floor(Math.random() * files.length)
+        for (let i = 0; i < files.length; i++) {
+            const idx = (i + random) % files.length
+            const file = path.join(dir, files[idx])
+            if (!(await isValidWallpaper(file))) continue
+            wallpaper = file
+        }
+
+        if (!wallpaper) {
+            console.error(`[ERR] No valid wallpapers found in ${JSON.stringify(dir)}`)
+            showHelp(1)
+        }
     }
 
-    console.log("Running wallust...")
-    await cmd("wallust", "run", "-p", palette, wallpaper)
+    if (!(await isValidWallpaper(wallpaper))) {
+        console.error(`[ERR] ${JSON.stringify(wallpaper)} is not a valid wallpaper`)
+        showHelp(1)
+    }
 
-    console.log(`Setting wallpaper to ${wallpaper}`)
+    console.log(`[LOG] Setting wallpaper to ${wallpaper}`)
 
-    console.log("Setting swaybg...")
+    await cmd(
+        "aether",
+        "--generate",
+        theme === "light" ? "--light-mode" : [],
+        "--extract-mode",
+        EXTRACT_MODES[Math.floor(Math.random() * EXTRACT_MODES.length)],
+        "--no-neovim",
+        wallpaper,
+    )
+
+    await printColors()
+
     await cmd("killall", "swaybg")
     await cmd("swaybg", "--image", wallpaper, "--mode", "fill").disown()
 
-    console.log("Setting gnome background...")
-    await cmd(
-        "gsettings",
-        "set",
-        "org.gnome.desktop.background",
-        "picture-uri",
-        `file://${wallpaper}`,
-    )
-    await cmd(
-        "gsettings",
-        "set",
-        "org.gnome.desktop.background",
-        "picture-uri-dark",
-        `file://${wallpaper}`,
-    )
+    const gtkBackgroundCmd = ["gsettings", "set", "org.gnome.desktop.background"]
+    await cmd(gtkBackgroundCmd, "picture-uri", `file://${wallpaper}`)
+    await cmd(gtkBackgroundCmd, "picture-uri-dark", `file://${wallpaper}`)
 
-    console.log("Setting GTK theme...")
-    await cmd("gsettings", "set", "org.gnome.desktop.interface", "gtk-theme", gtkTheme)
-    await cmd(
-        "gsettings",
-        "set",
-        "org.gnome.desktop.interface",
-        "color-scheme",
-        gtkColorScheme,
-    )
+    const gtkInterfaceCmd = ["gsettings", "set", "org.gnome.desktop.interface"]
+    await cmd(gtkInterfaceCmd, "gtk-theme", gtkTheme)
+    await cmd(gtkInterfaceCmd, "color-scheme", gtkColorScheme)
 
-    console.log("Updating kitty...")
-    await cmd(
-        "kitten",
-        "@",
-        "--to",
-        "unix:@kitty-control",
-        "set-colors",
-        "--all",
-        "~/.cache/wal/colors-kitty.conf",
-    )
-    await cmd(
-        "kitty",
-        "@",
-        "--to",
-        "unix:@kitty-control",
-        "set-background-opacity",
-        "--all",
-        theme === "light" ? "0.95" : "0.85",
-    )
-
-    console.log("Resetting nwg-panel...")
-    await cmd("killall", "nwg-panel")
-    await cmd("nwg-panel").disown()
-
-    console.log("Resetting mako...")
-    await cmd("killall", "mako")
-    await cmd("mako").disown()
-
-    console.log("Notifying neovim...")
-    for (const server of await cmd("nvr", "--serverlist").lines()) {
-        await cmd("nvr", "--nostart", "--servername", server, "+colorscheme wal")
+    for (const pid of await cmd("pgrep", "kitty").lines()) {
+        const socket = `unix:@kitty-control-${pid}`
+        await cmd(
+            "kitty",
+            "@",
+            "--to",
+            socket,
+            "set-colors",
+            "--all",
+            "~/.config/aether/theme/kitty.conf",
+        )
     }
 
     await storeTimestamp()
+}
+
+async function isValidWallpaper(wallpaper) {
+    if (
+        !wallpaper
+        || (!wallpaper.endsWith(".jpg")
+            && !wallpaper.endsWith(".jpeg")
+            && !wallpaper.endsWith(".png")
+            && !wallpaper.endsWith(".webp"))
+    )
+        return false
+
+    const stat = await fs.promises.stat(wallpaper).catch(() => null)
+    return stat?.isFile()
+}
+
+async function printColors() {
+    try {
+        const colorsToml = await Bun.file(
+            `${process.env.HOME}/.config/aether/theme/colors.toml`,
+        ).text()
+        const colors = TOML.parse(colorsToml)
+
+        let s = ""
+        for (let i = 0; i < 16; i++) {
+            if (i % 8 === 0) {
+                s += "\n"
+            }
+            const color = colors[`color${i}`]
+            const r = parseInt(color.slice(1, 3), 16)
+            const g = parseInt(color.slice(3, 5), 16)
+            const b = parseInt(color.slice(5, 7), 16)
+            s += `\x1b[48;2;${r};${g};${b}m    ${RESET}`
+        }
+
+        console.log(s + "\n")
+    } catch (e) {
+        console.error(e.message)
+    }
 }
 
 async function schedule() {
@@ -247,10 +288,10 @@ function trimNewLine(str) {
 }
 
 /**
- * @param {...string} command
+ * @param {...string | string[]} command
  */
 function cmd(...command) {
-    return new Process(command)
+    return new Process(command.flat())
 }
 
 /**
@@ -277,6 +318,10 @@ class Process {
      * @returns {Promise<ProcessOutput>}
      */
     exec() {
+        if (!this._quiet) {
+            this.printCommand()
+        }
+
         const child = childProcess.spawn(this._command[0], this._command.slice(1), {
             stdio: "pipe",
         })
@@ -317,6 +362,7 @@ class Process {
             child.on("exit", (code) => {
                 if (this._quiet) {
                     if (code !== 0) {
+                        this.printCommand()
                         console.error(trimNewLine(stderr))
                     }
                 } else {
@@ -356,6 +402,8 @@ class Process {
      * @returns {Promise<void>}
      */
     disown() {
+        this.printCommand({ disown: true })
+
         const child = childProcess.spawn(this._command[0], this._command.slice(1), {
             stdio: "ignore",
             detached: true,
@@ -367,6 +415,27 @@ class Process {
             child.on("error", reject)
             child.on("spawn", () => resolve())
         })
+    }
+
+    /**
+     * @param {object} [opts]
+     * @param {boolean} [opts.disown]
+     */
+    printCommand(opts) {
+        const command = this.formatedCommand(opts)
+        console.log(`${DIM}$ ${command}${RESET}`)
+    }
+
+    /**
+     * @param {object} [opts]
+     * @param {boolean} [opts.disown]
+     */
+    formatedCommand(opts) {
+        let command = this._command.map((x) => $.escape(x)).join(" ")
+        if (opts?.disown) {
+            command += " & disown"
+        }
+        return command
     }
 
     /**

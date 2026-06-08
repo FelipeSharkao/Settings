@@ -22,7 +22,9 @@ link("shell/profile", ".zlogin")
 link("shell/profile", ".zshenv")
 link("nvim", ".config/nvim")
 link("kitty", ".config/kitty")
-link("wallust", ".config/wallust")
+link("aether", ".config/aether")
+link("lazygit", ".config/lazygit")
+link("mako", ".config/mako")
 link("vicinae", ".config/vicinae")
 link("hypr", ".config/hypr")
 link("wlogout", ".config/wlogout")
@@ -48,6 +50,7 @@ themeZip("https://www.gnome-look.org/p/1876396", {
 async function link(localPath, globalPath) {
     localPath = path.resolve(BASEDIR, localPath)
     globalPath = path.resolve(HOME, globalPath)
+
     const stat = await fs.lstat(globalPath).catch(() => null)
     if (stat) {
         if (

@@ -28,6 +28,8 @@ end
 
 -- adjust some colors
 
+local utils = require("plugin-utils.colors")
+
 vim.api.nvim_set_hl(0, "WinBar", { bg = "NONE", update = true })
 vim.api.nvim_set_hl(0, "WinBarNC", { bg = "NONE", update = true })
 
@@ -35,3 +37,12 @@ vim.api.nvim_set_hl(0, "LspInlayHint", { link = "ColorColumn" })
 
 vim.api.nvim_set_hl(0, "TelescopeNormal", { link = "NormalFloat" })
 vim.api.nvim_set_hl(0, "TelescopeBorder", { link = "FloatBorder" })
+
+for _, hl in ipairs({
+    "NormalFloat",
+    "FloatBorder",
+    "FloatTitle",
+    "FloatFooter",
+}) do
+    utils.hl_bolden_bg(hl, 0.1)
+end

@@ -1,0 +1,12 @@
+os:
+    editPreset: nvim-remote
+
+git:
+    ignoreWhitespaceInDiffView: true
+    autoForwardBranches: none
+    pagers:
+        - colorArg: always
+          pager: ~/.config/lazygit/delta.sh
+
+gui:
+    language: en

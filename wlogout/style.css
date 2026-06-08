@@ -1,4 +1,4 @@
-@import "../../.cache/wal/colors-gtk.css";
+@import "../../.config/aether/theme/gtk.css";
 
 * {
     font-family: "Fira Sans Semibold", FontAwesome, Roboto, Helvetica, Arial, sans-serif;
@@ -7,7 +7,7 @@
 }
 
 window {
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: alpha(@background, 0.6);
 }
 
 button {
@@ -20,23 +20,22 @@ button {
     background-position: center;
     background-size: 15%;
 
-    border-style: solid;
     background-color: @background;
     border: none;
     border-radius: 8px;
 
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 4px alpha(@background, 0.2);
 }
 
 button:active,
 button:focus {
-    background-color: mix(@color11, @background, 0.2);
-    box-shadow: 0 0 8px alpha(@color11, 0.2);
+    background-color: mix(@accent_color, @background, 0.4);
+    box-shadow: 0 0 8px alpha(@accent_color, 0.2);
 }
 
 button:hover {
-    background-color: @color11;
-    box-shadow: 0 0 8px alpha(@color11, 0.5);
+    background-color: @accent_color;
+    box-shadow: 0 0 8px alpha(@accent_color, 0.5);
 }
 
 #lock {

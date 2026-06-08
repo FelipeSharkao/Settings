@@ -8,21 +8,6 @@ if vim.fn.has("gui_running") == 1 then
     keymap("t", "<C-S-V>", '<C-\\><C-O>"+gp', { noremap = true })
 end
 
-vim.api.nvim_create_autocmd("ColorScheme", {
-    pattern = "*",
-    callback = function()
-        local utils = require("plugin-utils")
-        for _, hl in ipairs({
-            "NormalFloat",
-            "FloatBorder",
-            "FloatTitle",
-            "FloatFooter",
-        }) do
-            utils.colors.hl_bolden_bg(hl, 0.1)
-        end
-    end,
-})
-
 if vim.g.neovide then
     vim.g.neovide_scale_factor = 1.0
     vim.g.neovide_transparency = 0.9

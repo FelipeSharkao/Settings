@@ -83,10 +83,15 @@ end
 ---@param factor number 0 = background, 1 = foreground
 function M.hl_bolden_bg(name, factor)
     local hl = vim.api.nvim_get_hl(0, { name = name, link = false })
-    if hl.bg == nil or hl.bg == "NONE" then return end
-    if hl.fg == nil or hl.fg == "NONE" then return end
+    local normal_hl = vim.api.nvim_get_hl(0, { name = "Normal", link = false })
 
-    local bg_rgb = M.blend(hl.bg, hl.fg, factor)
+    local fg = hl.fg or normal_hl.fg
+    if fg == nil or fg == "NONE" then return end
+
+    local bg = hl.bg or normal_hl.bg
+    if bg == nil or bg == "NONE" then return end
+
+    local bg_rgb = M.blend(bg, fg, factor)
     local bg_hex = M.format(bg_rgb, "hex")
     vim.api.nvim_set_hl(0, name, { bg = bg_hex, default = false, update = true })
 end
