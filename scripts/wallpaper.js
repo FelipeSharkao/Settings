@@ -80,9 +80,8 @@ async function run() {
 
     let wallpaper
     if (values["keep-wallpaper"]) {
-        wallpaper = trimNewLine(
-            await Bun.file(`${process.env.HOME}/.cache/wal/wal`).text(),
-        )
+        const metadata = await loadMetadata()
+        wallpaper = metadata?.wallpaper
     } else if (values.file) {
         wallpaper = resolvePath(values.file)
     } else {
@@ -151,7 +150,7 @@ async function run() {
         )
     }
 
-    await storeTimestamp()
+    await storeMetadata({ wallpaper })
 }
 
 async function isValidWallpaper(wallpaper) {
@@ -212,16 +211,19 @@ async function schedule() {
     while (true) {
         await Bun.sleep(SCHEDULE_INTERVAL)
 
-        const lastRun = await loadTimestamp()
+        const metadata = await loadMetadata()
+        if (!metadata) continue
+
+        const lastRun = new Date(metadata.timestamp)
 
         const now = new Date()
         const dawn = setTime(now, 6, 0)
-        // const midday = setTime(now, 12, 0);
+        const midday = setTime(now, 12, 0)
         const dusk = setTime(now, 18, 0)
 
         if (
             (lastRun < dusk && dusk <= now)
-            // (lastRun < midday && midday <= now) ||
+            || (lastRun < midday && midday <= now)
             || (lastRun < dawn && dawn <= now)
         ) {
             await run()
@@ -229,18 +231,34 @@ async function schedule() {
     }
 }
 
-async function storeTimestamp() {
+/**
+ * @typedef {object} Metadata
+ * @property {string} wallpaper
+ * @property {string} timestamp
+ */
+
+/**
+ * @param {Omit<Metadata, "timestamp">} opts
+ */
+async function storeMetadata(opts) {
     await Bun.write(
-        `${process.env.HOME}/.cache/wallpaper.timestamp`,
-        new Date().toISOString(),
+        `${process.env.HOME}/.cache/wallpaper.json`,
+        JSON.stringify({ ...opts, timestamp: new Date().toISOString() }, null, 2),
     )
 }
 
-async function loadTimestamp() {
-    const timestamp = await Bun.file(
-        `${process.env.HOME}/.cache/wallpaper.timestamp`,
-    ).text()
-    return new Date(timestamp)
+/**
+ * @returns {Promise<Metadata | null>}
+ */
+async function loadMetadata() {
+    try {
+        const timestamp = await Bun.file(
+            `${process.env.HOME}/.cache/wallpaper.json`,
+        ).text()
+        return JSON.parse(timestamp)
+    } catch {
+        return null
+    }
 }
 
 /**

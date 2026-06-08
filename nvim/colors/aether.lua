@@ -46,12 +46,21 @@ for _, hl in ipairs({
     "DiagnosticSignInfo",
     "DiagnosticSignHint",
     "DiagnosticSignOk",
+    "SignColumn",
 }) do
     vim.api.nvim_set_hl(0, hl, { bg = "NONE", update = true })
 end
 
-utils.hl_soften_bg("Visual", 0.8)
 utils.hl_bolden_bg("ColorColumn", 0.2)
+
+for _, hl in ipairs({
+    "Visual",
+    "LspReferenceText",
+    "QuickFixLine",
+    "GitConflictCurrent",
+}) do
+    utils.hl_soften_bg(hl, 0.8)
+end
 
 for _, hl in ipairs({
     "NormalFloat",
