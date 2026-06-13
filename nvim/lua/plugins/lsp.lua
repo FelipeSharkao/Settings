@@ -1,3 +1,36 @@
+local augroup = vim.api.nvim_create_augroup("lsp-config", { clear = true })
+
+---@param language string|string[]
+---@param lsp_name string
+---@param mason_name? string
+local function install_server(language, lsp_name, mason_name)
+    mason_name = mason_name or lsp_name
+
+    vim.api.nvim_create_autocmd("FileType", {
+        group = augroup,
+        pattern = language,
+        callback = function()
+            local registry = require("mason-registry")
+            local pkg = registry.get_package(mason_name)
+            if not pkg then
+                vim.notify("Package " .. mason_name .. " not found")
+                return
+            end
+            if pkg:is_installed() then
+                vim.lsp.enable(lsp_name, true)
+            else
+                pkg:install({}, function(success)
+                    if success then
+                        vim.schedule(function() vim.lsp.enable(lsp_name, true) end)
+                    else
+                        vim.notify("Failed to install package " .. mason_name)
+                    end
+                end)
+            end
+        end,
+    })
+end
+
 local function setup_servers()
     local utils = require("plugin-utils")
 
@@ -15,6 +48,8 @@ local function setup_servers()
         "lua_ls",
         "eslint",
         "graphql",
+        "c3_lsp",
+        "gleam",
     }
     for _, server in ipairs(no_format) do
         vim.lsp.config(server, {
@@ -112,36 +147,43 @@ end
 ---@type LazySpec[]
 return {
     {
-        "williamboman/mason-lspconfig.nvim",
+        "williamboman/mason.nvim",
         lazy = false,
         dependencies = {
-            { "williamboman/mason.nvim", opts = {} },
             "neovim/nvim-lspconfig",
         },
         config = function()
+            require("mason").setup()
+
             setup_servers()
 
-            require("mason-lspconfig").setup({
-                ensure_installed = {
-                    "vtsls",
-                    "eslint",
-                    "lua_ls",
-                    "rust_analyzer",
-                    "taplo",
-                    "zls",
-                    "dockerls",
-                    "svelte",
-                    "graphql",
-                    "hls",
-                    "clangd",
-                    "elp", -- erlang
-                },
-            })
+            local js = {
+                "javascript",
+                "javascriptreact",
+                "typescript",
+                "typescriptreact",
+                "svelte",
+            }
+
+            install_server("c", "clangd")
+            install_server("c3", "c3_lsp", "c3-lsp")
+            install_server("docker", "dockerls", "docker-language-server")
+            install_server("erlang", "elp")
+            install_server("graphql", "graphql", "graphql-language-service-cli")
+            install_server("haskell", "hls", "haskell-language-server")
+            install_server(js, "eslint", "eslint-lsp")
+            install_server(js, "vtsls")
+            install_server("lua", "lua_ls", "lua-language-server")
+            install_server("rust", "rust_analyzer", "rust-analyzer")
+            install_server("svelte", "svelte", "svelte-language-server")
+            install_server("toml", "taplo")
+            install_server("zig", "zls")
 
             vim.lsp.enable("ocamllsp", true)
             vim.lsp.enable("gdscript", true)
             vim.lsp.enable("sourcekit", true)
             vim.lsp.enable("tsgo", true)
+            vim.lsp.enable("gleam", true)
         end,
         keys = {
             {
