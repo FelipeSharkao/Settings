@@ -81,6 +81,7 @@ statusline.setup({
 require("mini.tabline").setup()
 
 -- Surround actions
+local word_pat = "%f[%w_%-%.:][%w_%-%.:]+"
 require("mini.surround").setup({
     mappings = {
         add = "sa",
@@ -92,10 +93,27 @@ require("mini.surround").setup({
     },
     custom_surroundings = {
         ["g"] = {
-            input = { "%f[%w_][%w_]+%b<>", "^.-<().*()>$" },
+            -- Type with generics, include c++/rust qualified names
+            input = { word_pat .. "%b<>", "^.-<().*()>$" },
             output = function()
                 local type_name = MiniSurround.user_input("Type name")
                 if type_name then return { left = type_name .. "<", right = ">" } end
+            end,
+        },
+        ["f"] = {
+            -- Like the builtin one, but include c++/rust qualified names
+            input = { word_pat .. "%b()", "^.-%(().*()%)$" },
+            output = function()
+                local type_name = MiniSurround.user_input("Function name")
+                if type_name then return { left = type_name .. "(", right = ")" } end
+            end,
+        },
+        ["m"] = {
+            -- rust macro
+            input = { word_pat .. "!%b()", "^.-%(().*()%)$" },
+            output = function()
+                local type_name = MiniSurround.user_input("Macro name")
+                if type_name then return { left = type_name .. "!(", right = ")" } end
             end,
         },
     },
