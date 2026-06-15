@@ -64,3 +64,18 @@ for _, cmd in ipairs({ "WriteSudo", "Wsu" }) do
         complete = "file",
     })
 end
+
+-- Treesitter queries development
+vim.api.nvim_create_user_command("SaveHighlights", function(o)
+    local lang = o.fargs[1]
+
+    local content = table.concat(vim.api.nvim_buf_get_lines(0, 0, -1, false), "\n")
+    local path = vim.fn.stdpath("data") .. "/site/queries/" .. lang .. "/highlights.scm"
+
+    vim.treesitter.query.set(lang, "highlights", content)
+    io.open(path, "w"):write(content)
+end, {
+    desc = "Save highlights.scm for a parser",
+    nargs = 1,
+    complete = function() return vim.tbl_keys(require("nvim-treesitter.parsers")) end,
+})

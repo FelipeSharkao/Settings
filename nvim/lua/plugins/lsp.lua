@@ -80,28 +80,32 @@ local function setup_servers()
         },
     }
 
-    vim.lsp.config("vtsls", {
-        on_attach = utils.lsp.extend_on_attach("vtsls", function(client)
-            for key, _ in pairs(client.server_capabilities) do
-                if key ~= "textDocumentSync" and key ~= "codeActionProvider" then
-                    client.server_capabilities[key] = false
-                end
-            end
-        end),
-    })
-
     vim.lsp.config("tsgo", {
         settings = {
-            -- publish_diagnostic_on = "insert_leave",
             typescript = js_lang_settings,
             javascript = js_lang_settings,
-            --vtsls = { experimental = { entriesLimit = 30 } },
         },
         -- tsgo has poor debouncing so we have to do it on our side
         flags = { debounce_text_changes = 500 },
-        -- limit memory to 2GB because it is spiking
-        cmd_env = { GOMEMLIMIT = tostring(2 * 1024 * 1024) },
     })
+
+    -- Cap the tsgo process to 3GB of RAM because it's spiking
+    local function cap_tsgo()
+        vim.system({
+            "bash",
+            "-c",
+            [[
+                for pid in $(pgrep -f "tsgo"); do
+                    rss=$(ps -o rss= -p "$pid")
+                    if [ $rss -gt $((3 * 1024 * 1024)) ]; then
+                        kill -9 "$pid"
+                    fi
+                done
+            ]],
+        })
+        vim.defer_fn(cap_tsgo, 5000)
+    end
+    vim.defer_fn(cap_tsgo, 1000)
 
     vim.lsp.config("rust_analyzer", {
         settings = {
@@ -172,7 +176,6 @@ return {
             install_server("graphql", "graphql", "graphql-language-service-cli")
             install_server("haskell", "hls", "haskell-language-server")
             install_server(js, "eslint", "eslint-lsp")
-            install_server(js, "vtsls")
             install_server("lua", "lua_ls", "lua-language-server")
             install_server("rust", "rust_analyzer", "rust-analyzer")
             install_server("svelte", "svelte", "svelte-language-server")
