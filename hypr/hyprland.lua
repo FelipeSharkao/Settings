@@ -28,7 +28,8 @@ hl.config({
     decoration = {
         rounding = 6,
         blur = {
-            enabled = false,
+            enabled = true,
+            size = 4,
         },
         dim_inactive = true,
         dim_strength = 0.3,
@@ -130,7 +131,14 @@ hl.window_rule({
     float = true,
 })
 
+hl.layer_rule({
+    name = "vicinae-blur",
+    match = { namespace = "vicinae" },
+    blur = true,
+})
+
 require("startup")
 require("monitors")
 require("workspaces")
 require("keymaps")
+require("colors")

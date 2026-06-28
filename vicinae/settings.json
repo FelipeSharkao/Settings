@@ -28,10 +28,7 @@
       "system_info": false
    },
    "launcher_window": {
-      "opacity": 1,
-      "compact_mode": {
-         "enabled": true
-      }
+      "opacity": 0.75
    },
    "providers": {
       "core": {

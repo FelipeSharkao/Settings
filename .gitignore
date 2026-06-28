@@ -3,4 +3,5 @@ hypr/monitors.lua
 hypr/monitors.conf
 hypr/workspaces.lua
 hypr/workspaces.conf
+hypr/colors.lua
 aether/theme

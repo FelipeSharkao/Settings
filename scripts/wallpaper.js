@@ -6,13 +6,10 @@ import path from "node:path"
 import childProcess from "node:child_process"
 import { TOML, $ } from "bun"
 
-import { set } from "date-fns"
 import dbus from "dbus-next"
 
 const DIM = "\x1b[2m"
 const RESET = "\x1b[0m"
-
-const SCHEDULE_INTERVAL = 5 * 60_000 // 5 minutes
 
 const EXTRACT_MODES = [
     "colorful",
@@ -64,15 +61,13 @@ async function run() {
             showHelp(1)
     }
 
-    let palette, gtkTheme, gtkColorScheme
+    let gtkTheme, gtkColorScheme
     switch (theme) {
         case "light":
-            palette = "light16"
             gtkTheme = "MarshmallowLight"
             gtkColorScheme = "prefer-light"
             break
         case "dark":
-            palette = "dark16"
             gtkTheme = "MarshmallowDark"
             gtkColorScheme = "prefer-dark"
             break
@@ -137,19 +132,6 @@ async function run() {
     await cmd(gtkInterfaceCmd, "gtk-theme", gtkTheme)
     await cmd(gtkInterfaceCmd, "color-scheme", gtkColorScheme)
 
-    for (const pid of await cmd("pgrep", "kitty").lines()) {
-        const socket = `unix:@kitty-control-${pid}`
-        await cmd(
-            "kitty",
-            "@",
-            "--to",
-            socket,
-            "set-colors",
-            "--all",
-            "~/.config/aether/theme/kitty.conf",
-        )
-    }
-
     await storeMetadata({ wallpaper })
 }
 
@@ -208,27 +190,10 @@ async function schedule() {
         }
     })
 
-    while (true) {
-        await Bun.sleep(SCHEDULE_INTERVAL)
-
-        const metadata = await loadMetadata()
-        if (!metadata) continue
-
-        const lastRun = new Date(metadata.timestamp)
-
-        const now = new Date()
-        const dawn = setTime(now, 6, 0)
-        const midday = setTime(now, 12, 0)
-        const dusk = setTime(now, 18, 0)
-
-        if (
-            (lastRun < dusk && dusk <= now)
-            || (lastRun < midday && midday <= now)
-            || (lastRun < dawn && dawn <= now)
-        ) {
-            await run()
-        }
-    }
+    // Bun.cron is in UTC, I want America/Sao_Paulo
+    // 0h, 6h, 12h and 18h
+    const job = Bun.cron("0 3,9,15,21 * * *", () => run())
+    console.log(`[LOG] Scheduled job "${job.cron}"`)
 }
 
 /**
@@ -441,7 +406,7 @@ class Process {
      */
     printCommand(opts) {
         const command = this.formatedCommand(opts)
-        console.log(`${DIM}$ ${command}${RESET}`)
+        console.log(dim(`$ ${command}`))
     }
 
     /**
@@ -471,6 +436,7 @@ class Process {
     _quiet = false
 }
 
-function setTime(date, hours, minutes, seconds = 0, milliseconds = 0) {
-    return set(date, { hours, minutes, seconds, milliseconds })
+function dim(str) {
+    if (!process.stdout.isTTY) return str
+    return `${DIM}${str}${RESET}`
 }
