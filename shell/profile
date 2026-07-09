@@ -29,6 +29,11 @@ alias glon="git log --no-merges --pretty=\"%Cred%h%Creset -%C(auto)%d%Creset %s 
 
 alias wine64="env WINEARCH=win64 WINEPREFIX=$HOME/.wine64 wine"
 
+export UXN_PATH="$HOME/Programs/uxn"
+alias uxncli="$UXN2_PATH/bin/uxn2"
+alias uxnemu="$UXN2_PATH/bin/uxn2 -2"
+alias uxnasm="uxncli $UXN2_PATH/bin/drifblim.rom"
+
 # Bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
