@@ -128,6 +128,14 @@ require("mini.operators").setup({
 -- Remove buffers (like vim-bbye)
 require("mini.bufremove").setup()
 
+-- Pretty (and more importantly, non-blocking) notifications
+require("mini.notify").setup({
+    window = {
+        config = { border = "none" },
+        winblend = 60,
+    },
+})
+
 local function create_delete_command(name, func_name)
     vim.api.nvim_create_user_command(name, function(opts)
         local bufnr = 0

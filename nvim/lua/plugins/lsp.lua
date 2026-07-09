@@ -170,7 +170,6 @@ return {
             }
 
             install_server("c", "clangd")
-            install_server("c3", "c3_lsp", "c3-lsp")
             install_server("docker", "dockerls", "docker-language-server")
             install_server("erlang", "elp")
             install_server("graphql", "graphql", "graphql-language-service-cli")
@@ -182,11 +181,15 @@ return {
             install_server("toml", "taplo")
             install_server("zig", "zls")
 
+            -- C3 release is old. Install from source
+            -- install_server("c3", "c3_lsp", "c3-lsp")
+
             vim.lsp.enable("ocamllsp", true)
             vim.lsp.enable("gdscript", true)
             vim.lsp.enable("sourcekit", true)
             vim.lsp.enable("tsgo", true)
             vim.lsp.enable("gleam", true)
+            vim.lsp.enable("c3_lsp", true)
         end,
         keys = {
             {

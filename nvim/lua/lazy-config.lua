@@ -23,9 +23,6 @@ require("lazy").setup({
         -- show indentation levels
         "lukas-reineke/indent-blankline.nvim",
 
-        -- Notifications
-        { "j-hui/fidget.nvim", opts = {}, event = "BufEnter" },
-
         -- vim.ui.select
         {
             "stevearc/dressing.nvim",
@@ -47,7 +44,7 @@ require("lazy").setup({
             "SmiteshP/nvim-navic",
             opts = {
                 icons = utils.lsp_icons,
-                lsp = { auto_attach = true },
+                lsp = { auto_attach = true, preference = { "tsgo", "graphql" } },
             },
             init = function()
                 vim.o.winbar = " %{%v:lua.require('plugin-utils').winbar_get_icon()%}"
