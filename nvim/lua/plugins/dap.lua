@@ -71,7 +71,6 @@ return {
 
             local dap = require("dap")
             local dap_utils = require("dap.utils")
-            local utils = require("plugin-utils")
 
             dap.adapters["pwa-node"] = {
                 type = "server",
@@ -137,28 +136,29 @@ return {
                 args = { "--interpreter=dap" },
             }
 
-            dap.configurations.rust = {
-                {
-                    name = "Launch",
-                    type = "gdb",
-                    request = "launch",
-                    program = function()
-                        return dap_utils.pick_file({
-                            path = vim.fn.getcwd() .. "/target/debug",
-                        })
-                    end,
-                    args = function()
-                        return dap_utils.splitstr(vim.fn.input("Args: ", "", "arglist"))
-                    end,
-                    env = function()
-                        local env =
-                            utils.parse_env(vim.fn.input("Env: ", "", "environment"))
-                        return env
-                    end,
-                    cwd = "${workspaceFolder}",
-                    stopOnEntry = false,
-                },
-            }
+            for _, language in ipairs({
+                "c",
+                "cpp",
+                "rust",
+            }) do
+                dap.configurations[language] = {
+                    {
+                        name = "Launch",
+                        type = "gdb",
+                        request = "launch",
+                        program = function()
+                            return dap_utils.pick_file({ filter = "^[^%.]+$" })
+                        end,
+                        args = function()
+                            return dap_utils.splitstr(
+                                vim.fn.input("Args: ", "", "arglist")
+                            )
+                        end,
+                        cwd = "${workspaceFolder}",
+                        stopOnEntry = false,
+                    },
+                }
+            end
         end,
     },
 }
