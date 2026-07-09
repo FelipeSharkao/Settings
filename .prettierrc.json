@@ -2,5 +2,6 @@
     "experimentalOperatorPosition": "start",
     "semi": false,
     "singleQuote": false,
-    "trailingComma": "all"
+    "trailingComma": "all",
+    "proseWrap": "always"
 }

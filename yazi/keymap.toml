@@ -7,3 +7,8 @@ desc = "Enter the child directory, or open the file"
 on = "<Backspace>"
 run = "leave"
 desc = "Go back to the parent directory"
+
+[[mgr.append_keymap]]
+on = ["g", "?"]
+run = "help"
+desc = "Open the help menu"

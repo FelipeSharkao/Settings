@@ -58,6 +58,7 @@ for _, hl in ipairs({
     "LspReferenceText",
     "QuickFixLine",
     "GitConflictCurrent",
+    "DiffText",
 }) do
     utils.hl_soften_bg(hl, 0.8)
 end
