@@ -69,11 +69,15 @@ return {
     {
         "dcampos/nvim-snippy",
         event = "InsertEnter",
+        ---@type snippy.Config
         opts = {
             mappings = {
-                is = {
-                    ["<C-l>"] = "expand_or_advance",
-                    ["<C-h>"] = "previous",
+                i = {
+                    ["<C-]>"] = "expand",
+                },
+                nis = {
+                    ["<C-j>"] = "next",
+                    ["<C-k>"] = "previous",
                 },
             },
         },

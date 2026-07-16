@@ -25,6 +25,7 @@ vim.o.splitbelow = true -- open new horizontal split below
 -- ================= Scrolling ================= --
 
 vim.o.scrolloff = 8 -- start scrolling when 8 lines away from margins
+vim.o.sidescrolloff = 12 -- start scrolling when 8 columns away from margins
 
 -- ================= Indentation ================= --
 
@@ -66,6 +67,10 @@ vim.wo.breakindentopt = "min:40,shift:3,sbr"
 vim.o.showbreak = "↳"
 vim.wo.colorcolumn = "81,+1"
 
+-- When wrapping is disabled, show indicators for big lines
+vim.opt.list = true
+vim.opt.listchars:append({ extends = "»", precedes = "«", trail = "·" })
+
 -- Resize selected window if it's too small
 vim.api.nvim_create_autocmd({ "VimResized", "BufEnter", "WinEnter" }, {
     callback = function()
@@ -78,14 +83,6 @@ vim.api.nvim_create_autocmd({ "VimResized", "BufEnter", "WinEnter" }, {
 })
 
 vim.o.formatoptions = "jcroql"
-
-vim.api.nvim_create_autocmd("filetype", {
-    pattern = { "markdown", "text" },
-    callback = function()
-        vim.opt_local.formatoptions:append("t")
-        vim.opt_local.formatoptions:remove("l")
-    end,
-})
 
 -- ================= Spell checking ================= --
 
@@ -101,6 +98,7 @@ vim.o.pumblend = 15
 -- ================= Fold ================= --
 
 vim.o.foldopen = "block,mark,percent,quickfix,search,tag,undo,jump,insert"
+vim.wo.foldignore = ""
 
 -- Set folding only for modifiable buffers
 local fold_group = vim.api.nvim_create_augroup("DisableFolding", { clear = true })
@@ -136,13 +134,13 @@ end
 local function toggle_folding(value)
     if value then
         if vim.wo.foldmethod ~= "indent" and vim.wo.foldmethod ~= "diff" then
-            vim.o.foldmethod = "indent"
+            vim.wo.foldmethod = "indent"
             vim.wo.foldlevel = 0
             open_conflict_folds()
         end
     else
         if vim.wo.foldmethod == "indent" then
-            vim.o.foldmethod = "manual"
+            vim.wo.foldmethod = "manual"
             vim.wo.foldlevel = 999
         end
     end
@@ -152,28 +150,18 @@ vim.api.nvim_create_autocmd("BufWinEnter", {
     pattern = "*",
     group = fold_group,
     callback = function()
-        toggle_folding(
-            vim.api.nvim_buf_get_name(0)
-                and vim.bo.modifiable
-                and vim.bo.buftype ~= "nofile"
-        )
+        local has_folds = vim.api.nvim_buf_get_name(0)
+            and vim.bo.modifiable
+            and vim.bo.buftype ~= "nofile"
+        toggle_folding(has_folds)
+        if has_folds then vim.defer_fn(function() vim.cmd("normal! zv") end, 0) end
     end,
 })
 
 vim.api.nvim_create_autocmd("FileType", {
     pattern = { "dap-view", "dap-repl" },
     group = fold_group,
-    callback = function()
-        print("FileType dap-view")
-        toggle_folding(false)
-    end,
-})
-
--- Disable foldignore
-vim.api.nvim_create_autocmd("FileType", {
-    pattern = { "javascript", "typescript", "javascriptreact", "typescriptreact", "rust" },
-    group = fold_group,
-    callback = function() vim.wo.foldignore = "" end,
+    callback = function() toggle_folding(false) end,
 })
 
 -- ================= Themes ================= --
@@ -194,14 +182,10 @@ vim.diagnostic.config({
 -- ================= Misc ================= --
 
 vim.o.history = 10000 -- numbers of entries in history for ':' commands and search patterns (10000 = max)
+vim.o.scrollback = 5000 -- lines of scrollback for terminal (kitty is 2000 for comparison)
 vim.o.updatetime = 100 -- used for CursorHold event (for document highlighting detection)
-vim.o.mouse = "a" -- allow mouse only in help files
+vim.o.mouse = "a" -- allow mouse
 vim.o.mousemodel = "extend" -- right click extends selection
-
--- allows hidden buffers
--- this means that a modified buffer doesn't need to be saved when changing
--- tabs/windows.
-vim.o.hidden = true
 
 -- set completion mode on command line to be similar to cli
 vim.o.wildmode = "list:longest"
