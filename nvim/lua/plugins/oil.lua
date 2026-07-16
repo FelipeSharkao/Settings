@@ -1,6 +1,8 @@
 return {
     {
-        "stevearc/oil.nvim",
+        --"stevearc/oil.nvim",
+        "FelipeSharkao/oil.nvim",
+        branch = "fix/632", -- I'm waiting on https://github.com/stevearc/oil.nvim/pull/769
         dependencies = { "nvim-tree/nvim-web-devicons" },
         opts = {
             columns = { "icon", "size", "mtime" },
@@ -44,7 +46,13 @@ return {
     },
     {
         "refractalize/oil-git-status.nvim",
-        dependencies = { "stevearc/oil.nvim" },
+        dependencies = {
+            {
+                --"stevearc/oil.nvim",
+                "FelipeSharkao/oil.nvim",
+                branch = "fix/632", -- I'm waiting on https://github.com/stevearc/oil.nvim/pull/769
+            },
+        },
         opts = {},
     },
 }
