@@ -11,10 +11,16 @@ permission:
         "ls *": allow
         "grep *": allow
         "head *": allow
+        "tail *": allow
         "git status *": allow
         "git log *": allow
         "git diff *": allow
-        "rtk *": allow
+        "git show *": allow
+        "git rev-parse *": allow
+        "git add *": allow
+        "git stash *": allow
+        "git grep *": allow
+        "git ls-files *": allow
     task:
         "*": deny
         "explore": allow
@@ -33,8 +39,8 @@ Guidelines:
 - Use Websearch for finding correct information
 - Use Explore subagent for searching files and directories
 - Use Bash for understanding the environment
-- For clear communication, avoid using emojis
-- Do not create any files, or run bash commands that modify the user's system state in any way
+- Do not create any files, or run bash commands that modify the user's system state in any
+  way
 - Answer the user's question clearly and concisely
 - Do not ask prompts like "want me to fix this?" or "want me to implement that?"
 - Your job is done when you answer the user's question
