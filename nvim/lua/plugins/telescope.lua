@@ -1,3 +1,30 @@
+require("lazy")
+
+local function directories_picker()
+    local pickers = require("telescope.pickers")
+    local finders = require("telescope.finders")
+    local conf = require("telescope.config").values
+    local actions = require("telescope.actions")
+    local action_state = require("telescope.actions.state")
+
+    local picker_opts = {
+        prompt_title = "Find directory",
+        finder = finders.new_oneshot_job({ "fd", "--type", "d" }, {}),
+        attach_mappings = function(prompt_bufnr)
+            actions.select_default:replace(function()
+                actions.close(prompt_bufnr)
+                local selection = action_state.get_selected_entry()
+                vim.cmd.Dir(selection[1])
+            end)
+            return true
+        end,
+        sorter = conf.file_sorter(),
+    }
+
+    pickers.new({}, picker_opts):find()
+end
+
+---@type LazySpec
 return {
     "nvim-telescope/telescope.nvim",
     dependencies = {
@@ -8,11 +35,6 @@ return {
     },
     config = function()
         local actions = require("telescope.actions")
-        local builtin = require("telescope.builtin")
-        local conf = require("telescope.config").values
-        local finders = require("telescope.finders")
-        local make_entry = require("telescope.make_entry")
-        local pickers = require("telescope.pickers")
         local previewers = require("telescope.previewers")
         local sorters = require("telescope.sorters")
         local telescope = require("telescope")
@@ -22,12 +44,9 @@ return {
             local action_state = require("telescope.actions.state")
             local current_picker = action_state.get_current_picker(prompt_bufnr)
 
-            current_picker:delete_selection(function(selection)
-                if vim.api.nvim_buf_get_option(selection.bufnr, "modified") then
-                    return false
-                end
-                require("mini.bufremove").delete(selection.bufnr)
-            end)
+            current_picker:delete_selection(
+                function(selection) require("mini.bufremove").delete(selection.bufnr) end
+            )
         end
 
         telescope.setup({
@@ -58,17 +77,14 @@ return {
                 buffer_previewer_maker = previewers.buffer_previewer_maker,
                 mappings = {
                     i = {
-                        ["<C-l>"] = actions.smart_send_to_qflist + actions.open_qflist,
+                        ["<C-l>"] = actions.smart_send_to_loclist + actions.open_loclist,
                         ["<C-q>"] = actions.close,
-                        ["<CR>"] = function()
-                            vim.cmd([[:stopinsert]])
-                            vim.cmd([[call feedkeys("\<CR>")]])
-                        end,
+                        ["<CR>"] = actions.select_default,
                     },
                     n = {
                         ["<C-n>"] = actions.move_selection_next,
                         ["<C-p>"] = actions.move_selection_previous,
-                        ["<C-l>"] = actions.smart_send_to_qflist + actions.open_qflist,
+                        ["<C-l>"] = actions.smart_send_to_loclist + actions.open_loclist,
                         ["<C-q>"] = actions.close,
                         ["q"] = actions.close,
                     },
@@ -78,7 +94,6 @@ return {
                 buffers = {
                     ignore_current_buffer = true,
                     sort_mru = true,
-                    only_cwd = true,
                     mappings = {
                         i = {
                             ["<C-d>"] = buf_delete_action,
@@ -109,18 +124,41 @@ return {
         telescope.load_extension("dap")
         telescope.load_extension("live_grep_args")
 
-        local keymap = vim.keymap.set
-        local opts = { silent = true, noremap = true }
-
-        keymap("n", "gf", "<Nop>", opts)
-        keymap("n", "gff", builtin.find_files, opts)
-        keymap("n", "gfg", telescope.extensions.live_grep_args.live_grep_args, opts)
-        keymap("n", "gfb", builtin.buffers, opts)
-        keymap("n", "gfl", builtin.resume, opts)
-
-        keymap("n", "z=", builtin.spell_suggest, opts)
-
         vim.api.nvim_set_hl(0, "TelescopeNormal", { link = "NormalFloat" })
         vim.api.nvim_set_hl(0, "TelescopeBorder", { link = "FloatBorder" })
     end,
+    keys = {
+        { "gf", "<Nop>" },
+        {
+            "gff",
+            "<Cmd>Telescope find_files<CR>",
+            mode = { "n" },
+            desc = "Telescope - Find files",
+        },
+        {
+            "gfd",
+            directories_picker,
+            desc = "Telescope - Find directory",
+        },
+        {
+            "gfg",
+            "<Cmd>Telescope live_grep_args<CR>",
+            desc = "Telescope - Grep",
+        },
+        {
+            "gfb",
+            "<Cmd>Telescope buffers<CR>",
+            desc = "Telescope - Buffers",
+        },
+        {
+            "gfl",
+            "<Cmd>Telescope resume<CR>",
+            desc = "Telescope - Resume previous picker",
+        },
+        {
+            "z=",
+            "<Cmd>Telescope spell_suggest<CR>",
+            desc = "Open spellchecker suggestions",
+        },
+    },
 }

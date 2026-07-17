@@ -62,19 +62,6 @@ vim.api.nvim_create_autocmd("FileType", {
     end,
 })
 
--- Util commands
-vim.api.nvim_create_user_command("Open", function(o)
-    vim.cmd("tabe | tcd " .. o.fargs[1])
-    require("oil").open(nil, { preview = {} })
-end, {
-    desc = "Open directory in new tab",
-    complete = "dir",
-    nargs = 1,
-})
-vim.api.nvim_create_user_command("Settings", "Open ~/Settings", {
-    desc = "Open Settings directory",
-})
-
 for _, cmd in ipairs({ "WriteSudo", "Wsu" }) do
     vim.api.nvim_create_user_command(cmd, function(o)
         local file = o.fargs[1] or vim.fn.expand("%")
