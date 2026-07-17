@@ -5,13 +5,21 @@ snippet mod "Module definition"
 
 	return M
 
-snippet funl "Local function"
-	local function ${1:fname}fname($2)
+snippet fun "Function"
+	function ${1}($2)
 		$3
 	end
 
+snippet funl "Local function"
+	local function ${1}($2)
+		$3
+	end
+
+
 snippet plugin "Configuration for a plugin"
-	---@type LazySpec[]
+	require("lazy")
+
+	---@type LazySpec${1:[]}
 	return {
-		$1
+		$2
 	}
