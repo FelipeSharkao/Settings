@@ -129,7 +129,7 @@ require("lazy").setup({
         -- Git
         {
             "APZelos/blamer.nvim",
-            dependencies = { "nvim-tree/nvim-web-devicons" },
+            init = function() vim.g.blamer_enabled = true end,
         },
 
         -- ====== Misc ======

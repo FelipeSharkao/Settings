@@ -131,6 +131,9 @@ require("mini.notify").setup({
     },
 })
 
+-- Icons for file browser
+require("mini.icons").setup({})
+
 local function create_delete_command(name, func_name)
     vim.api.nvim_create_user_command(name, function(opts)
         local bufnr = 0

@@ -3,9 +3,9 @@ return {
         --"stevearc/oil.nvim",
         "FelipeSharkao/oil.nvim",
         branch = "fix/632", -- I'm waiting on https://github.com/stevearc/oil.nvim/pull/769
-        dependencies = { "nvim-tree/nvim-web-devicons" },
+        lazy = false,
         opts = {
-            columns = { "icon", "size", "mtime" },
+            columns = { "icon", "size" },
             constrain_cursor = "name",
             default_file_explorer = true,
             delete_to_trash = true,
