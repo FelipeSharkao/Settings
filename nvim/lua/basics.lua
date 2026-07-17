@@ -189,3 +189,7 @@ vim.o.mousemodel = "extend" -- right click extends selection
 
 -- set completion mode on command line to be similar to cli
 vim.o.wildmode = "list:longest"
+
+-- disable `-- MODE --` indicators since they are redundant with the statusline and cover
+-- the align UI
+vim.o.showmode = false

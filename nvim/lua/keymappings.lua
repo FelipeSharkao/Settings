@@ -2,28 +2,6 @@
 local keymap = vim.keymap.set
 local opts = { noremap = true, silent = true }
 
--- Disable arrow keys (git gut)
-for _, key in ipairs({
-    "<Up>",
-    "<C-Up>",
-    "<Down>",
-    "<C-Down>",
-    "<Left>",
-    "<C-Left>",
-    "<Right>",
-    "<C-Right>",
-    "<PageUp>",
-    "<C-PageUp>",
-    "<PageDown>",
-    "<C-PageDown>",
-    "<Home>",
-    "<C-Home>",
-    "<End>",
-    "<C-End>",
-}) do
-    keymap({ "n", "i", "v" }, key, "<Cmd>echo 'Use k, l, f, t, <C-U> or <C-D>'<CR>", opts)
-end
-
 -- emacs/readline keys on insert and command mode
 for _, key in ipairs({
     { "<C-b>", "<Left>", desc = "Move cursor one character to the left" },

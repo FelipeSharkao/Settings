@@ -155,10 +155,5 @@ return {
             "<Cmd>Telescope resume<CR>",
             desc = "Telescope - Resume previous picker",
         },
-        {
-            "z=",
-            "<Cmd>Telescope spell_suggest<CR>",
-            desc = "Open spellchecker suggestions",
-        },
     },
 }
