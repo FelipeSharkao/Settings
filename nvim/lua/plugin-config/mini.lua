@@ -28,12 +28,7 @@ require("mini.cursorword").setup()
 require("mini.move").setup()
 
 -- Pickers
-require("mini.pick").setup({
-    mappings = {
-        caret_left = "<C-h>",
-        caret_right = "<C-l>",
-    },
-})
+require("mini.pick").setup()
 
 -- Opinated statusline
 local statusline = require("mini.statusline")

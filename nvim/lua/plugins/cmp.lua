@@ -23,8 +23,8 @@ return {
                 mapping = {
                     ["<C-n>"] = cmp.mapping.select_next_item(),
                     ["<C-p>"] = cmp.mapping.select_prev_item(),
-                    ["<C-k>"] = cmp.mapping.scroll_docs(-4),
-                    ["<C-j>"] = cmp.mapping.scroll_docs(4),
+                    ["<M-n>"] = cmp.mapping.scroll_docs(4),
+                    ["<M-p>"] = cmp.mapping.scroll_docs(-4),
                     ["<C-x><C-o>"] = cmp.mapping.complete({}),
                     ["<C-e>"] = cmp.mapping.abort(),
                     ["<C-y>"] = cmp.mapping.confirm({ select = true }),

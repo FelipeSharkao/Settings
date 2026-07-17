@@ -3,7 +3,7 @@ local keymap = vim.keymap.set
 local opts = { noremap = true, silent = true }
 
 -- Disable arrow keys (git gut)
-local arrow_keys = {
+for _, key in ipairs({
     "<Up>",
     "<C-Up>",
     "<Down>",
@@ -20,9 +20,33 @@ local arrow_keys = {
     "<C-Home>",
     "<End>",
     "<C-End>",
-}
-for _, key in ipairs(arrow_keys) do
+}) do
     keymap({ "n", "i", "v" }, key, "<Cmd>echo 'Use k, l, f, t, <C-U> or <C-D>'<CR>", opts)
+end
+
+-- emacs/readline keys on insert and command mode
+for _, key in ipairs({
+    { "<C-b>", "<Left>", desc = "Move cursor one character to the left" },
+    { "<C-f>", "<Right>", desc = "Move cursor one character to the right" },
+    { "<C-BS>", "<C-W>", desc = "Delete the next word" },
+}) do
+    keymap({ "i", "c" }, table.remove(key, 1), table.remove(key, 1), key)
+end
+for _, key in ipairs({
+    { "<M-b>", "b", desc = "Move cursor one word to the left" },
+    { "<M-f>", "w", desc = "Move cursor one word to the right" },
+    { "<M-d>", "de", desc = "Delete the next word" },
+    { "<C-Del>", "de", desc = "Delete the next word" },
+    { "<C-k>", "D", desc = "Delete the text up to the end of the line" },
+}) do
+    local lhs = table.remove(key, 1)
+    local rhs = table.remove(key, 1)
+    keymap("i", lhs, function()
+        local ve = vim.wo.virtualedit
+        vim.opt_local.virtualedit:append("onemore")
+        vim.cmd.normal({ rhs, bang = true })
+        vim.wo.virtualedit = ve
+    end, key)
 end
 
 -- loclist and quickfix
