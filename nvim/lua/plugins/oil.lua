@@ -99,7 +99,7 @@ end, {
 
 vim.api.nvim_create_user_command("Open", function(args)
     vim.cmd.tabnew()
-    vim.cmd.cd(args.fargs[1])
+    vim.cmd.tcd(args.fargs[1])
     open(nil, { swap = true })
 end, {
     desc = "Open directory in new tab",
