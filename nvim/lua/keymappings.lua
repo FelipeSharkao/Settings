@@ -54,6 +54,19 @@ for _, cmd in ipairs({ "WriteSudo", "Wsu" }) do
     })
 end
 
+-- Restart session
+for _, cmd in ipairs({ "RestartSession", "Rso" }) do
+    vim.api.nvim_create_user_command(cmd, function(o)
+        local file = o.fargs[1] or vim.fn.stdpath('cache') .. 'Session.vim'
+        vim.cmd.mksession({ file, bang = true })
+        vim.cmd.restart("source", file)
+    end, {
+        desc = "Restart preserving current session",
+        nargs = "?",
+        complete = "file",
+    })
+end
+
 -- Treesitter queries development
 vim.api.nvim_create_user_command("SaveHighlights", function(o)
     local lang = o.fargs[1]
