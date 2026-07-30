@@ -10,6 +10,7 @@ return {
             { "gf", desc = "Telescope" },
             { "gr", desc = "LSP actions" },
             { "gs", desc = "LSP navigation" },
+            { "<Leader>h", desc = "Gitsigns" },
         },
         triggers = {
             { "<auto>", mode = "nxso" },

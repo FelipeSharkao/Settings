@@ -126,12 +126,6 @@ require("lazy").setup({
         -- Respect .editorconfig file
         "gpanders/editorconfig.nvim",
 
-        -- Git
-        {
-            "APZelos/blamer.nvim",
-            init = function() vim.g.blamer_enabled = true end,
-        },
-
         -- ====== Misc ======
         -- many, many features
         {
