@@ -27,7 +27,7 @@ fi
 alias gmc="git merge --continue"
 alias glon="git log --no-merges --pretty=\"%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset\""
 
-alias wine64="env WINEARCH=win64 WINEPREFIX=$HOME/.wine64 wine"
+alias wine64='env WINEARCH=win64 WINEPREFIX="${WINEPREFIX:-$HOME/.wine64}" wine'
 
 export UXN_PATH="$HOME/Programs/uxn"
 alias uxncli="$UXN2_PATH/bin/uxn2"
