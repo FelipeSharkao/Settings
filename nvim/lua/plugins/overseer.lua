@@ -164,6 +164,9 @@ return {
                         },
                         ["r"] = { "keymap.run_action", opts = { action = "restart" } },
                     },
+                    sort = function(a, b)
+                        return require("overseer.task_list").sort_newest_first(a, b)
+                    end,
                 },
             })
             overseer_config()

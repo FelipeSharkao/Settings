@@ -34,7 +34,7 @@ vim.api.nvim_create_autocmd("FileType", {
         keymap(
             "n",
             "<CR>",
-            "<CR><Cmd>cclose<CR>",
+            "<CR><Cmd>cclose<CR><Cmd>lclose<CR>",
             vim.tbl_extend("force", opts, { buffer = 0 })
         )
     end,

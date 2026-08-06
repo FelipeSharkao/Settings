@@ -203,6 +203,7 @@ return {
             vim.lsp.enable("tsgo", true)
             vim.lsp.enable("gleam", true)
             vim.lsp.enable("c3_lsp", true)
+            vim.lsp.enable("nushell", true)
         end,
         keys = {
             {
