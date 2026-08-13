@@ -34,22 +34,9 @@ end
 local function setup_servers()
     local utils = require("plugin-utils")
 
-    local auto_format_augroup =
-        vim.api.nvim_create_augroup("Format on save", { clear = true })
-
     vim.lsp.config("*", {
         capabilities = require("cmp_nvim_lsp").default_capabilities(),
-        on_attach = function(client, bufnr)
-            if client.server_capabilities.documentFormattingProvider then
-                vim.api.nvim_create_autocmd({ "BufWritePre" }, {
-                    group = auto_format_augroup,
-                    buf = bufnr,
-                    callback = function() vim.lsp.buf.format({ async = false }) end,
-                })
-            end
-
-            utils.lsp.enable_inlay_hints(client, bufnr)
-        end,
+        on_attach = function(client, bufnr) utils.lsp.enable_inlay_hints(client, bufnr) end,
     })
 
     local no_format = {
@@ -275,6 +262,13 @@ return {
                         args = { "fmt", "-" },
                     }),
                 },
+            })
+
+            local auto_format_augroup =
+                vim.api.nvim_create_augroup("Format on save", { clear = true })
+            vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+                group = auto_format_augroup,
+                callback = function() vim.lsp.buf.format({ async = false }) end,
             })
         end,
     },
