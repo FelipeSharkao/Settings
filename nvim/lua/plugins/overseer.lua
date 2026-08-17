@@ -58,12 +58,22 @@ local function overseer_config()
         task.default_component_params = params
         params.errorformat = params.errorformat or vim.o.errorformat
 
+        -- Overseer adds on_complete_restart to vscode "isBackground" tasks
         local is_background = util.has_component(task, "restart_on_save")
             or util.has_component(task, "on_complete_restart")
 
         if is_background then
             if not util.has_component(task, "on_complete_notify") then
                 util.add_component(task, component_notify)
+            end
+
+            -- Overseer default on_complete_restart restart of failures, making it
+            -- impossible to read and handle errors
+            if util.has_component(task, "on_complete_restart") then
+                util.add_component(
+                    task,
+                    { "on_complete_restart", statuses = { "SUCCESS" } }
+                )
             end
         else
             if not util.has_component(task, "on_output_parse") then

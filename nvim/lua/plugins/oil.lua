@@ -29,27 +29,34 @@ for _, opts in ipairs({
     }
 end
 
--- Yank keys, similar to yazi but adapted to nvim
+-- Copy keys, similar to yazi but adapted to nvim
+local function copy_action(opts)
+    -- Adapted from the default yamk_entry, except it copy to "+ instead
+    opts = opts or {}
+    local oil = require("oil")
+    local entry = oil.get_cursor_entry()
+    local dir = oil.get_current_dir()
+    if not entry or not dir then return end
+    local name = entry.name
+    if entry.type == "directory" then name = name .. "/" end
+    local path = dir .. name
+    path = vim.fn.fnamemodify(path, opts.modify)
+    vim.fn.setreg("+", path)
+end
+
 for _, opts in ipairs({
-    { key = "y", modify = ":~:.", desc = "filepath (relative)" },
-    { key = "Y", modify = ":p:~", desc = "filepath (absolute)" },
+    { key = "c", modify = ":~:.", desc = "filepath (relative)" },
+    { key = "C", modify = ":p:~", desc = "filepath (absolute)" },
     { key = "n", modify = ":t:r", desc = "filename without extension" },
     { key = "d", modify = ":~:.:h", desc = "directory (relative)" },
-    { key = "d", modify = ":p:h", desc = "directory (absolute)" },
+    { key = "D", modify = ":p:h", desc = "directory (absolute)" },
     { key = "f", modify = ":t", desc = "filename" },
 }) do
-    keymaps["gy" .. opts.key] = {
-        "actions.yank_entry",
-        opts = { modify = ":~" .. (opts.rel and ":." or "") .. opts.modify },
-        desc = "Yank " .. opts.desc .. (opts.rel and " (relative)" or ""),
+    keymaps["gc" .. opts.key] = {
+        copy_action,
+        opts = { modify = opts.modify },
+        desc = "Yank " .. opts.desc,
     }
-    if opts.rel then
-        keymaps["gy" .. opts.key:upper()] = {
-            "actions.yank_entry",
-            opts = { modify = ":p:~" .. opts.modify },
-            desc = "Yank " .. opts.desc .. " (absolute)",
-        }
-    end
 end
 
 ---@class OpenOpts
@@ -110,6 +117,28 @@ end, {
 vim.api.nvim_create_user_command("Settings", "Open ~/Settings", {
     desc = "Open Settings directory",
 })
+
+-- Disable blend for the icons so they are double width no matter the winblend
+if vim.fn.has("gui_running") == 0 then
+    vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter", "FileType" }, {
+        pattern = "oil",
+        callback = function()
+            for _, hl in ipairs({
+                "MiniIconsAzure",
+                "MiniIconsBlue",
+                "MiniIconsCyan",
+                "MiniIconsGreen",
+                "MiniIconsGrey",
+                "MiniIconsOrange",
+                "MiniIconsPurple",
+                "MiniIconsRed",
+                "MiniIconsYellow",
+            }) do
+                vim.api.nvim_set_hl(0, hl, { blend = 0, update = true })
+            end
+        end,
+    })
+end
 
 ---@type LazySpec[]
 return {
